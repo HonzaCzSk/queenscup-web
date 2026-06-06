@@ -1,46 +1,86 @@
-# Astro Starter Kit: Basics
+# 🏀 Queens Cup – Official Website
 
-```sh
-npm create astro@latest -- --template basics
+Oficiální web mezinárodního minibasketbalového turnaje **Queens Cup** konaného v Hradci Králové.
+
+## O turnaji
+
+Queens Cup je mezinárodní turnaj v minibasketbalu pro dívky ve třech kategoriích:
+
+| Kategorie | Ročník narození | Hala |
+|-----------|----------------|------|
+| U11 | 2015 | Sokol HK |
+| U12 | 2014 | GAPA aréna |
+| U13 | 2013 | Sokol HK |
+
+Turnaj se koná každoročně první víkend v září v Hradci Králové.  
+Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších zemí.
+
+## Technologie
+
+- **[Astro](https://astro.build/)** – statický site builder
+- **[Tailwind CSS](https://tailwindcss.com/)** – utility-first CSS framework
+- **[Sanity.io](https://www.sanity.io/)** – headless CMS pro správu obsahu
+- **[Vercel](https://vercel.com/)** – hosting a automatický deployment
+
+## Funkce
+
+- 🌍 Vícejazyčnost – čeština, angličtina, polština
+- 🌙 Dark / Light mode
+- 📱 Plně responzivní design
+- 🏆 Tři kategorie – U11, U12, U13
+- 📋 Rozpis zápasů, výsledky, pavouk
+- 👥 Týmy a hráčky
+- 🤝 Partneři turnaje
+- 📸 Fotogalerie
+
+## Lokální spuštění
+
+### Požadavky
+- Node.js 18+
+- npm
+
+### Astro (frontend)
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Web běží na `http://localhost:4321`
 
-## 🚀 Project Structure
+### Sanity Studio (CMS)
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```bash
+cd sanity
+npm install
+npm run dev
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Studio běží na `http://localhost:3333`
 
-## 🧞 Commands
+## Struktura projektu
 
-All commands are run from the root of the project, from a terminal:
+```
+queenscup-web/
+├── src/
+│   ├── pages/        # stránky webu (cs/en/pl)
+│   ├── components/   # znovupoužitelné komponenty
+│   ├── layouts/      # layouty stránek
+│   ├── i18n/         # překlady
+│   └── styles/       # globální styly
+├── sanity/           # Sanity Studio + schémata
+└── public/           # statické soubory
+```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+Web je nasazen na **Vercel** a automaticky se aktualizuje při každém `git push` na větev `main`.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Autor
+
+**Jan Votroubek** – správce webových stránek  
+Hradecké lvice / Queens Cup organizační tým
+
+---
+
+*Spolufinancováno s podporou EU*
