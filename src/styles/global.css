@@ -1,1 +1,68 @@
-@import "tailwindcss";
+@import './base.css';
+@import './dark.css';
+@import './screen.css';
+@import './preferences.css';
+
+/* ── Queens Cup – přepínač kategorií ── */
+.cattabs {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.cattab {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  color: rgba(255,255,255,.75);
+  border: 1px solid transparent;
+  transition: background .15s, color .15s;
+}
+
+.cattab.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.cattab:hover:not(.is-active) {
+  background: rgba(255,255,255,.10);
+  color: #fff;
+}
+
+.langswitch {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.langbtn {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  color: rgba(255,255,255,.55);
+  border: 1px solid transparent;
+  transition: background .15s, color .15s, border-color .15s;
+  letter-spacing: .4px;
+}
+
+.langbtn.is-active {
+  background: rgba(255,255,255,.18);
+  color: #fff;
+  border-color: rgba(255,255,255,.35);
+}
+
+.langbtn:hover:not(.is-active) {
+  background: rgba(255,255,255,.10);
+  color: #fff;
+}
+
+/* Hero override – nechceme clip na panel */
+.hero {
+  overflow: visible !important;
+  border-radius: 0 !important;
+}

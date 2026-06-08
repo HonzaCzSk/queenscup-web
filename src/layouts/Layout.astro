@@ -1,23 +1,182 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import { t, getLang } from '../i18n/index'
+import type { Lang } from '../i18n/index'
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+interface Props {
+  title: string
+  description?: string
+  lang?: string
+  activePage?: string
+  activeCategory?: string
+}
+
+const {
+  title,
+  description = 'Mezinárodní minibasketbalový turnaj dívek – Hradec Králové',
+  lang = 'cs',
+  activePage = '',
+  activeCategory = 'u11',
+} = Astro.props
+
+const locale = getLang(lang)
+const tr = t(locale)
+
+const langUrls: Record<Lang, string> = {
+  cs: Astro.url.pathname.replace(/^\/(en|pl)/, '') || '/',
+  en: '/en' + Astro.url.pathname.replace(/^\/(en|pl)/, ''),
+  pl: '/pl' + Astro.url.pathname.replace(/^\/(en|pl)/, ''),
+}
+---
+
+<!doctype html>
+<html lang={lang} data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} | Queens Cup</title>
+  <meta name="description" content={description} />
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={`${title} | Queens Cup`} />
+  <meta property="og:description" content={description} />
+  <meta property="og:site_name" content="Queens Cup" />
+  <meta property="og:image" content="/og-image.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Prevent theme flash -->
+  <script is:inline>
+    (function() {
+      const saved = localStorage.getItem('theme')
+      const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      document.documentElement.setAttribute('data-theme', saved || sys)
+    })()
+  </script>
+</head>
+
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <span class="brand__dot"></span>
+        <a class="brand__name" href={lang === 'cs' ? '/' : `/${lang}/`}>Queens Cup</a>
+      </div>
+
+      <div class="topright">
+        <!-- Přepínač kategorií -->
+        <div class="cattabs">
+          <a class={`cattab ${activeCategory === 'u11' ? 'is-active' : ''}`}
+             href={lang === 'cs' ? '/?cat=u11' : `/${lang}/?cat=u11`}>
+            {tr.categories.u11}
+          </a>
+          <a class={`cattab ${activeCategory === 'u12' ? 'is-active' : ''}`}
+             href={lang === 'cs' ? '/?cat=u12' : `/${lang}/?cat=u12`}>
+            {tr.categories.u12}
+          </a>
+          <a class={`cattab ${activeCategory === 'u13' ? 'is-active' : ''}`}
+             href={lang === 'cs' ? '/?cat=u13' : `/${lang}/?cat=u13`}>
+            {tr.categories.u13}
+          </a>
+        </div>
+
+        <!-- Přepínač jazyků -->
+        <div class="langswitch">
+          <a class={`langbtn ${lang === 'cs' ? 'is-active' : ''}`} href={langUrls.cs} aria-label="Čeština">CZ</a>
+          <a class={`langbtn ${lang === 'en' ? 'is-active' : ''}`} href={langUrls.en} aria-label="English">EN</a>
+          <a class={`langbtn ${lang === 'pl' ? 'is-active' : ''}`} href={langUrls.pl} aria-label="Polski">PL</a>
+        </div>
+
+
+        <!-- Dark mode -->
+        <button class="themebtn" id="themeToggle" type="button" aria-label="Přepnout motiv">DARK</button>
+
+        <!-- Hamburger -->
+        <button class="menubtn" id="menuToggle" type="button" aria-label="Otevřít menu">☰</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div class="menu" id="mobileMenu" aria-hidden="true">
+    <div class="menu__backdrop" data-close></div>
+    <div class="menu__panel" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="menu__head">
+        <div class="menu__title">Menu</div>
+        <button class="menu__close" type="button" data-close aria-label="Zavřít menu">✕</button>
+      </div>
+      <div class="menu__links">
+        <a class={`menu__link ${activePage === 'home' ? 'is-active' : ''}`} href={lang === 'cs' ? '/' : `/${lang}/`}>{tr.nav.home}</a>
+        <a class={`menu__link ${activePage === 'schedule' ? 'is-active' : ''}`} href={lang === 'cs' ? '/rozpis' : `/${lang}/schedule`}>{tr.nav.schedule}</a>
+        <a class={`menu__link ${activePage === 'results' ? 'is-active' : ''}`} href={lang === 'cs' ? '/vysledky' : `/${lang}/results`}>{tr.nav.results}</a>
+        <a class={`menu__link ${activePage === 'bracket' ? 'is-active' : ''}`} href={lang === 'cs' ? '/pavouk' : `/${lang}/bracket`}>{tr.nav.bracket}</a>
+        <a class={`menu__link ${activePage === 'teams' ? 'is-active' : ''}`} href={lang === 'cs' ? '/tymy' : `/${lang}/teams`}>{tr.nav.teams}</a>
+        <a class={`menu__link ${activePage === 'info' ? 'is-active' : ''}`} href={lang === 'cs' ? '/info' : `/${lang}/info`}>{tr.nav.info}</a>
+        <a class={`menu__link ${activePage === 'contacts' ? 'is-active' : ''}`} href={lang === 'cs' ? '/kontakty' : `/${lang}/contacts`}>{tr.nav.contacts}</a>
+        <a class={`menu__link ${activePage === 'photos' ? 'is-active' : ''}`} href={lang === 'cs' ? '/fotky' : `/${lang}/photos`}>{tr.nav.photos}</a>
+      </div>
+      <!-- Kategorie v menu -->
+      <div class="menu__cats">
+        <a class={`cattab ${activeCategory === 'u11' ? 'is-active' : ''}`} href="?cat=u11">{tr.categories.u11}</a>
+        <a class={`cattab ${activeCategory === 'u12' ? 'is-active' : ''}`} href="?cat=u12">{tr.categories.u12}</a>
+        <a class={`cattab ${activeCategory === 'u13' ? 'is-active' : ''}`} href="?cat=u13">{tr.categories.u13}</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="wrap nav__inner">
+      <a class={`nav__item ${activePage === 'home' ? 'is-active' : ''}`} href={lang === 'cs' ? '/' : `/${lang}/`}>{tr.nav.home}</a>
+      <a class={`nav__item ${activePage === 'schedule' ? 'is-active' : ''}`} href={lang === 'cs' ? '/rozpis' : `/${lang}/schedule`}>{tr.nav.schedule}</a>
+      <a class={`nav__item ${activePage === 'results' ? 'is-active' : ''}`} href={lang === 'cs' ? '/vysledky' : `/${lang}/results`}>{tr.nav.results}</a>
+      <a class={`nav__item ${activePage === 'bracket' ? 'is-active' : ''}`} href={lang === 'cs' ? '/pavouk' : `/${lang}/bracket`}>{tr.nav.bracket}</a>
+      <a class={`nav__item ${activePage === 'teams' ? 'is-active' : ''}`} href={lang === 'cs' ? '/tymy' : `/${lang}/teams`}>{tr.nav.teams}</a>
+      <a class={`nav__item ${activePage === 'info' ? 'is-active' : ''}`} href={lang === 'cs' ? '/info' : `/${lang}/info`}>{tr.nav.info}</a>
+      <a class={`nav__item ${activePage === 'contacts' ? 'is-active' : ''}`} href={lang === 'cs' ? '/kontakty' : `/${lang}/contacts`}>{tr.nav.contacts}</a>
+      <a class={`nav__item ${activePage === 'photos' ? 'is-active' : ''}`} href={lang === 'cs' ? '/fotky' : `/${lang}/photos`}>{tr.nav.photos}</a>
+    </div>
+  </nav>
+
+  <!-- OBSAH STRÁNKY -->
+  <slot />
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="wrap footer__wrap">
+      <div class="partners">
+        <div class="partners__title">Partneři turnaje</div>
+        <slot name="partners" />
+      </div>
+      <div class="footer__bar">
+        <div class="footer__left">{tr.footer.rights}</div>
+        <div class="socialbar" aria-label="Sociální sítě">
+          <a class="socialbtn" href="https://www.instagram.com/queens_cup_hk/" target="_blank" rel="noopener" aria-label="Instagram">
+            <img src="/assets/social/instagram.svg" alt="Instagram" />
+          </a>
+          <a class="socialbtn socialbtn--tvcom" href="https://www.tvcom.cz/" target="_blank" rel="noopener" aria-label="TVcom">
+            <img src="/assets/social/tvcom.svg" alt="TVcom" />
+          </a>
+          <a class="socialbtn" href="https://www.hradeckelvice.cz/" target="_blank" rel="noopener" aria-label="Hradecké lvice">
+            <img src="/assets/social/lvice.svg" alt="Hradecké lvice" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- COOKIE NOTICE -->
+  <div id="site-notice" role="region" aria-label="Upozornění na cookies"></div>
+
+  <!-- SCRIPTS -->
+  <script is:inline src="/assets/js/theme.js"></script>
+  <script is:inline src="/assets/js/menu.js"></script>
+  <script is:inline src="/assets/js/preferences.js"></script>
+
+</body>
+</html>
