@@ -12,8 +12,12 @@ Queens Cup je mezinárodní turnaj v minibasketbalu pro dívky ve třech kategor
 | U12 | 2014 | GAPA aréna |
 | U13 | 2013 | Sokol HK |
 
-Turnaj se koná každoročně první víkend v září v Hradci Králové.  
-Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších zemí.
+Turnaj se koná tento rok první dva víkendy v září v Hradci Králové.
+
+Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších evropských zemí.
+
+### Hrací dny
+4-6. a 11-13. září
 
 ## Technologie
 
