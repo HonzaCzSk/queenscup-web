@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/global.css'
+import { t, getLang } from '../i18n/index'
+
+interface Props {
+  lang: string
+}
+
+const { lang } = Astro.props
+const locale = getLang(lang)
+const tr = t(locale)
+
+const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+
+const mapLinks = {
+  sokol: 'https://maps.google.com/?q=Sokol+Hradec+Kralove+Eliscino+nabrezi',
+  gapa: 'https://maps.google.com/?q=GAPA+arena+Brezhradska+Hradec+Kralove'
+}
+---
+
+<Layout title={tr.contacts.title} activePage="contacts" activeCategory={cat} lang={lang}>
+  <main class="wrap">
+    <section class="pagehead">
+      <h1 class="h1">{tr.contacts.title}</h1>
+      <p class="lead">
+        {lang === 'cs' ? 'Kontaktní osoby a adresy hracích hal turnaje.' : lang === 'pl' ? 'Osoby kontaktowe oraz adresy hal sportowych turnieju.' : 'Contact persons and sports venue addresses.'}
+      </p>
+    </section>
+
+    <div class="grid" style="grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 24px;">
+      
+      <!-- Hlavní organizátor -->
+      <div class="card">
+        <h2 class="h2">{tr.contacts.organizer}</h2>
+        <div style="font-weight: 800; font-size: 15px; margin-bottom: 6px;">{tr.contacts.organizer_club}</div>
+        <p class="muted" style="font-size: 13px; line-height: 1.5;">
+          Eliščino nábřeží 777<br />
+          500 03 Hradec Králové<br />
+          Česká republika
+        </p>
+        <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 700;">
+          <div>Email: <a href="mailto:info@hradeckelvice.cz" style="color: var(--accent);">info@hradeckelvice.cz</a></div>
+          <div>Web: <a href="https://www.hradeckelvice.cz" target="_blank" style="color: var(--accent);">www.hradeckelvice.cz</a></div>
+        </div>
+      </div>
+
+      <!-- Organizační tým -->
+      <div class="card">
+        <h2 class="h2">{tr.contacts.team}</h2>
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div>
+            <div style="font-weight: 800; font-size: 14px;">{tr.contacts.accommodation_contact}</div>
+            <div style="font-size: 13px; font-weight: 600;">Jan Votroubek</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">
+              Email: <a href="mailto:votroubek@hradeckelvice.cz" style="color: var(--accent);">votroubek@hradeckelvice.cz</a>
+            </div>
+          </div>
+          <div style="border-top: 1px solid var(--line); padding-top: 10px;">
+            <div style="font-weight: 800; font-size: 14px;">{tr.contacts.results_contact}</div>
+            <div style="font-size: 13px; font-weight: 600;">Jan Votroubek / Web Admin</div>
+            <div style="font-size: 13px; color: var(--muted); margin-top: 2px;">
+              Email: <a href="mailto:web@queenscup.cz" style="color: var(--accent);">web@queenscup.cz</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adresy hal s mapami -->
+      <div class="card" style="grid-column: 1 / -1;">
+        <h2 class="h2">{tr.contacts.venues}</h2>
+        <div class="linklist">
+          <a href={mapLinks.sokol} target="_blank" rel="noopener" class="linkitem" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-weight: 900; font-size: 14px; color: var(--accent); display: block;">Sokol HK (U11, U13)</span>
+              <span class="muted" style="font-size: 12px; font-weight: 600;">Eliščino nábřeží 777, Hradec Králové</span>
+            </div>
+            <span style="font-size: 12px; font-weight: 900; opacity: 0.85; text-transform: uppercase;">
+              {tr.contacts.map_link} ↗
+            </span>
+          </a>
+          <a href={mapLinks.gapa} target="_blank" rel="noopener" class="linkitem" style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <span style="font-weight: 900; font-size: 14px; color: var(--accent); display: block;">GAPA aréna (U12)</span>
+              <span class="muted" style="font-size: 12px; font-weight: 600;">Březhradská 148, Hradec Králové</span>
+            </div>
+            <span style="font-size: 12px; font-weight: 900; opacity: 0.85; text-transform: uppercase;">
+              {tr.contacts.map_link} ↗
+            </span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</Layout>

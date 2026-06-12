@@ -1,0 +1,202 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/global.css'
+import { getMatches } from '../lib/queries'
+import { t, getLang } from '../i18n/index'
+
+interface Props {
+  lang: string
+}
+
+const { lang } = Astro.props
+const locale = getLang(lang)
+const tr = t(locale)
+
+const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+
+const matches = await getMatches(cat)
+
+const den1 = matches.filter((m: any) => m.day === 1)
+const den2 = matches.filter((m: any) => m.day === 2)
+const den3 = matches.filter((m: any) => m.day === 3)
+
+const venues: Record<string, string> = {
+  cs: { sokol: 'Sokol HK', gapa: 'GAPA aréna' },
+  en: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
+  pl: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
+}[locale]
+
+const matchTypes: Record<string, string> = {
+  cs: {
+    group: 'Základní skupina',
+    qf: 'Čtvrtfinále',
+    sf: 'Semifinále',
+    third: 'O 3. místo',
+    final: 'Finále',
+  },
+  en: {
+    group: 'Group stage',
+    qf: 'Quarterfinal',
+    sf: 'Semifinal',
+    third: '3rd Place Match',
+    final: 'Final',
+  },
+  pl: {
+    group: 'Faza grupowa',
+    qf: 'Ćwierćfinał',
+    sf: 'Półfinał',
+    third: 'Mecz o 3. miejsce',
+    final: 'Finał',
+  },
+}[locale]
+
+const catLabels: Record<string, string> = {
+  cs: {
+    u11: 'U11 · ročník 2015 · Sokol HK',
+    u12: 'U12 · ročník 2014 · GAPA aréna',
+    u13: 'U13 · ročník 2013 · Sokol HK',
+  },
+  en: {
+    u11: 'U11 · born 2015 · Sokol HK',
+    u12: 'U12 · born 2014 · GAPA Arena',
+    u13: 'U13 · born 2013 · Sokol HK',
+  },
+  pl: {
+    u11: 'U11 · rocznik 2015 · Sokol HK',
+    u12: 'U12 · rocznik 2014 · GAPA Arena',
+    u13: 'U13 · ročník 2013 · Sokol HK',
+  }
+}[locale]
+
+const dayLabels = {
+  cs: {
+    day1: 'Den 1 – Sobota',
+    day2: 'Den 2 – Neděle',
+    day3: 'Den 3 – Pondělí',
+  },
+  en: {
+    day1: 'Day 1 – Saturday',
+    day2: 'Day 2 – Sunday',
+    day3: 'Day 3 – Monday',
+  },
+  pl: {
+    day1: 'Dzień 1 – Sobota',
+    day2: 'Dzień 2 – Niedziela',
+    day3: 'Dzień 3 – Poniedziałek',
+  }
+}[locale]
+
+function formatTime(datetime: string) {
+  if (!datetime) return '—'
+  return new Date(datetime).toLocaleTimeString(locale === 'cs' ? 'cs-CZ' : locale === 'pl' ? 'pl-PL' : 'en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+}
+
+function getMatchRowClass(m: any) {
+  if (m.status === 'live') return 'is-live'
+  if (m.status === 'finished') return 'is-fin'
+  // fallback if status not set but scores present
+  if (m.scoreA !== undefined && m.scoreA !== null && m.scoreB !== undefined && m.scoreB !== null) {
+    return 'is-fin'
+  }
+  return ''
+}
+
+function renderScore(m: any) {
+  const hasScore = m.scoreA !== undefined && m.scoreA !== null && m.scoreB !== undefined && m.scoreB !== null
+  if (m.status === 'live') {
+    return (
+      <span class="score-live-pulse">
+        {hasScore ? `${m.scoreA} : ${m.scoreB}` : '0 : 0'}
+      </span>
+    )
+  }
+  if (hasScore) {
+    return `${m.scoreA} : ${m.scoreB}`
+  }
+  return '—'
+}
+---
+
+<Layout title={tr.results.title} activePage="results" activeCategory={cat} lang={lang}>
+  <main class="wrap">
+    <section class="pagehead">
+      <h1 class="h1">{tr.results.title}</h1>
+      <p class="lead">{catLabels[cat]}</p>
+    </section>
+
+    <!-- Helper functions to render matches for a day -->
+    {[{ dayId: 1, matchesList: den1, label: dayLabels.day1 },
+      { dayId: 2, matchesList: den2, label: dayLabels.day2 },
+      { dayId: 3, matchesList: den3, label: dayLabels.day3 }].map(({ dayId, matchesList, label }) => (
+      (matchesList.length > 0 || dayId <= 2) && (
+        <section class="card" style="margin-top: 24px;">
+          <h2 class="h2">{label}</h2>
+          <div class="tablewrap">
+            <table class="schedule results">
+              <colgroup>
+                <col style="width: 80px;">
+                <col style="width: 140px;">
+                <col>
+                <col style="width: 100px;">
+                <col style="width: 150px;">
+                <col style="width: 100px;">
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="col-time">{tr.results.time}</th>
+                  <th class="col-hall">{tr.results.hall}</th>
+                  <th class="col-match">{tr.results.match}</th>
+                  <th class="col-score">{tr.results.score}</th>
+                  <th class="col-group">{tr.results.type}</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {matchesList.length === 0 ? (
+                  <tr>
+                    <td colspan="6" class="muted" style="text-align:center; padding:20px;">
+                      {tr.results.no_matches}
+                    </td>
+                  </tr>
+                ) : matchesList.map((m: any) => {
+                  const rowClass = getMatchRowClass(m)
+                  return (
+                    <tr class={rowClass}>
+                      <td class="col-time">{formatTime(m.datetime)}</td>
+                      <td class="col-hall">
+                        <span class={`pill ${m.venue === 'sokol' ? 'pill--h1' : 'pill--h2'}`}>
+                          {venues[m.venue] ?? m.venue}
+                        </span>
+                      </td>
+                      <td class="col-match" style="text-align: center; font-weight: 700;">
+                        {m.teamA?.name ?? '?'} – {m.teamB?.name ?? '?'}
+                      </td>
+                      <td class="col-score score" style="text-align: center;">
+                        {renderScore(m)}
+                      </td>
+                      <td class="col-group" style="text-align: center;">
+                        {matchTypes[m.matchType] ?? m.matchType}
+                      </td>
+                      <td>
+                        {m.status === 'live' && (
+                          <span class="badge badge--live">{tr.results.live}</span>
+                        )}
+                        {(m.status === 'finished' || (m.status !== 'live' && m.scoreA != null)) && (
+                          <span class="badge badge--fin">{tr.results.fin}</span>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )
+    ))}
+  </main>
+</Layout>

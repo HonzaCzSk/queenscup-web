@@ -1,30 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
+import IndexPage from '../components/IndexPage.astro'
 ---
 
-<Layout title="Úvod" activePage="home" activeCategory="u11">
-  <main class="wrap">
-    <section class="hero">
-      <div class="hero__text">
-        <h1 class="h1">Queens Cup</h1>
-        <p class="muted">Mezinárodní minibasketbalový turnaj dívek</p>
-        <p class="lead">Září 2026 · Hradec Králové</p>
-        <div class="cta">
-          <a class="btn btn--primary" href="/rozpis">Rozpis zápasů</a>
-          <a class="btn btn--ghost" href="/info">Info pro návštěvníky</a>
-        </div>
-      </div>
-      <div class="hero__panel">
-        <div class="panel">
-          <div class="panel__title">Kategorie</div>
-          <ul class="list">
-            <li>U11 · ročník 2015 · Sokol HK</li>
-            <li>U12 · ročník 2014 · GAPA aréna</li>
-            <li>U13 · ročník 2013 · Sokol HK</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
-</Layout>
+<IndexPage lang="cs" />

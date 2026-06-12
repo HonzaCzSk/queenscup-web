@@ -66,3 +66,41 @@
   overflow: visible !important;
   border-radius: 0 !important;
 }
+
+/* ── EU Co-funding Footer badge ── */
+.footer__left-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.eu-funding {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eu-logo {
+  height: 16px;
+  width: auto;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 1px;
+}
+
+[data-theme="dark"] .eu-logo {
+  border-color: rgba(255,255,255,0.15);
+}
+
+.eu-text {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .footer__left-wrap {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}

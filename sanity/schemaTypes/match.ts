@@ -74,6 +74,19 @@ export default defineType({
       type: 'number',
     }),
     defineField({
+      name: 'status',
+      title: 'Stav zápasu',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Naplánováno', value: 'scheduled'},
+          {title: 'Běží (Live)', value: 'live'},
+          {title: 'Konec', value: 'finished'},
+        ],
+      },
+      initialValue: 'scheduled',
+    }),
+    defineField({
       name: 'matchType',
       title: 'Typ zápasu',
       type: 'string',

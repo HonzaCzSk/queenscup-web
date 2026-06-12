@@ -7,7 +7,7 @@ Oficiální web mezinárodního minibasketbalového turnaje **Queens Cup** konan
 Queens Cup je mezinárodní turnaj v minibasketbalu pro dívky ve třech kategoriích:
 
 | Kategorie | Ročník narození | Hala |
-|-----------|----------------|------|
+| ----------- | ---------------- | ------ |
 | U11 | 2015 | Sokol HK |
 | U12 | 2014 | GAPA aréna |
 | U13 | 2013 | Sokol HK |
@@ -18,7 +18,7 @@ Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších zemí
 ## Technologie
 
 - **[Astro](https://astro.build/)** – statický site builder
-- **[Tailwind CSS](https://tailwindcss.com/)** – utility-first CSS framework
+- **Vlastní CSS** – design převzatý z MČR webů (base, dark, screen, print)
 - **[Sanity.io](https://www.sanity.io/)** – headless CMS pro správu obsahu
 - **[Vercel](https://vercel.com/)** – hosting a automatický deployment
 
@@ -36,6 +36,7 @@ Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších zemí
 ## Lokální spuštění
 
 ### Požadavky
+
 - Node.js 18+
 - npm
 
@@ -60,8 +61,7 @@ Studio běží na `http://localhost:3333`
 
 ## Struktura projektu
 
-```
-queenscup-web/
+```queenscup-web/
 ├── src/
 │   ├── pages/        # stránky webu (cs/en/pl)
 │   ├── components/   # znovupoužitelné komponenty
@@ -83,4 +83,4 @@ Hradecké lvice / Queens Cup organizační tým
 
 ---
 
-*Spolufinancováno s podporou EU*
+### Spolufinancováno s podporou EU

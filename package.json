@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "queenscup-web",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -12,7 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.0",
+    "@sanity/client": "^7.22.1",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^6.4.4",
     "tailwindcss": "^4.3.0"
   }

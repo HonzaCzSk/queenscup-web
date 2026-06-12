@@ -1,6 +1,7 @@
 ---
 import { t, getLang } from '../i18n/index'
 import type { Lang } from '../i18n/index'
+import { getPartners } from '../lib/queries'
 
 interface Props {
   title: string
@@ -12,7 +13,7 @@ interface Props {
 
 const {
   title,
-  description = 'Mezinárodní minibasketbalový turnaj dívek – Hradec Králové',
+  description = 'Mezinárodní minibasketbalový turnaj – Hradec Králové',
   lang = 'cs',
   activePage = '',
   activeCategory = 'u11',
@@ -26,6 +27,12 @@ const langUrls: Record<Lang, string> = {
   en: '/en' + Astro.url.pathname.replace(/^\/(en|pl)/, ''),
   pl: '/pl' + Astro.url.pathname.replace(/^\/(en|pl)/, ''),
 }
+
+const partners = await getPartners()
+const generalPartners = partners.filter((p: any) => p.level === 'general')
+const mainPartners = partners.filter((p: any) => p.level === 'main')
+const regularPartners = partners.filter((p: any) => p.level === 'partner')
+const mediaPartners = partners.filter((p: any) => p.level === 'media')
 ---
 
 <!doctype html>
@@ -150,11 +157,76 @@ const langUrls: Record<Lang, string> = {
   <footer class="footer">
     <div class="wrap footer__wrap">
       <div class="partners">
-        <div class="partners__title">Partneři turnaje</div>
-        <slot name="partners" />
+        <div class="partners__title">{tr.home.partners_title}</div>
+
+        {generalPartners.length > 0 && (
+          <div>
+            <div class="partners__general-label">
+              {lang === 'cs' ? 'Generální partner' : lang === 'pl' ? 'Partner generalny' : 'General Partner'}
+            </div>
+            <div class="partners__general">
+              {generalPartners.map((p: any) => (
+                <a href={p.url ?? '#'} class="partner" target="_blank" rel="noopener" title={p.name}>
+                  {p.logo ? <img src={p.logo} alt={p.name} /> : <span>{p.name}</span>}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {mainPartners.length > 0 && (
+          <div>
+            <div class="partners__section-label">
+              {lang === 'cs' ? 'Hlavní partneři' : lang === 'pl' ? 'Partnerzy główni' : 'Main Partners'}
+            </div>
+            <div class="partners__row">
+              {mainPartners.map((p: any) => (
+                <a href={p.url ?? '#'} class="partner partner--main" target="_blank" rel="noopener" title={p.name}>
+                  {p.logo ? <img src={p.logo} alt={p.name} /> : <span>{p.name}</span>}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {regularPartners.length > 0 && (
+          <div>
+            <div class="partners__section-label">
+              {lang === 'cs' ? 'Partneři' : lang === 'pl' ? 'Partnerzy' : 'Partners'}
+            </div>
+            <div class="partners__row">
+              {regularPartners.map((p: any) => (
+                <a href={p.url ?? '#'} class="partner" target="_blank" rel="noopener" title={p.name}>
+                  {p.logo ? <img src={p.logo} alt={p.name} /> : <span>{p.name}</span>}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {mediaPartners.length > 0 && (
+          <div>
+            <div class="partners__section-label">
+              {lang === 'cs' ? 'Mediální partneři' : lang === 'pl' ? 'Partnerzy medialni' : 'Media Partners'}
+            </div>
+            <div class="partners__row">
+              {mediaPartners.map((p: any) => (
+                <a href={p.url ?? '#'} class="partner" target="_blank" rel="noopener" title={p.name}>
+                  {p.logo ? <img src={p.logo} alt={p.name} /> : <span>{p.name}</span>}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div class="footer__bar">
-        <div class="footer__left">{tr.footer.rights}</div>
+        <div class="footer__left-wrap">
+          <div class="footer__left">{tr.footer.rights}</div>
+          <div class="eu-funding">
+            <img src="/assets/eu-logo.svg" alt="EU Flag" class="eu-logo" />
+            <span class="eu-text">{tr.footer.eu_funding}</span>
+          </div>
+        </div>
         <div class="socialbar" aria-label="Sociální sítě">
           <a class="socialbtn" href="https://www.instagram.com/queens_cup_hk/" target="_blank" rel="noopener" aria-label="Instagram">
             <img src="/assets/social/instagram.svg" alt="Instagram" />
@@ -177,6 +249,12 @@ const langUrls: Record<Lang, string> = {
   <script is:inline src="/assets/js/theme.js"></script>
   <script is:inline src="/assets/js/menu.js"></script>
   <script is:inline src="/assets/js/preferences.js"></script>
+
+  <!-- Vercel Analytics -->
+  <script>
+    import { inject } from '@vercel/analytics'
+    inject()
+  </script>
 
 </body>
 </html>

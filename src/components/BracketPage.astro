@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/global.css'
+import { getMatches } from '../lib/queries'
+import { t, getLang } from '../i18n/index'
+
+interface Props {
+  lang: string
+}
+
+const { lang } = Astro.props
+const locale = getLang(lang)
+const tr = t(locale)
+
+const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+
+const matches = await getMatches(cat)
+
+// Filter playoff matches
+const playoffMatches = matches.filter((m: any) =>
+  ['qf', 'sf', 'third', 'final'].includes(m.matchType)
+)
+
+const qfMatches = playoffMatches.filter((m: any) => m.matchType === 'qf')
+const sfMatches = playoffMatches.filter((m: any) => m.matchType === 'sf')
+const finalMatches = playoffMatches.filter((m: any) => m.matchType === 'final')
+const thirdMatches = playoffMatches.filter((m: any) => m.matchType === 'third')
+
+const hasQF = qfMatches.length > 0
+const hasPlayoffs = playoffMatches.length > 0
+
+const catLabels: Record<string, string> = {
+  cs: {
+    u11: 'U11 · ročník 2015 · Sokol HK',
+    u12: 'U12 · ročník 2014 · GAPA aréna',
+    u13: 'U13 · ročník 2013 · Sokol HK',
+  },
+  en: {
+    u11: 'U11 · born 2015 · Sokol HK',
+    u12: 'U12 · born 2014 · GAPA Arena',
+    u13: 'U13 · born 2013 · Sokol HK',
+  },
+  pl: {
+    u11: 'U11 · rocznik 2015 · Sokol HK',
+    u12: 'U12 · rocznik 2014 · GAPA Arena',
+    u13: 'U13 · rocznik 2013 · Sokol HK',
+  }
+}[locale]
+
+function formatTime(datetime: string) {
+  if (!datetime) return '—'
+  return new Date(datetime).toLocaleTimeString(locale === 'cs' ? 'cs-CZ' : locale === 'pl' ? 'pl-PL' : 'en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
+}
+
+function isPlayed(m: any) {
+  return m.scoreA !== undefined && m.scoreA !== null && m.scoreB !== undefined && m.scoreB !== null
+}
+---
+
+<Layout title={tr.bracket.title} activePage="bracket" activeCategory={cat} lang={lang}>
+  <main class="wrap">
+    <section class="pagehead">
+      <h1 class="h1">{tr.bracket.title}</h1>
+      <p class="lead">{catLabels[cat]}</p>
+    </section>
+
+    {!hasPlayoffs ? (
+      <div class="card" style="text-align: center; padding: 40px 20px;">
+        <p class="muted">{tr.bracket.no_bracket}</p>
+      </div>
+    ) : (
+      <div id="playoff-section" class="card" style="padding: 24px; border-radius: 18px; margin-bottom: 24px;">
+        <div class="playoff-grid" style={!hasQF ? "grid-template-columns: repeat(2, minmax(220px, 1fr));" : ""}>
+          
+          <!-- Čtvrtfinále -->
+          {hasQF && (
+            <div class="round round-qf">
+              <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
+                {lang === 'cs' ? 'Čtvrtfinále' : lang === 'pl' ? 'Ćwierćfinał' : 'Quarterfinals'}
+              </h3>
+              {qfMatches.map((m: any) => {
+                const played = isPlayed(m)
+                const isWinnerA = played && m.scoreA > m.scoreB
+                const isWinnerB = played && m.scoreB > m.scoreA
+                return (
+                  <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
+                    <div class="teamline">
+                      <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
+                    </div>
+                    <div class="teamline">
+                      <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
+                    </div>
+                    <div class="score">
+                      {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+
+          <!-- Semifinále -->
+          <div class="round round-sf" style={!hasQF ? "grid-column: 1; grid-row: 1 / span 2;" : ""}>
+            <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
+              {tr.bracket.semis}
+            </h3>
+            {sfMatches.map((m: any) => {
+              const played = isPlayed(m)
+              const isWinnerA = played && m.scoreA > m.scoreB
+              const isWinnerB = played && m.scoreB > m.scoreA
+              return (
+                <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
+                  <div class="teamline">
+                    <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
+                  </div>
+                  <div class="teamline">
+                    <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
+                  </div>
+                  <div class="score">
+                    {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <!-- Finále & O 3. místo -->
+          <div class="round round-f" style={!hasQF ? "grid-column: 2; grid-row: 1 / span 2; gap: 24px;" : "gap: 24px;"}>
+            <!-- Finále -->
+            <div>
+              <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
+                {tr.bracket.final}
+              </h3>
+              {finalMatches.map((m: any) => {
+                const played = isPlayed(m)
+                const isWinnerA = played && m.scoreA > m.scoreB
+                const isWinnerB = played && m.scoreB > m.scoreA
+                return (
+                  <div class={`game ${played ? 'game-played' : 'game-upcoming'}`} style="border-color: var(--accent);">
+                    <div class="teamline">
+                      <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
+                    </div>
+                    <div class="teamline">
+                      <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
+                    </div>
+                    <div class="score">
+                      {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+
+            <!-- O 3. místo -->
+            {thirdMatches.length > 0 && (
+              <div>
+                <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px; margin-top: 16px;">
+                  {tr.bracket.third}
+                </h3>
+                {thirdMatches.map((m: any) => {
+                  const played = isPlayed(m)
+                  const isWinnerA = played && m.scoreA > m.scoreB
+                  const isWinnerB = played && m.scoreB > m.scoreA
+                  return (
+                    <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
+                      <div class="teamline">
+                        <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
+                      </div>
+                      <div class="teamline">
+                        <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
+                      </div>
+                      <div class="score">
+                        {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+
+        </div>
+      </div>
+    )}
+  </main>
+</Layout>
