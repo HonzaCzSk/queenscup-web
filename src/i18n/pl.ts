@@ -1,4 +1,5 @@
 export const pl = {
+  construction_notice: 'Ta strona jest obecnie w budowie. Dane turniejowe, składy i harmonogramy są w trakcie przygotowywania.',
   nav: {
     home: 'Strona główna',
     schedule: 'Harmonogram',
@@ -85,8 +86,8 @@ export const pl = {
     venues: 'Adresy hal',
     map_link: 'Pokaż na mapie',
     organizer_club: 'Klub Hradecké lvice',
-    accommodation_contact: 'Zakwaterowanie i logistyka',
-    results_contact: 'Serwis wyników i strona internetowa',
+    accommodation_contact: 'Pořadatel turnieje',
+    results_contact: 'Administracja webu',
   },
   photos: {
     title: 'Galeria zdjęć',

@@ -1,5 +1,10 @@
 ---
-import SchedulePage from '../components/SchedulePage.astro'
+import SchedulePage from "../components/SchedulePage.astro";
+
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+    | "u11"
+    | "u12"
+    | "u13";
 ---
 
-<SchedulePage lang="cs" />
+<SchedulePage lang="cs" cat={cat} />

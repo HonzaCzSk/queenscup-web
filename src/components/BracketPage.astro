@@ -6,58 +6,59 @@ import { t, getLang } from '../i18n/index'
 
 interface Props {
   lang: string
+  cat: 'u11' | 'u12' | 'u13'
 }
 
-const { lang } = Astro.props
+const { lang, cat } = Astro.props
 const locale = getLang(lang)
 const tr = t(locale)
 
-const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
-
 const matches = await getMatches(cat)
 
-// Filter playoff matches
-const playoffMatches = matches.filter((m: any) =>
-  ['qf', 'sf', 'third', 'final'].includes(m.matchType)
-)
+const qfMatches = matches.filter((m: any) => m.matchType === 'qf')
+const finalMatch = matches.find((m: any) => m.matchType === 'final')
+const thirdMatch = matches.find((m: any) => m.matchType === 'third')
+const fifthMatch = matches.find((m: any) => m.matchType === 'fifth')
+const seventhMatch = matches.find((m: any) => m.matchType === 'seventh')
+const ninthMatch = matches.find((m: any) => m.matchType === 'ninth')
 
-const qfMatches = playoffMatches.filter((m: any) => m.matchType === 'qf')
-const sfMatches = playoffMatches.filter((m: any) => m.matchType === 'sf')
-const finalMatches = playoffMatches.filter((m: any) => m.matchType === 'final')
-const thirdMatches = playoffMatches.filter((m: any) => m.matchType === 'third')
+const hasAny = qfMatches.length > 0 || finalMatch || thirdMatch
 
-const hasQF = qfMatches.length > 0
-const hasPlayoffs = playoffMatches.length > 0
-
-const catLabels: Record<string, string> = {
+const catLabels: Record<string, Record<string, string>> = {
   cs: {
-    u11: 'U11 · ročník 2015 · Sokol HK',
-    u12: 'U12 · ročník 2014 · GAPA aréna',
-    u13: 'U13 · ročník 2013 · Sokol HK',
+    u11: 'U11 · Sokol HK',
+    u12: 'U12 · GAPA aréna',
+    u13: 'U13 · Sokol HK',
   },
   en: {
-    u11: 'U11 · born 2015 · Sokol HK',
-    u12: 'U12 · born 2014 · GAPA Arena',
-    u13: 'U13 · born 2013 · Sokol HK',
+    u11: 'U11 · Sokol HK',
+    u12: 'U12 · GAPA Arena',
+    u13: 'U13 · Sokol HK',
   },
   pl: {
-    u11: 'U11 · rocznik 2015 · Sokol HK',
-    u12: 'U12 · rocznik 2014 · GAPA Arena',
-    u13: 'U13 · rocznik 2013 · Sokol HK',
-  }
-}[locale]
+    u11: 'U11 · Sokol HK',
+    u12: 'U12 · GAPA Arena',
+    u13: 'U13 · Sokol HK',
+  },
+}
 
 function formatTime(datetime: string) {
   if (!datetime) return '—'
-  return new Date(datetime).toLocaleTimeString(locale === 'cs' ? 'cs-CZ' : locale === 'pl' ? 'pl-PL' : 'en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
+  return new Date(datetime).toLocaleTimeString('cs-CZ', {
+    hour: '2-digit', minute: '2-digit', hour12: false,
   })
 }
 
 function isPlayed(m: any) {
-  return m.scoreA !== undefined && m.scoreA !== null && m.scoreB !== undefined && m.scoreB !== null
+  return m?.scoreA != null && m?.scoreB != null
+}
+
+function winnerA(m: any) {
+  return isPlayed(m) && m.scoreA > m.scoreB
+}
+
+function winnerB(m: any) {
+  return isPlayed(m) && m.scoreB > m.scoreA
 }
 ---
 
@@ -65,125 +66,140 @@ function isPlayed(m: any) {
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.bracket.title}</h1>
-      <p class="lead">{catLabels[cat]}</p>
+      <p class="lead">{catLabels[locale][cat]}</p>
     </section>
 
-    {!hasPlayoffs ? (
+    {!hasAny ? (
       <div class="card" style="text-align: center; padding: 40px 20px;">
         <p class="muted">{tr.bracket.no_bracket}</p>
       </div>
     ) : (
-      <div id="playoff-section" class="card" style="padding: 24px; border-radius: 18px; margin-bottom: 24px;">
-        <div class="playoff-grid" style={!hasQF ? "grid-template-columns: repeat(2, minmax(220px, 1fr));" : ""}>
-          
-          <!-- Čtvrtfinále -->
-          {hasQF && (
-            <div class="round round-qf">
-              <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
-                {lang === 'cs' ? 'Čtvrtfinále' : lang === 'pl' ? 'Ćwierćfinał' : 'Quarterfinals'}
-              </h3>
-              {qfMatches.map((m: any) => {
-                const played = isPlayed(m)
-                const isWinnerA = played && m.scoreA > m.scoreB
-                const isWinnerB = played && m.scoreB > m.scoreA
-                return (
-                  <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
-                    <div class="teamline">
-                      <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
-                    </div>
-                    <div class="teamline">
-                      <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
-                    </div>
-                    <div class="score">
-                      {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          )}
+      <div class="bracket-wrap">
 
-          <!-- Semifinále -->
-          <div class="round round-sf" style={!hasQF ? "grid-column: 1; grid-row: 1 / span 2;" : ""}>
-            <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
-              {tr.bracket.semis}
-            </h3>
-            {sfMatches.map((m: any) => {
-              const played = isPlayed(m)
-              const isWinnerA = played && m.scoreA > m.scoreB
-              const isWinnerB = played && m.scoreB > m.scoreA
-              return (
-                <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
-                  <div class="teamline">
-                    <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
-                  </div>
-                  <div class="teamline">
-                    <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
-                  </div>
-                  <div class="score">
-                    {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
+        <!-- ČTVRTFINÁLE -->
+        <div class="bracket-section">
+          <div class="bracket-section__title">
+            {lang === 'cs' ? 'Čtvrtfinále' : lang === 'pl' ? 'Ćwierćfinał' : 'Quarter-finals'}
+          </div>
+          <div class="bracket-qf-grid">
+            {qfMatches.map((m: any) => (
+              <div class={`bk-game ${isPlayed(m) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                <div class={`bk-team ${winnerA(m) ? 'bk-team--winner' : ''}`}>
+                  <span class="bk-team__name">{m.teamA?.name ?? '?'}</span>
+                  {isPlayed(m) && <span class="bk-team__score">{m.scoreA}</span>}
+                </div>
+                <div class={`bk-team ${winnerB(m) ? 'bk-team--winner' : ''}`}>
+                  <span class="bk-team__name">{m.teamB?.name ?? '?'}</span>
+                  {isPlayed(m) && <span class="bk-team__score">{m.scoreB}</span>}
+                </div>
+                {!isPlayed(m) && (
+                  <div class="bk-game__time">{formatTime(m.datetime)}</div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- ZÁPASY O UMÍSTĚNÍ -->
+        <div class="bracket-section">
+          <div class="bracket-section__title">
+            {lang === 'cs' ? 'Zápasy o umístění' : lang === 'pl' ? 'Mecze o miejsca' : 'Placement Matches'}
+          </div>
+          <div class="bracket-placement-grid">
+
+            <!-- Řada 1: Finále + O 3. místo -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              {finalMatch && (
+                <div>
+                  <div class="bk-placement__label">🏆 {tr.bracket.final}</div>
+                  <div class={`bk-game bk-game--final ${isPlayed(finalMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                    <div class={`bk-team ${winnerA(finalMatch) ? 'bk-team--winner bk-team--gold' : ''}`}>
+                      <span class="bk-team__name">{finalMatch.teamA?.name ?? '—'}</span>
+                      {isPlayed(finalMatch) && <span class="bk-team__score">{finalMatch.scoreA}</span>}
+                    </div>
+                    <div class={`bk-team ${winnerB(finalMatch) ? 'bk-team--winner bk-team--gold' : ''}`}>
+                      <span class="bk-team__name">{finalMatch.teamB?.name ?? '—'}</span>
+                      {isPlayed(finalMatch) && <span class="bk-team__score">{finalMatch.scoreB}</span>}
+                    </div>
+                    {!isPlayed(finalMatch) && <div class="bk-game__time">{formatTime(finalMatch.datetime)}</div>}
                   </div>
                 </div>
-              )
-            })}
-          </div>
-
-          <!-- Finále & O 3. místo -->
-          <div class="round round-f" style={!hasQF ? "grid-column: 2; grid-row: 1 / span 2; gap: 24px;" : "gap: 24px;"}>
-            <!-- Finále -->
-            <div>
-              <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px;">
-                {tr.bracket.final}
-              </h3>
-              {finalMatches.map((m: any) => {
-                const played = isPlayed(m)
-                const isWinnerA = played && m.scoreA > m.scoreB
-                const isWinnerB = played && m.scoreB > m.scoreA
-                return (
-                  <div class={`game ${played ? 'game-played' : 'game-upcoming'}`} style="border-color: var(--accent);">
-                    <div class="teamline">
-                      <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
+              )}
+              {thirdMatch && (
+                <div class="bk-placement--third">
+                  <div class="bk-placement__label">🥉 {tr.bracket.third}</div>
+                  <div class={`bk-game ${isPlayed(thirdMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                    <div class={`bk-team ${winnerA(thirdMatch) ? 'bk-team--winner bk-team--bronze' : ''}`}>
+                      <span class="bk-team__name">{thirdMatch.teamA?.name ?? '—'}</span>
+                      {isPlayed(thirdMatch) && <span class="bk-team__score">{thirdMatch.scoreA}</span>}
                     </div>
-                    <div class="teamline">
-                      <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
+                    <div class={`bk-team ${winnerB(thirdMatch) ? 'bk-team--winner bk-team--bronze' : ''}`}>
+                      <span class="bk-team__name">{thirdMatch.teamB?.name ?? '—'}</span>
+                      {isPlayed(thirdMatch) && <span class="bk-team__score">{thirdMatch.scoreB}</span>}
                     </div>
-                    <div class="score">
-                      {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
-                    </div>
+                    {!isPlayed(thirdMatch) && <div class="bk-game__time">{formatTime(thirdMatch.datetime)}</div>}
                   </div>
-                )
-              })}
+                </div>
+              )}
             </div>
 
-            <!-- O 3. místo -->
-            {thirdMatches.length > 0 && (
-              <div>
-                <h3 class="h3" style="font-size: 12px; font-weight: 900; letter-spacing: .12em; margin-bottom: 12px; margin-top: 16px;">
-                  {tr.bracket.third}
-                </h3>
-                {thirdMatches.map((m: any) => {
-                  const played = isPlayed(m)
-                  const isWinnerA = played && m.scoreA > m.scoreB
-                  const isWinnerB = played && m.scoreB > m.scoreA
-                  return (
-                    <div class={`game ${played ? 'game-played' : 'game-upcoming'}`}>
-                      <div class="teamline">
-                        <span class={`teamname ${isWinnerA ? 'winner' : ''}`}>{m.teamA?.name ?? '?'}</span>
-                      </div>
-                      <div class="teamline">
-                        <span class={`teamname ${isWinnerB ? 'winner' : ''}`}>{m.teamB?.name ?? '?'}</span>
-                      </div>
-                      <div class="score">
-                        {played ? `${m.scoreA}:${m.scoreB}` : formatTime(m.datetime)}
-                      </div>
+            <!-- Řada 2: O 5. + O 7. místo -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              {fifthMatch && (
+                <div>
+                  <div class="bk-placement__label">O 5. místo</div>
+                  <div class={`bk-game ${isPlayed(fifthMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                    <div class={`bk-team ${winnerA(fifthMatch) ? 'bk-team--winner' : ''}`}>
+                      <span class="bk-team__name">{fifthMatch.teamA?.name ?? '—'}</span>
+                      {isPlayed(fifthMatch) && <span class="bk-team__score">{fifthMatch.scoreA}</span>}
                     </div>
-                  )
-                })}
+                    <div class={`bk-team ${winnerB(fifthMatch) ? 'bk-team--winner' : ''}`}>
+                      <span class="bk-team__name">{fifthMatch.teamB?.name ?? '—'}</span>
+                      {isPlayed(fifthMatch) && <span class="bk-team__score">{fifthMatch.scoreB}</span>}
+                    </div>
+                    {!isPlayed(fifthMatch) && <div class="bk-game__time">{formatTime(fifthMatch.datetime)}</div>}
+                  </div>
+                </div>
+              )}
+              {seventhMatch && (
+                <div>
+                  <div class="bk-placement__label">O 7. místo</div>
+                  <div class={`bk-game ${isPlayed(seventhMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                    <div class={`bk-team ${winnerA(seventhMatch) ? 'bk-team--winner' : ''}`}>
+                      <span class="bk-team__name">{seventhMatch.teamA?.name ?? '—'}</span>
+                      {isPlayed(seventhMatch) && <span class="bk-team__score">{seventhMatch.scoreA}</span>}
+                    </div>
+                    <div class={`bk-team ${winnerB(seventhMatch) ? 'bk-team--winner' : ''}`}>
+                      <span class="bk-team__name">{seventhMatch.teamB?.name ?? '—'}</span>
+                      {isPlayed(seventhMatch) && <span class="bk-team__score">{seventhMatch.scoreB}</span>}
+                    </div>
+                    {!isPlayed(seventhMatch) && <div class="bk-game__time">{formatTime(seventhMatch.datetime)}</div>}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <!-- Řada 3: O 9. místo -->
+            {ninthMatch && (
+              <div style="max-width: 50%; padding-right: 5px;">
+                <div class="bk-placement__label">O 9. místo</div>
+                <div class={`bk-game ${isPlayed(ninthMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
+                  <div class={`bk-team ${winnerA(ninthMatch) ? 'bk-team--winner' : ''}`}>
+                    <span class="bk-team__name">{ninthMatch.teamA?.name ?? '—'}</span>
+                    {isPlayed(ninthMatch) && <span class="bk-team__score">{ninthMatch.scoreA}</span>}
+                  </div>
+                  <div class={`bk-team ${winnerB(ninthMatch) ? 'bk-team--winner' : ''}`}>
+                    <span class="bk-team__name">{ninthMatch.teamB?.name ?? '—'}</span>
+                    {isPlayed(ninthMatch) && <span class="bk-team__score">{ninthMatch.scoreB}</span>}
+                  </div>
+                  {!isPlayed(ninthMatch) && <div class="bk-game__time">{formatTime(ninthMatch.datetime)}</div>}
+                </div>
               </div>
             )}
-          </div>
 
+          </div>
         </div>
+
       </div>
     )}
   </main>

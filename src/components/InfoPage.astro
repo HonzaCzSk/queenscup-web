@@ -1,60 +1,80 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
-import { t, getLang } from '../i18n/index'
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import { t, getLang } from "../i18n/index";
 
 interface Props {
-  lang: string
+  lang: string;
 }
 
-const { lang } = Astro.props
-const locale = getLang(lang)
-const tr = t(locale)
+const { lang } = Astro.props;
+const locale = getLang(lang);
+const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+  | "u11"
+  | "u12"
+  | "u13";
 
 const venuesText = {
   cs: [
-    'Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové',
-    'GAPA aréna (U12) – Březhradská 148, Hradec Králové',
-    'Obě haly mají k dispozici parkoviště a občerstvení.'
+    "Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové",
+    "GAPA aréna (U12) – Na potoce 691/30, Hradec Králové",
+    "Obě haly mají k dispozici parkoviště a občerstvení.",
   ],
   en: [
-    'Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové',
-    'GAPA Arena (U12) – Březhradská 148, Hradec Králové',
-    'Both sports halls feature parking and buffet options.'
+    "Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové",
+    "GAPA Arena (U12) – Na potoce 691/30, Hradec Králové",
+    "Both sports halls feature parking and buffet options.",
   ],
   pl: [
-    'Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové',
-    'GAPA Arena (U12) – Březhradská 148, Hradec Králové',
-    'Oba obiekty posiadają parkingi oraz bufety.'
-  ]
-}[locale]
+    "Sokol HK (U11, U13) – Eliščino nábřeží 777, Hradec Králové",
+    "GAPA Arena (U12) – Na potoce 691/30, Hradec Králové",
+    "Oba obiekty posiadają parkingi oraz bufety.",
+  ],
+}[locale];
 ---
 
-<Layout title={tr.info.title} activePage="info" activeCategory={cat} lang={lang}>
+<Layout
+  title={tr.info.title}
+  activePage="info"
+  activeCategory={cat}
+  lang={lang}
+>
   <main class="wrap page-info">
     <section class="pagehead">
       <h1 class="h1">{tr.info.title}</h1>
       <p class="lead">
-        {lang === 'cs' ? 'Důležité organizační informace a pokyny pro týmy a návštěvníky turnaje.' : lang === 'pl' ? 'Ważne informacje organizacyjne i wskazówki dla drużyn oraz gości turnieju.' : 'Important organizational information and guidelines for teams and tournament visitors.'}
+        {
+          lang === "cs"
+            ? "Důležité organizační informace a pokyny pro týmy a návštěvníky turnaje."
+            : lang === "pl"
+              ? "Ważne informacje organizacyjne i wskazówki dla drużyn oraz gości turnieju."
+              : "Important organizational information and guidelines for teams and tournament visitors."
+        }
       </p>
     </section>
 
-    <div id="info-cards" class="grid" style="grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 24px; margin-bottom: 30px;">
-      
+    <div
+      id="info-cards"
+      class="grid"
+      style="grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 24px; margin-bottom: 30px;"
+    >
       <!-- Vstupné (Highlighted Card) -->
       <div class="card card--accent">
         <h2 class="h2">
           {tr.info.tickets}
-          <span class="badge" style="background: rgba(255,59,48,.15); border-color: rgba(255,59,48,.35); color: var(--accent);">
-            {lang === 'cs' ? 'Zdarma' : lang === 'pl' ? 'Bezpłatnie' : 'Free'}
+          <span
+            class="badge"
+            style="background: rgba(255,59,48,.15); border-color: rgba(255,59,48,.35); color: var(--accent);"
+          >
+            {lang === "cs" ? "Zdarma" : lang === "pl" ? "Bezpłatnie" : "Free"}
           </span>
         </h2>
         <p class="muted">{tr.info.tickets_desc}</p>
       </div>
 
-      <!-- Ubytování -->
+      <!-- Ubytování 
       <div class="card">
         <h2 class="h2">
           {tr.info.accommodation}
@@ -62,43 +82,56 @@ const venuesText = {
         </h2>
         <p class="muted">{tr.info.accommodation_desc}</p>
       </div>
+      -->
 
-      <!-- Stravování -->
+      <!-- Stravování 
       <div class="card">
         <h2 class="h2">{tr.info.catering}</h2>
         <p class="muted">{tr.info.catering_desc}</p>
       </div>
+      -->
 
       <!-- Haly a doprava -->
       <div class="card">
         <h2 class="h2">{tr.info.venues}</h2>
         <p class="muted">{tr.info.venues_desc}</p>
         <ul style="margin-top: 12px; font-size: 13px; font-weight: 600;">
-          {venuesText.map(t => (
-            <li style="margin: 4px 0;">{t}</li>
-          ))}
+          {venuesText.map((t) => <li style="margin: 4px 0;">{t}</li>)}
         </ul>
       </div>
 
-      <!-- Ke stažení -->
+      <!-- Ke stažení
       <div class="card" style="grid-column: 1 / -1;">
         <h2 class="h2">{tr.info.downloads}</h2>
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: 12px;">
+        <div
+          style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: 12px;"
+        >
           <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,59,48,.1); border: 1px solid rgba(255,59,48,.2); display: flex; align-items: center; justify-content: center; font-weight: 950; color: var(--accent);">
+            <div
+              style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,59,48,.1); border: 1px solid rgba(255,59,48,.2); display: flex; align-items: center; justify-content: center; font-weight: 950; color: var(--accent);"
+            >
               PDF
             </div>
             <div>
-              <div style="font-weight: 800; font-size: 14px;">{tr.info.poster}</div>
-              <div class="muted" style="font-size: 12px; margin: 0;">Queens Cup 2026 Poster</div>
+              <div style="font-weight: 800; font-size: 14px;">
+                {tr.info.poster}
+              </div>
+              <div class="muted" style="font-size: 12px; margin: 0;">
+                Queens Cup 2026 Poster
+              </div>
             </div>
           </div>
-          <a href="/assets/plakat-2026.pdf" class="btn btn--ghost" download style="padding: 8px 16px;">
+          <a
+            href="/assets/plakat-2026.pdf"
+            class="btn btn--ghost"
+            download
+            style="padding: 8px 16px;"
+          >
             {tr.info.download_btn}
           </a>
         </div>
       </div>
-
+      -->
     </div>
   </main>
 </Layout>

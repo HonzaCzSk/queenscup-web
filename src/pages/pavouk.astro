@@ -1,5 +1,10 @@
 ---
-import BracketPage from '../components/BracketPage.astro'
+import BracketPage from "../components/BracketPage.astro";
+
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+    | "u11"
+    | "u12"
+    | "u13";
 ---
 
-<BracketPage lang="cs" />
+<BracketPage lang="cs" cat={cat} />

@@ -1,55 +1,60 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
-import { getTeams } from '../lib/queries'
-import { t, getLang } from '../i18n/index'
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import { getTeams } from "../lib/queries";
+import { t, getLang } from "../i18n/index";
 
 interface Props {
-  lang: string
+  lang: string;
+  cat: "u11" | "u12" | "u13";
 }
 
-const { lang } = Astro.props
-const locale = getLang(lang)
-const tr = t(locale)
+const { lang, cat } = Astro.props;
+const locale = getLang(lang);
+const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
-
-const teams = await getTeams(cat)
+const teams = await getTeams(cat);
 
 const countryFlags: Record<string, string> = {
-  CZ: '🇨🇿 CZ',
-  PL: '🇵🇱 PL',
-  SK: '🇸🇰 SK',
-  DE: '🇩🇪 DE',
-  OTHER: '🌍',
-}
+  CZ: "cz",
+  PL: "pl",
+  SK: "sk",
+  HU: "hu",
+  DE: "de",
+  OTHER: "",
+};
 
 const venues: Record<string, string> = {
-  cs: { sokol: 'Sokol HK', gapa: 'GAPA aréna' },
-  en: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
-  pl: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
-}[locale]
+  cs: { sokol: "Sokol HK", gapa: "GAPA aréna" },
+  en: { sokol: "Sokol HK", gapa: "GAPA Arena" },
+  pl: { sokol: "Sokol HK", gapa: "GAPA Arena" },
+}[locale];
 
 const catLabels: Record<string, string> = {
   cs: {
-    u11: 'U11 · ročník 2015 · Sokol HK',
-    u12: 'U12 · ročník 2014 · GAPA aréna',
-    u13: 'U13 · ročník 2013 · Sokol HK',
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA aréna",
+    u13: "U13 · Sokol HK",
   },
   en: {
-    u11: 'U11 · born 2015 · Sokol HK',
-    u12: 'U12 · born 2014 · GAPA Arena',
-    u13: 'U13 · born 2013 · Sokol HK',
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA Arena",
+    u13: "U13 · Sokol HK",
   },
   pl: {
-    u11: 'U11 · rocznik 2015 · Sokol HK',
-    u12: 'U12 · rocznik 2014 · GAPA Arena',
-    u13: 'U13 · rocznik 2013 · Sokol HK',
-  }
-}[locale]
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA Arena",
+    u13: "U13 · Sokol HK",
+  },
+}[locale];
 ---
 
-<Layout title={tr.teams.title} activePage="teams" activeCategory={cat} lang={lang}>
+<Layout
+  title={tr.teams.title}
+  activePage="teams"
+  activeCategory={cat}
+  lang={lang}
+>
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.teams.title}</h1>
@@ -67,111 +72,143 @@ const catLabels: Record<string, string> = {
       />
     </div>
 
-    {teams.length === 0 ? (
-      <div class="card" style="text-align: center; padding: 40px 20px;">
-        <p class="muted">{tr.teams.no_teams}</p>
-      </div>
-    ) : (
-      <div class="stack" id="teamsList">
-        {teams.map((t: any) => (
-          <div class="team" data-name={t.name.toLowerCase()}>
-            <button class="team__head" aria-expanded="false" type="button">
-              <div style="display: flex; align-items: center; gap: 14px; width: 100%;">
-                <div class="teamlogo">
-                  {t.logo ? (
-                    <img src={t.logo} alt={t.name} style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;" />
-                  ) : (
-                    <span class="teamlogo--ph">{t.name.substring(0, 2).toUpperCase()}</span>
-                  )}
-                </div>
-                <div style="flex: 1;">
-                  <h2 class="h2" style="margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 800;">
-                    {t.name}
-                  </h2>
-                  <div class="team-meta" style="margin-top: 4px;">
-                    {t.country && (
-                      <span class="pill">{countryFlags[t.country] ?? t.country}</span>
-                    )}
-                    {t.venue && (
-                      <span class="pill muted">{tr.teams.venue}: {venues[t.venue] ?? t.venue}</span>
-                    )}
-                    {t.coach && (
-                      <span class="pill muted">{tr.teams.coach}: {t.coach}</span>
+    {
+      teams.length === 0 ? (
+        <div class="card" style="text-align: center; padding: 40px 20px;">
+          <p class="muted">{tr.teams.no_teams}</p>
+        </div>
+      ) : (
+        <div class="stack" id="teamsList">
+          {teams.map((t: any) => (
+            <div class="team" data-name={t.name.toLowerCase()}>
+              <button class="team__head" aria-expanded="false" type="button">
+                <div style="display: flex; align-items: center; gap: 14px; width: 100%;">
+                  <div class="teamlogo">
+                    {t.logo ? (
+                      <img
+                        src={t.logo}
+                        alt={t.name}
+                        style="width: 100%; height: 100%; object-fit: contain; border-radius: 10px;"
+                      />
+                    ) : (
+                      <span class="teamlogo--ph">
+                        {t.name.substring(0, 2).toUpperCase()}
+                      </span>
                     )}
                   </div>
+                  <div style="flex: 1;">
+                    <h2
+                      class="h2"
+                      style="margin: 0; display: inline-flex; align-items: center; gap: 8px; font-size: 18px; font-weight: 800;"
+                    >
+                      {t.name}
+                    </h2>
+                    <div class="team-meta" style="margin-top: 4px;">
+                      {t.country && (
+                        <span
+                          class="pill"
+                          style="display:inline-flex; align-items:center; gap:6px;"
+                        >
+                          {countryFlags[t.country] && (
+                            <span class={`fi fi-${countryFlags[t.country]}`} />
+                          )}
+                          {t.country}
+                        </span>
+                      )}
+                      {t.venue && (
+                        <span class="pill muted">
+                          {tr.teams.venue}: {venues[t.venue] ?? t.venue}
+                        </span>
+                      )}
+                      {t.coach && (
+                        <span class="pill muted">
+                          {tr.teams.coach}: {t.coach}
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <span class="team__chev"></span>
-            </button>
-            <div class="team__panel" style="display: none;">
-              <h3 class="h3" style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px;">
-                {tr.teams.roster}
-              </h3>
-              {(!t.players || t.players.length === 0) ? (
-                <p class="muted" style="font-size: 13px;">
-                  {lang === 'cs' ? 'Soupiska bude doplněna.' : lang === 'pl' ? 'Skład zostanie uzupełniony.' : 'Roster will be added soon.'}
-                </p>
-              ) : (
-                <div class="tablewrap" style="max-width: 500px;">
-                  <table class="schedule roster__table">
-                    <colgroup>
-                      <col style="width: 80px;">
-                      <col>
-                    </colgroup>
-                    <thead>
-                      <tr>
-                        <th>{tr.teams.number}</th>
-                        <th>{tr.teams.name}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {t.players.map((p: any) => (
+                <span class="team__chev" />
+              </button>
+              <div class="team__panel" style="display: none;">
+                <h3
+                  class="h3"
+                  style="font-size: 14px; text-transform: uppercase; font-weight: 900; margin-bottom: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px;"
+                >
+                  {tr.teams.roster}
+                </h3>
+                {!t.players || t.players.length === 0 ? (
+                  <p class="muted" style="font-size: 13px;">
+                    {lang === "cs"
+                      ? "Soupiska bude doplněna."
+                      : lang === "pl"
+                        ? "Skład zostanie uzupełniony."
+                        : "Roster will be added soon."}
+                  </p>
+                ) : (
+                  <div class="tablewrap" style="max-width: 500px;">
+                    <table class="schedule roster__table">
+                      <colgroup>
+                        <col style="width: 80px;" />
+                        <col />
+                      </colgroup>
+                      <thead>
                         <tr>
-                          <td style="font-weight: 900; text-align: center;">{p.number ?? '—'}</td>
-                          <td>{p.name}</td>
+                          <th>{tr.teams.number}</th>
+                          <th>{tr.teams.name}</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                      </thead>
+                      <tbody>
+                        {t.players.map((p: any) => (
+                          <tr>
+                            <td style="font-weight: 900; text-align: center;">
+                              {p.number ?? "—"}
+                            </td>
+                            <td>{p.name}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    )}
+          ))}
+        </div>
+      )
+    }
   </main>
 </Layout>
 
 <script is:inline>
   // Accordion toggle logic
-  document.addEventListener('DOMContentLoaded', () => {
-    const accordions = document.querySelectorAll('.team');
-    accordions.forEach(acc => {
-      const btn = acc.querySelector('.team__head');
-      const panel = acc.querySelector('.team__panel');
+  document.addEventListener("DOMContentLoaded", () => {
+    const accordions = document.querySelectorAll(".team");
+    accordions.forEach((acc) => {
+      const btn = acc.querySelector(".team__head");
+      const panel = acc.querySelector(".team__panel");
       if (btn && panel) {
-        btn.addEventListener('click', () => {
-          const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-          btn.setAttribute('aria-expanded', !isExpanded ? 'true' : 'false');
-          panel.style.display = !isExpanded ? 'block' : 'none';
+        btn.addEventListener("click", () => {
+          const isExpanded = btn.getAttribute("aria-expanded") === "true";
+          btn.setAttribute("aria-expanded", !isExpanded ? "true" : "false");
+          panel.style.display = !isExpanded ? "block" : "none";
         });
       }
     });
 
     // Client-side search logic
-    const searchInput = document.getElementById('teamSearch');
-    const teamsList = document.getElementById('teamsList');
+    const searchInput = document.getElementById("teamSearch");
+    const teamsList = document.getElementById("teamsList");
     if (searchInput && teamsList) {
-      const teamItems = teamsList.querySelectorAll('.team');
-      searchInput.addEventListener('input', (e) => {
+      const teamItems = teamsList.querySelectorAll(".team");
+      searchInput.addEventListener("input", (e) => {
         const query = e.target.value.toLowerCase().trim();
-        teamItems.forEach(item => {
-          const name = item.getAttribute('data-name') || '';
+        teamItems.forEach((item) => {
+          const name = item.getAttribute("data-name") || "";
           if (name.includes(query)) {
-            item.style.display = 'block';
+            item.style.display = "block";
           } else {
-            item.style.display = 'none';
+            item.style.display = "none";
           }
         });
       });

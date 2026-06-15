@@ -1,4 +1,5 @@
 export const en = {
+  construction_notice: 'This website is currently under construction. Tournament data, rosters, and schedules are being prepared.',
   nav: {
     home: 'Home',
     schedule: 'Schedule',
@@ -85,8 +86,8 @@ export const en = {
     venues: 'Venues Addresses',
     map_link: 'Show on map',
     organizer_club: 'Hradecké lvice Club',
-    accommodation_contact: 'Accommodation & Logistics',
-    results_contact: 'Results Service & Web',
+    accommodation_contact: 'Tournament Organizer',
+    results_contact: 'Web Administration',
   },
   photos: {
     title: 'Photo Gallery',

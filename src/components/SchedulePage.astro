@@ -1,102 +1,109 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
-import { getMatches } from '../lib/queries'
-import { t, getLang } from '../i18n/index'
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import { getMatches } from "../lib/queries";
+import { t, getLang } from "../i18n/index";
 
 interface Props {
-  lang: string
+  lang: string;
+  cat: "u11" | "u12" | "u13";
 }
 
-const { lang } = Astro.props
-const locale = getLang(lang)
-const tr = t(locale)
+const { lang, cat } = Astro.props;
+const locale = getLang(lang);
+const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+const matches = await getMatches(cat);
 
-const matches = await getMatches(cat)
+const den1 = matches.filter((m: any) => m.day === 1);
+const den2 = matches.filter((m: any) => m.day === 2);
+const den3 = matches.filter((m: any) => m.day === 3);
 
-const den1 = matches.filter((m: any) => m.day === 1)
-const den2 = matches.filter((m: any) => m.day === 2)
-const den3 = matches.filter((m: any) => m.day === 3)
-
-const venues: Record<string, string> = {
-  cs: { sokol: 'Sokol HK', gapa: 'GAPA aréna' },
-  en: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
-  pl: { sokol: 'Sokol HK', gapa: 'GAPA Arena' },
-}[locale]
+const courts: Record<string, string> = {
+  court1: "Court 1 – Sokol HK",
+  court2: "Court 2 – Sokol HK",
+  gapa: "GAPA aréna",
+};
 
 const matchTypes: Record<string, string> = {
   cs: {
-    group: 'Základní skupina',
-    qf: 'Čtvrtfinále',
-    sf: 'Semifinále',
-    third: 'O 3. místo',
-    final: 'Finále',
+    group: "Základní skupina",
+    qf: "Čtvrtfinále",
+    sf: "Semifinále",
+    third: "O 3. místo",
+    final: "Finále",
   },
   en: {
-    group: 'Group stage',
-    qf: 'Quarterfinal',
-    sf: 'Semifinal',
-    third: '3rd Place Match',
-    final: 'Final',
+    group: "Group stage",
+    qf: "Quarterfinal",
+    sf: "Semifinal",
+    third: "3rd Place Match",
+    final: "Final",
   },
   pl: {
-    group: 'Faza grupowa',
-    qf: 'Ćwierćfinał',
-    sf: 'Półfinał',
-    third: 'Mecz o 3. miejsce',
-    final: 'Finał',
+    group: "Faza grupowa",
+    qf: "Ćwierćfinał",
+    sf: "Półfinał",
+    third: "Mecz o 3. miejsce",
+    final: "Finał",
   },
-}[locale]
+}[locale];
 
 const catLabels: Record<string, string> = {
   cs: {
-    u11: 'U11 · ročník 2015 · Sokol HK',
-    u12: 'U12 · ročník 2014 · GAPA aréna',
-    u13: 'U13 · ročník 2013 · Sokol HK',
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA aréna",
+    u13: "U13 · Sokol HK",
   },
   en: {
-    u11: 'U11 · born 2015 · Sokol HK',
-    u12: 'U12 · born 2014 · GAPA Arena',
-    u13: 'U13 · born 2013 · Sokol HK',
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA Arena",
+    u13: "U13 · Sokol HK",
   },
   pl: {
-    u11: 'U11 · rocznik 2015 · Sokol HK',
-    u12: 'U12 · rocznik 2014 · GAPA Arena',
-    u13: 'U13 · ročník 2013 · Sokol HK',
-  }
-}[locale]
+    u11: "U11 · Sokol HK",
+    u12: "U12 · GAPA Arena",
+    u13: "U13 · Sokol HK",
+  },
+}[locale];
 
 const dayLabels = {
   cs: {
-    day1: 'Den 1 – Sobota',
-    day2: 'Den 2 – Neděle',
-    day3: 'Den 3 – Pondělí',
+    day1: "Den 1 – Pátek",
+    day2: "Den 2 – Sobota",
+    day3: "Den 3 – Neděle",
   },
   en: {
-    day1: 'Day 1 – Saturday',
-    day2: 'Day 2 – Sunday',
-    day3: 'Day 3 – Monday',
+    day1: "Day 1 – Friday",
+    day2: "Day 2 – Saturday",
+    day3: "Day 3 – Sunday",
   },
   pl: {
-    day1: 'Dzień 1 – Sobota',
-    day2: 'Dzień 2 – Niedziela',
-    day3: 'Dzień 3 – Poniedziałek',
-  }
-}[locale]
+    day1: "Dzień 1 – Piątek",
+    day2: "Dzień 2 – Sobota",
+    day3: "Dzień 3 – Niedziela",
+  },
+}[locale];
 
 function formatTime(datetime: string) {
-  if (!datetime) return '—'
-  return new Date(datetime).toLocaleTimeString(locale === 'cs' ? 'cs-CZ' : locale === 'pl' ? 'pl-PL' : 'en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  })
+  if (!datetime) return "—";
+  return new Date(datetime).toLocaleTimeString(
+    locale === "cs" ? "cs-CZ" : locale === "pl" ? "pl-PL" : "en-US",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    },
+  );
 }
 ---
 
-<Layout title={tr.schedule.title} activePage="schedule" activeCategory={cat} lang={lang}>
+<Layout
+  title={tr.schedule.title}
+  activePage="schedule"
+  activeCategory={cat}
+  lang={lang}
+>
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.schedule.title}</h1>
@@ -109,10 +116,10 @@ function formatTime(datetime: string) {
       <div class="tablewrap">
         <table class="schedule">
           <colgroup>
-            <col style="width: 80px;">
-            <col style="width: 140px;">
-            <col>
-            <col style="width: 150px;">
+            <col style="width: 80px;" />
+            <col style="width: 140px;" />
+            <col />
+            <col style="width: 150px;" />
           </colgroup>
           <thead>
             <tr>
@@ -123,24 +130,36 @@ function formatTime(datetime: string) {
             </tr>
           </thead>
           <tbody>
-            {den1.length === 0 ? (
-              <tr>
-                <td colspan="4" class="muted" style="text-align:center; padding:20px;">
-                  {tr.schedule.no_matches}
-                </td>
-              </tr>
-            ) : den1.map((m: any) => (
-              <tr>
-                <td>{formatTime(m.datetime)}</td>
-                <td>
-                  <span class={`pill ${m.venue === 'sokol' ? 'pill--h1' : 'pill--h2'}`}>
-                    {venues[m.venue] ?? m.venue}
-                  </span>
-                </td>
-                <td>{m.teamA?.name ?? '?'} – {m.teamB?.name ?? '?'}</td>
-                <td>{matchTypes[m.matchType] ?? m.matchType}</td>
-              </tr>
-            ))}
+            {
+              den1.length === 0 ? (
+                <tr>
+                  <td
+                    colspan="4"
+                    class="muted"
+                    style="text-align:center; padding:20px;"
+                  >
+                    {tr.schedule.no_matches}
+                  </td>
+                </tr>
+              ) : (
+                den1.map((m: any) => (
+                  <tr>
+                    <td>{formatTime(m.datetime)}</td>
+                    <td>
+                      <span
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
+                      >
+                        {courts[m.court] ?? m.court ?? "—"}
+                      </span>
+                    </td>
+                    <td style="font-weight: 700;">
+                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    </td>
+                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
+                  </tr>
+                ))
+              )
+            }
           </tbody>
         </table>
       </div>
@@ -152,10 +171,10 @@ function formatTime(datetime: string) {
       <div class="tablewrap">
         <table class="schedule">
           <colgroup>
-            <col style="width: 80px;">
-            <col style="width: 140px;">
-            <col>
-            <col style="width: 150px;">
+            <col style="width: 80px;" />
+            <col style="width: 140px;" />
+            <col />
+            <col style="width: 150px;" />
           </colgroup>
           <thead>
             <tr>
@@ -166,66 +185,84 @@ function formatTime(datetime: string) {
             </tr>
           </thead>
           <tbody>
-            {den2.length === 0 ? (
-              <tr>
-                <td colspan="4" class="muted" style="text-align:center; padding:20px;">
-                  {tr.schedule.no_matches}
-                </td>
-              </tr>
-            ) : den2.map((m: any) => (
-              <tr>
-                <td>{formatTime(m.datetime)}</td>
-                <td>
-                  <span class={`pill ${m.venue === 'sokol' ? 'pill--h1' : 'pill--h2'}`}>
-                    {venues[m.venue] ?? m.venue}
-                  </span>
-                </td>
-                <td>{m.teamA?.name ?? '?'} – {m.teamB?.name ?? '?'}</td>
-                <td>{matchTypes[m.matchType] ?? m.matchType}</td>
-              </tr>
-            ))}
+            {
+              den2.length === 0 ? (
+                <tr>
+                  <td
+                    colspan="4"
+                    class="muted"
+                    style="text-align:center; padding:20px;"
+                  >
+                    {tr.schedule.no_matches}
+                  </td>
+                </tr>
+              ) : (
+                den2.map((m: any) => (
+                  <tr>
+                    <td>{formatTime(m.datetime)}</td>
+                    <td>
+                      <span
+                        class={`pill ${m.court === "sokol" ? "pill--h1" : "pill--h2"}`}
+                      >
+                        {courts[m.court] ?? m.court}
+                      </span>
+                    </td>
+                    <td style="font-weight: 700;">
+                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    </td>
+                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
+                  </tr>
+                ))
+              )
+            }
           </tbody>
         </table>
       </div>
     </section>
 
     <!-- Den 3 (only show if there are matches on Day 3) -->
-    {den3.length > 0 && (
-      <section class="card" style="margin-top: 24px;">
-        <h2 class="h2">{dayLabels.day3}</h2>
-        <div class="tablewrap">
-          <table class="schedule">
-            <colgroup>
-              <col style="width: 80px;">
-              <col style="width: 140px;">
-              <col>
-              <col style="width: 150px;">
-            </colgroup>
-            <thead>
-              <tr>
-                <th>{tr.schedule.time}</th>
-                <th>{tr.schedule.hall}</th>
-                <th>{tr.schedule.match}</th>
-                <th>{tr.schedule.type}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {den3.map((m: any) => (
+    {
+      den3.length > 0 && (
+        <section class="card" style="margin-top: 24px;">
+          <h2 class="h2">{dayLabels.day3}</h2>
+          <div class="tablewrap">
+            <table class="schedule">
+              <colgroup>
+                <col style="width: 80px;" />
+                <col style="width: 140px;" />
+                <col />
+                <col style="width: 150px;" />
+              </colgroup>
+              <thead>
                 <tr>
-                  <td>{formatTime(m.datetime)}</td>
-                  <td>
-                    <span class={`pill ${m.venue === 'sokol' ? 'pill--h1' : 'pill--h2'}`}>
-                      {venues[m.venue] ?? m.venue}
-                    </span>
-                  </td>
-                  <td>{m.teamA?.name ?? '?'} – {m.teamB?.name ?? '?'}</td>
-                  <td>{matchTypes[m.matchType] ?? m.matchType}</td>
+                  <th>{tr.schedule.time}</th>
+                  <th>{tr.schedule.hall}</th>
+                  <th>{tr.schedule.match}</th>
+                  <th>{tr.schedule.type}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    )}
+              </thead>
+              <tbody>
+                {den3.map((m: any) => (
+                  <tr>
+                    <td>{formatTime(m.datetime)}</td>
+                    <td>
+                      <span
+                        class={`pill ${m.court === "sokol" ? "pill--h1" : "pill--h2"}`}
+                      >
+                        {courts[m.court] ?? m.court}
+                      </span>
+                    </td>
+                    <td style="font-weight: 700;">
+                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    </td>
+                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )
+    }
   </main>
 </Layout>

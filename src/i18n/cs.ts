@@ -1,4 +1,5 @@
 export const cs = {
+  construction_notice: 'Tento web je momentálně ve výstavbě. Probíhá příprava dat, soupisek a rozpisů zápasů.',
   nav: {
     home: 'Úvod',
     schedule: 'Rozpis',
@@ -85,8 +86,8 @@ export const cs = {
     venues: 'Adresy hal',
     map_link: 'Zobrazit na mapě',
     organizer_club: 'Klub Hradecké lvice',
-    accommodation_contact: 'Ubytování a logistika',
-    results_contact: 'Výsledkový servis a web',
+    accommodation_contact: 'Pořadatel turnaje',
+    results_contact: 'Web administrace',
   },
   photos: {
     title: 'Fotogalerie',

@@ -1,5 +1,10 @@
 ---
-import TeamsPage from '../../components/TeamsPage.astro'
+import TeamsPage from "../../components/TeamsPage.astro";
+
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+    | "u11"
+    | "u12"
+    | "u13";
 ---
 
-<TeamsPage lang="pl" />
+<TeamsPage lang="pl" cat={cat} />
