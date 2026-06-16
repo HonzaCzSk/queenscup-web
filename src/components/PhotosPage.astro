@@ -1,38 +1,70 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
-import { t, getLang } from '../i18n/index'
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import { t, getLang } from "../i18n/index";
 
 interface Props {
-  lang: string
+  lang: string;
 }
 
-const { lang } = Astro.props
-const locale = getLang(lang)
-const tr = t(locale)
+const { lang } = Astro.props;
+const locale = getLang(lang);
+const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get('cat') ?? 'u11') as 'u11' | 'u12' | 'u13'
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+  | "u11"
+  | "u12"
+  | "u13";
 
 const photoAlbums = {
   cs: [
-    { title: 'Den 1 – Sobota (Zápasy)', desc: 'Fotky ze zápasů základní části' },
-    { title: 'Den 2 – Neděle (Play-off)', desc: 'Fotky z play-off a finálových bojů' },
-    { title: 'Slavnostní zakončení', desc: 'Vyhlášení výsledků a předávání pohárů' }
+    {
+      title: "Den 1 – Sobota (Zápasy)",
+      desc: "Fotky ze zápasů základní části",
+    },
+    {
+      title: "Den 2 – Neděle (Play-off)",
+      desc: "Fotky z play-off a finálových bojů",
+    },
+    {
+      title: "Slavnostní zakončení",
+      desc: "Vyhlášení výsledků a předávání pohárů",
+    },
   ],
   en: [
-    { title: 'Day 1 – Saturday (Matches)', desc: 'Photos from group stage games' },
-    { title: 'Day 2 – Sunday (Play-offs)', desc: 'Photos from play-off rounds and finals' },
-    { title: 'Closing Ceremony', desc: 'Award ceremony and team photos' }
+    {
+      title: "Day 1 – Saturday (Matches)",
+      desc: "Photos from group stage games",
+    },
+    {
+      title: "Day 2 – Sunday (Play-offs)",
+      desc: "Photos from play-off rounds and finals",
+    },
+    { title: "Closing Ceremony", desc: "Award ceremony and team photos" },
   ],
   pl: [
-    { title: 'Dzień 1 – Sobota (Mecze)', desc: 'Zdjęcia z meczów fazy grupowej' },
-    { title: 'Dzień 2 – Niedziela (Play-off)', desc: 'Zdjęcia z fazy pucharowej i finałów' },
-    { title: 'Ceremonia zakończenia', desc: 'Wręczenie nagród i zdjęcia grupowe' }
-  ]
-}[locale]
+    {
+      title: "Dzień 1 – Sobota (Mecze)",
+      desc: "Zdjęcia z meczów fazy grupowej",
+    },
+    {
+      title: "Dzień 2 – Niedziela (Play-off)",
+      desc: "Zdjęcia z fazy pucharowej i finałów",
+    },
+    {
+      title: "Ceremonia zakończenia",
+      desc: "Wręczenie nagród i zdjęcia grupowe",
+    },
+  ],
+}[locale];
 ---
 
-<Layout title={tr.photos.title} activePage="photos" activeCategory={cat} lang={lang}>
+<Layout
+  title={tr.photos.title}
+  activePage="photos"
+  activeCategory={cat}
+  lang={lang}
+>
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.photos.title}</h1>
@@ -40,14 +72,35 @@ const photoAlbums = {
     </section>
 
     <!-- Zonerama Primary CTA -->
-    <div class="card card--accent" style="margin-bottom: 24px; padding: 24px; text-align: center;">
+    <div
+      class="card card--accent"
+      style="margin-bottom: 24px; padding: 24px; text-align: center;"
+    >
       <h2 class="h2" style="font-size: 16px; margin-bottom: 8px;">
-        {lang === 'cs' ? 'Oficiální fotogalerie na Zonerama' : lang === 'pl' ? 'Oficjalna galeria na Zonerama' : 'Official Photo Gallery on Zonerama'}
+        {
+          lang === "cs"
+            ? "Oficiální fotogalerie na Zonerama"
+            : lang === "pl"
+              ? "Oficjalna galeria na Zonerama"
+              : "Official Photo Gallery on Zonerama"
+        }
       </h2>
       <p class="muted" style="font-size: 14px; margin-bottom: 16px;">
-        {lang === 'cs' ? 'Všechny fotografie z turnaje naleznete v plném rozlišení na naší Zoneramě.' : lang === 'pl' ? 'Wszystkie zdjęcia z turnieju w pełnej rozdzielczości znajdziesz na naszym profilu Zonerama.' : 'All high-resolution tournament photos are available on our Zonerama profile.'}
+        {
+          lang === "cs"
+            ? "Všechny fotografie z turnaje naleznete v plném rozlišení na naší Zoneramě."
+            : lang === "pl"
+              ? "Wszystkie zdjęcia z turnieju w pełnej rozdzielczości znajdziesz na naszym profilu Zonerama."
+              : "All high-resolution tournament photos are available on our Zonerama profile."
+        }
       </p>
-      <a href="https://zonerama.com" target="_blank" rel="noopener" class="btn btn--primary" style="display: inline-flex;">
+      <a
+        href="https://zonerama.com"
+        target="_blank"
+        rel="noopener"
+        class="btn btn--primary"
+        style="display: inline-flex;"
+      >
         {tr.photos.gallery_btn}
       </a>
     </div>
@@ -55,18 +108,44 @@ const photoAlbums = {
     <!-- Album Blocks (Dashed Thumbnails) -->
     <div class="card">
       <h2 class="h2" style="margin-bottom: 16px;">
-        {lang === 'cs' ? 'Fotoalba podle hracích dnů' : lang === 'pl' ? 'Albumy zdjęć według dni' : 'Photo Albums by Day'}
+        {
+          lang === "cs"
+            ? "Fotoalba podle hracích dnů"
+            : lang === "pl"
+              ? "Albumy zdjęć według dni"
+              : "Photo Albums by Day"
+        }
       </h2>
       <div class="gallery" style="margin-top: 14px;">
-        {photoAlbums.map((album) => (
-          <a href="https://zonerama.com" target="_blank" rel="noopener" class="thumb" style="flex-direction: column; text-align: center; padding: 14px; gap: 4px;">
-            <span style="font-size: 14px; font-weight: 800; color: var(--accent); line-height: 1.2;">{album.title}</span>
-            <span class="muted" style="font-size: 11px; font-weight: 500; margin-top: 2px;">{album.desc}</span>
-            <span style="font-size: 11px; font-weight: 700; opacity: 0.65; margin-top: auto; text-transform: uppercase;">
-              {lang === 'cs' ? 'Otevřít album' : lang === 'pl' ? 'Otwórz album' : 'Open Album'} ↗
-            </span>
-          </a>
-        ))}
+        {
+          photoAlbums.map((album) => (
+            <a
+              href="https://zonerama.com"
+              target="_blank"
+              rel="noopener"
+              class="thumb"
+              style="flex-direction: column; text-align: center; padding: 14px; gap: 4px;"
+            >
+              <span style="font-size: 14px; font-weight: 800; color: var(--accent); line-height: 1.2;">
+                {album.title}
+              </span>
+              <span
+                class="muted"
+                style="font-size: 11px; font-weight: 500; margin-top: 2px;"
+              >
+                {album.desc}
+              </span>
+              <span style="font-size: 11px; font-weight: 700; opacity: 0.65; margin-top: auto; text-transform: uppercase;">
+                {lang === "cs"
+                  ? "Otevřít album"
+                  : lang === "pl"
+                    ? "Otwórz album"
+                    : "Open Album"}{" "}
+                ↗
+              </span>
+            </a>
+          ))
+        }
       </div>
     </div>
   </main>

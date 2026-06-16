@@ -35,6 +35,7 @@ export default defineType({
           { title: 'Slovensko', value: 'SK' },
           { title: 'Maďarsko', value: 'HU' },
           { title: 'Německo', value: 'DE' },
+          { title: 'Lotyšsko', value: 'LV' },
           { title: 'Jiný', value: 'OTHER' },
         ],
       },

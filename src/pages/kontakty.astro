@@ -1,5 +1,10 @@
 ---
-import ContactsPage from '../components/ContactsPage.astro'
+import ContactsPage from "../components/ContactsPage.astro";
+
+const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
+    | "u11"
+    | "u12"
+    | "u13";
 ---
 
-<ContactsPage lang="cs" />
+<ContactsPage lang="cs" cat={cat} />

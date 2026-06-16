@@ -22,7 +22,7 @@ Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších evrop
 ## Technologie
 
 - **[Astro](https://astro.build/)** – statický site builder
-- **Vlastní CSS** – design převzatý z MČR webů (base, dark, screen, print)
+- **Vlastní CSS** – design převzatý z MČR webů (base, dark, screen, print, preferences)
 - **[Sanity.io](https://www.sanity.io/)** – headless CMS pro správu obsahu
 - **[Vercel](https://vercel.com/)** – hosting a automatický deployment
 

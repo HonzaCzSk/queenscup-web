@@ -5,20 +5,17 @@ import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
+  cat: "u11" | "u12" | "u13";
 }
 
-const { lang } = Astro.props;
+const { lang, cat } = Astro.props;
 const locale = getLang(lang);
 const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
-  | "u11"
-  | "u12"
-  | "u13";
-
 const mapLinks = {
-  sokol: "https://maps.google.com/?q=Sokol+Hradec+Kralove+Eliscino+nabrezi",
-  gapa: "https://maps.google.com/?q=GAPA+arena+Brezhradska+Hradec+Kralove",
+  sokol:
+    "https://www.google.com/maps/place/TJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9/@50.2132485,15.8280544,270m/data=!3m1!1e3!4m14!1m7!3m6!1s0x470c2b2ee832052b:0xc87ea657014029dc!2sOdd%C3%ADl+atletiky+TJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9!8m2!3d50.213266!4d15.8292647!16s%2Fg%2F1tdnvm62!3m5!1s0x470c2b2ee9083f57:0xdadd5997f9d5361d!8m2!3d50.213257!4d15.8289909!16s%2Fg%2F11h52sp2wy?authuser=1&entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D",
+  gapa: "https://www.google.com/maps/place/GAPA+ar%C3%A9na/@50.1897984,15.8362913,571m/data=!3m2!1e3!4b1!4m6!3m5!1s0x470dd4b08b301b19:0x6218f1f39b47361!8m2!3d50.1897984!4d15.8388662!16s%2Fg%2F1ptzdst_x?authuser=1&entry=ttu&g_ep=EgoyMDI2MDYxMy4wIKXMDSoASAFQAw%3D%3D",
 };
 ---
 

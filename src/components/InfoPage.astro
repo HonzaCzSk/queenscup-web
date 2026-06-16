@@ -5,16 +5,12 @@ import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
+  cat: "u11" | "u12" | "u13";
 }
 
-const { lang } = Astro.props;
+const { lang, cat } = Astro.props;
 const locale = getLang(lang);
 const tr = t(locale);
-
-const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
-  | "u11"
-  | "u12"
-  | "u13";
 
 const venuesText = {
   cs: [
@@ -74,22 +70,22 @@ const venuesText = {
         <p class="muted">{tr.info.tickets_desc}</p>
       </div>
 
-      <!-- Ubytování 
+      <!-- Parkování -->
       <div class="card">
         <h2 class="h2">
-          {tr.info.accommodation}
-          <span class="badge">{lang === 'cs' ? 'Týmy' : lang === 'pl' ? 'Zespoły' : 'Teams'}</span>
+          {tr.info.parking}
+          <span class="badge"
+            >{
+              lang === "cs"
+                ? "Diváci"
+                : lang === "pl"
+                  ? "Widzowie"
+                  : "Spectators"
+            }</span
+          >
         </h2>
-        <p class="muted">{tr.info.accommodation_desc}</p>
+        <p class="muted">{tr.info.parking_desc}</p>
       </div>
-      -->
-
-      <!-- Stravování 
-      <div class="card">
-        <h2 class="h2">{tr.info.catering}</h2>
-        <p class="muted">{tr.info.catering_desc}</p>
-      </div>
-      -->
 
       <!-- Haly a doprava -->
       <div class="card">
@@ -98,6 +94,12 @@ const venuesText = {
         <ul style="margin-top: 12px; font-size: 13px; font-weight: 600;">
           {venuesText.map((t) => <li style="margin: 4px 0;">{t}</li>)}
         </ul>
+      </div>
+
+      <!-- Stravování -->
+      <div class="card">
+        <h2 class="h2">{tr.info.travel}</h2>
+        <p class="muted">{tr.info.travel_desc}</p>
       </div>
 
       <!-- Ke stažení

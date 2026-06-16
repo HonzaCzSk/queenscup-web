@@ -22,12 +22,42 @@ const {
 
 const locale = getLang(lang);
 const tr = t(locale);
+
 const currentPath = Astro.url.pathname;
+const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u11";
+const catParam = `?cat=${currentCat}`;
+
+// Mapa českých cest na EN/PL ekvivalenty
+const pathMap: Record<string, { en: string; pl: string }> = {
+  "/": { en: "/en/", pl: "/pl/" },
+  "/rozpis": { en: "/en/schedule", pl: "/pl/schedule" },
+  "/vysledky": { en: "/en/results", pl: "/pl/results" },
+  "/pavouk": { en: "/en/bracket", pl: "/pl/bracket" },
+  "/tymy": { en: "/en/teams", pl: "/pl/teams" },
+  "/info": { en: "/en/info", pl: "/pl/info" },
+  "/kontakty": { en: "/en/contacts", pl: "/pl/contacts" },
+  "/fotky": { en: "/en/photos", pl: "/pl/photos" },
+};
+
+// Normalizuj aktuální cestu na českou verzi
+const csPath =
+  currentPath
+    .replace(/\/$/, "")
+    .replace(/^\/en/, "")
+    .replace(/^\/pl/, "")
+    .replace(/\/(schedule|harmonogram)$/, "/rozpis")
+    .replace(/\/(results|wyniki)$/, "/vysledky")
+    .replace(/\/(bracket|drabinka)$/, "/pavouk")
+    .replace(/\/(teams|druzyny)$/, "/tymy")
+    .replace(/\/(contacts|kontakt)$/, "/kontakty")
+    .replace(/\/(photos|zdjecia)$/, "/fotky") || "/";
+
+const mapped = pathMap[csPath] ?? { en: "/en" + csPath, pl: "/pl" + csPath };
 
 const langUrls: Record<Lang, string> = {
-  cs: Astro.url.pathname.replace(/^\/(en|pl)/, "") || "/",
-  en: "/en" + Astro.url.pathname.replace(/^\/(en|pl)/, ""),
-  pl: "/pl" + Astro.url.pathname.replace(/^\/(en|pl)/, ""),
+  cs: (csPath || "/") + catParam,
+  en: mapped.en + catParam,
+  pl: mapped.pl + catParam,
 };
 
 const partners = await getPartners();

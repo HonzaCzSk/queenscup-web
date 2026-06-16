@@ -113,7 +113,7 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Základní skupina', value: 'group' },
+          { title: 'Zákl. Skupina', value: 'group' },
           { title: 'Čtvrtfinále', value: 'qf' },
           { title: 'O 9. místo', value: 'ninth' },
           { title: 'O 7. místo', value: 'seventh' },
@@ -129,8 +129,9 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Court 1 – hlavní hala', value: 'court1' },
-          { title: 'Court 2 – tréninková hala', value: 'court2' },
+          { title: 'Court 1 – hlavní hala', value: 'Court 1' },
+          { title: 'Main court', value: 'Main Court - GAPA' },
+          { title: 'Court 2 – tréninková hala', value: 'Court 2' },
         ],
       },
     }),
