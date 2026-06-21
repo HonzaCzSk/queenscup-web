@@ -329,3 +329,18 @@ table.quarters th {
     grid-template-columns: 1fr;
   }
 }
+
+.visegrad-logo {
+  height: 32px;
+  width: auto;
+  border: none;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.eu-link {
+  color: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}

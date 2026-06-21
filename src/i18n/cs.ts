@@ -33,7 +33,7 @@ export const cs = {
     time: 'Čas',
     hall: 'Hala',
     match: 'Zápas',
-    type: 'Typ',
+    group_label: 'Skupina',
   },
   results: {
     title: 'Výsledky zápasů',
@@ -44,7 +44,6 @@ export const cs = {
     match: 'Zápas',
     time: 'Čas',
     hall: 'Hala',
-    type: 'Typ',
   },
   teams: {
     title: 'Týmy a soupisky',

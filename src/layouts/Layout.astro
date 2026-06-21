@@ -27,6 +27,9 @@ const currentPath = Astro.url.pathname;
 const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u11";
 const catParam = `?cat=${currentCat}`;
 
+const tournamentName =
+  currentCat === "u13" ? "V4 Basketball Queens Cup" : "Basketball Queens Cup";
+
 // Mapa českých cest na EN/PL ekvivalenty
 const pathMap: Record<string, { en: string; pl: string }> = {
   "/": { en: "/en/", pl: "/pl/" },
@@ -72,15 +75,15 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Queens Cup</title>
+    <title>{title} | {tournamentName}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content={`${title} | Queens Cup`} />
+    <meta property="og:title" content={`${title} | ${tournamentName}`} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="Queens Cup" />
+    <meta property="og:site_name" content={tournamentName} />
     <meta property="og:image" content="/og-image.png" />
 
     <!-- Favicon -->
@@ -110,7 +113,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
         <div class="brand">
           <span class="brand__dot"></span>
           <a class="brand__name" href={lang === "cs" ? "/" : `/${lang}/`}
-            >Queens Cup</a
+            >{tournamentName}</a
           >
         </div>
 
@@ -253,41 +256,51 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
     <!-- NAV -->
     <nav class="nav">
       <div class="wrap nav__inner">
+        <!-- Desktop NAV -->
         <a
           class={`nav__item ${activePage === "home" ? "is-active" : ""}`}
           href={lang === "cs" ? "/" : `/${lang}/`}>{tr.nav.home}</a
         >
         <a
           class={`nav__item ${activePage === "schedule" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/rozpis" : `/${lang}/schedule`}
-          >{tr.nav.schedule}</a
+          href={lang === "cs"
+            ? `/rozpis${catParam}`
+            : `/${lang}/schedule${catParam}`}>{tr.nav.schedule}</a
         >
         <a
           class={`nav__item ${activePage === "results" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/vysledky" : `/${lang}/results`}
-          >{tr.nav.results}</a
+          href={lang === "cs"
+            ? `/vysledky${catParam}`
+            : `/${lang}/results${catParam}`}>{tr.nav.results}</a
         >
         <a
           class={`nav__item ${activePage === "bracket" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/pavouk" : `/${lang}/bracket`}
-          >{tr.nav.bracket}</a
+          href={lang === "cs"
+            ? `/pavouk${catParam}`
+            : `/${lang}/bracket${catParam}`}>{tr.nav.bracket}</a
         >
         <a
           class={`nav__item ${activePage === "teams" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/tymy" : `/${lang}/teams`}>{tr.nav.teams}</a
+          href={lang === "cs"
+            ? `/tymy${catParam}`
+            : `/${lang}/teams${catParam}`}>{tr.nav.teams}</a
         >
         <a
           class={`nav__item ${activePage === "info" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/info" : `/${lang}/info`}>{tr.nav.info}</a
+          href={lang === "cs" ? `/info${catParam}` : `/${lang}/info${catParam}`}
+          >{tr.nav.info}</a
         >
         <a
           class={`nav__item ${activePage === "contacts" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/kontakty" : `/${lang}/contacts`}
-          >{tr.nav.contacts}</a
+          href={lang === "cs"
+            ? `/kontakty${catParam}`
+            : `/${lang}/contacts${catParam}`}>{tr.nav.contacts}</a
         >
         <a
           class={`nav__item ${activePage === "photos" ? "is-active" : ""}`}
-          href={lang === "cs" ? "/fotky" : `/${lang}/photos`}>{tr.nav.photos}</a
+          href={lang === "cs"
+            ? `/fotky${catParam}`
+            : `/${lang}/photos${catParam}`}>{tr.nav.photos}</a
         >
       </div>
     </nav>
@@ -435,11 +448,37 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
         </div>
         <div class="footer__bar">
           <div class="footer__left-wrap">
-            <div class="footer__left">{tr.footer.rights}</div>
-            <div class="eu-funding">
-              <img src="/assets/eu-logo.svg" alt="EU Flag" class="eu-logo" />
-              <span class="eu-text">{tr.footer.eu_funding}</span>
+            <div class="footer__left">
+              {tr.footer.rights.replace("Queens Cup", tournamentName)}
             </div>
+            {
+              currentCat === "u13" && (
+                <div class="eu-funding">
+                  <a
+                    href="https://www.visegradfund.org"
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <img
+                      src="/assets/visegrad-logo.jpg"
+                      alt="Visegrad Fund"
+                      class="visegrad-logo"
+                    />
+                  </a>
+                  <span class="eu-text">
+                    This event is supported by the grant No. 12610107 of{" "}
+                    <a
+                      href="https://www.visegradfund.org"
+                      target="_blank"
+                      rel="noopener"
+                      class="eu-link"
+                    >
+                      Visegrad funds.
+                    </a>
+                  </span>
+                </div>
+              )
+            }
           </div>
           <div class="socialbar" aria-label="Sociální sítě">
             <a

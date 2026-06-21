@@ -27,9 +27,7 @@ const courts: Record<string, string> = {
 
 const matchTypes: Record<string, string> = {
   cs: {
-    group: "Zákl. skupina",
     qf: "Čtvrtfinále",
-    sf: "Semifinále",
     ninth: "O 9. místo",
     seventh: "O 7. místo",
     fifth: "O 5. místo",
@@ -37,9 +35,7 @@ const matchTypes: Record<string, string> = {
     final: "Finále",
   },
   en: {
-    group: "Group stage",
     qf: "Quarterfinal",
-    sf: "Semifinal",
     ninth: "9th Place Match",
     seventh: "7th Place Match",
     fifth: "5th Place Match",
@@ -47,9 +43,7 @@ const matchTypes: Record<string, string> = {
     final: "Final",
   },
   pl: {
-    group: "Faza grupowa",
     qf: "Ćwierćfinał",
-    sf: "Półfinał",
     ninth: "Mecz o 9. miejsce",
     seventh: "Mecz o 7. miejsce",
     fifth: "Mecz o 5. miejsce",
@@ -128,14 +122,12 @@ function formatTime(datetime: string) {
             <col style="width: 80px;" />
             <col style="width: 140px;" />
             <col />
-            <col style="width: 150px;" />
           </colgroup>
           <thead>
             <tr>
               <th>{tr.schedule.time}</th>
               <th>{tr.schedule.hall}</th>
               <th>{tr.schedule.match}</th>
-              <th>{tr.schedule.type}</th>
             </tr>
           </thead>
           <tbody>
@@ -143,7 +135,7 @@ function formatTime(datetime: string) {
               den1.length === 0 ? (
                 <tr>
                   <td
-                    colspan="4"
+                    colspan="3"
                     class="muted"
                     style="text-align:center; padding:20px;"
                   >
@@ -161,10 +153,21 @@ function formatTime(datetime: string) {
                         {courts[m.court] ?? m.court ?? "—"}
                       </span>
                     </td>
-                    <td style="font-weight: 700;">
-                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    <td>
+                      <div style="font-weight: 700;">
+                        {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                      </div>
+                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {matchTypes[m.matchType] ?? m.matchType}
+                        </div>
+                      )}
+                      {m.matchType === "group" && m.group && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {tr.schedule.group_label} {m.group}
+                        </div>
+                      )}
                     </td>
-                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
                   </tr>
                 ))
               )
@@ -183,14 +186,12 @@ function formatTime(datetime: string) {
             <col style="width: 80px;" />
             <col style="width: 140px;" />
             <col />
-            <col style="width: 150px;" />
           </colgroup>
           <thead>
             <tr>
               <th>{tr.schedule.time}</th>
               <th>{tr.schedule.hall}</th>
               <th>{tr.schedule.match}</th>
-              <th>{tr.schedule.type}</th>
             </tr>
           </thead>
           <tbody>
@@ -198,7 +199,7 @@ function formatTime(datetime: string) {
               den2.length === 0 ? (
                 <tr>
                   <td
-                    colspan="4"
+                    colspan="3"
                     class="muted"
                     style="text-align:center; padding:20px;"
                   >
@@ -216,10 +217,21 @@ function formatTime(datetime: string) {
                         {courts[m.court] ?? m.court}
                       </span>
                     </td>
-                    <td style="font-weight: 700;">
-                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    <td>
+                      <div style="font-weight: 700;">
+                        {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                      </div>
+                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {matchTypes[m.matchType] ?? m.matchType}
+                        </div>
+                      )}
+                      {m.matchType === "group" && m.group && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {tr.schedule.group_label} {m.group}
+                        </div>
+                      )}
                     </td>
-                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
                   </tr>
                 ))
               )
@@ -240,14 +252,12 @@ function formatTime(datetime: string) {
                 <col style="width: 80px;" />
                 <col style="width: 140px;" />
                 <col />
-                <col style="width: 150px;" />
               </colgroup>
               <thead>
                 <tr>
                   <th>{tr.schedule.time}</th>
                   <th>{tr.schedule.hall}</th>
                   <th>{tr.schedule.match}</th>
-                  <th>{tr.schedule.type}</th>
                 </tr>
               </thead>
               <tbody>
@@ -261,10 +271,21 @@ function formatTime(datetime: string) {
                         {courts[m.court] ?? m.court}
                       </span>
                     </td>
-                    <td style="font-weight: 700;">
-                      {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                    <td>
+                      <div style="font-weight: 700;">
+                        {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                      </div>
+                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {matchTypes[m.matchType] ?? m.matchType}
+                        </div>
+                      )}
+                      {m.matchType === "group" && m.group && (
+                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                          {tr.schedule.group_label} {m.group}
+                        </div>
+                      )}
                     </td>
-                    <td>{matchTypes[m.matchType] ?? m.matchType}</td>
                   </tr>
                 ))}
               </tbody>

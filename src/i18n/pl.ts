@@ -33,7 +33,7 @@ export const pl = {
     time: 'Czas',
     hall: 'Hala',
     match: 'Mecz',
-    type: 'Typ',
+    group_label: 'Grupa',
   },
   results: {
     title: 'Wyniki meczów',
@@ -44,7 +44,6 @@ export const pl = {
     match: 'Mecz',
     time: 'Czas',
     hall: 'Hala',
-    type: 'Typ',
   },
   teams: {
     title: 'Drużyny i składy',

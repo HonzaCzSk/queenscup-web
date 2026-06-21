@@ -1,59 +1,67 @@
 ---
-import Layout from '../layouts/Layout.astro'
-import '../styles/global.css'
-import { t, getLang } from '../i18n/index'
+import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
+import { t, getLang } from "../i18n/index";
 
 interface Props {
-  lang: string
+  lang: string;
+  cat: "u11" | "u12" | "u13";
 }
 
-const { lang } = Astro.props
-const locale = getLang(lang)
-const tr = t(locale)
+const { lang, cat } = Astro.props;
+const locale = getLang(lang);
+const tr = t(locale);
 
-const scheduleUrl = lang === 'cs' ? '/rozpis' : `/${lang}/schedule`
-const infoUrl = lang === 'cs' ? '/info' : `/${lang}/info`
+const scheduleUrl =
+  lang === "cs" ? `/rozpis?cat=${cat}` : `/${lang}/schedule?cat=${cat}`;
+const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
 
 const categoryDetails = {
   cs: [
-    'U11 · ročník 2015 · Sokol HK',
-    'U12 · ročník 2014 · GAPA aréna',
-    'U13 · ročník 2013 · Sokol HK'
+    "U11 · ročník 2015 · Sokol HK",
+    "U12 · ročník 2014 · GAPA aréna",
+    "U13 · ročník 2013 · Sokol HK",
   ],
   en: [
-    'U11 · born 2015 · Sokol HK',
-    'U12 · born 2014 · GAPA Arena',
-    'U13 · born 2013 · Sokol HK'
+    "U11 · born 2015 · Sokol HK",
+    "U12 · born 2014 · GAPA Arena",
+    "U13 · born 2013 · Sokol HK",
   ],
   pl: [
-    'U11 · rocznik 2015 · Sokol HK',
-    'U12 · rocznik 2014 · GAPA Arena',
-    'U13 · rocznik 2013 · Sokol HK'
-  ]
-}[locale]
+    "U11 · rocznik 2015 · Sokol HK",
+    "U12 · rocznik 2014 · GAPA Arena",
+    "U13 · rocznik 2013 · Sokol HK",
+  ],
+}[locale];
 ---
 
-<Layout title={tr.nav.home} activePage="home" activeCategory="u11" lang={lang}>
+<Layout title={tr.nav.home} activePage="home" activeCategory={cat} lang={lang}>
   <main class="wrap">
     <section class="hero">
       <div class="hero__text">
-        <h1 class="h1">{tr.home.hero_title}</h1>
+        <h1 class="h1">{cat === "u13" ? "V4 Basketball Queens Cup" : tr.home.hero_title}</h1>
         <p class="muted">{tr.home.hero_subtitle}</p>
         <p class="lead">{tr.home.hero_date}</p>
         <div class="cta">
-          <a class="btn btn--primary" href={scheduleUrl}>{tr.home.btn_schedule}</a>
+          <a class="btn btn--primary" href={scheduleUrl}
+            >{tr.home.btn_schedule}</a
+          >
           <a class="btn btn--ghost" href={infoUrl}>{tr.home.btn_info}</a>
         </div>
       </div>
       <div class="hero__panel">
         <div class="panel">
           <div class="panel__title">
-            {lang === 'cs' ? 'Kategorie' : lang === 'pl' ? 'Kategorie' : 'Categories'}
+            {
+              lang === "cs"
+                ? "Kategorie"
+                : lang === "pl"
+                  ? "Kategorie"
+                  : "Categories"
+            }
           </div>
           <ul class="list">
-            {categoryDetails.map((detail) => (
-              <li>{detail}</li>
-            ))}
+            {categoryDetails.map((detail) => <li>{detail}</li>)}
           </ul>
         </div>
       </div>

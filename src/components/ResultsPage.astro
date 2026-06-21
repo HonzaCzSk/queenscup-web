@@ -26,6 +26,33 @@ const courts: Record<string, string> = {
   gapa: "GAPA aréna",
 };
 
+const matchTypes: Record<string, Record<string, string>> = {
+  cs: {
+    qf: "Čtvrtfinále",
+    ninth: "O 9. místo",
+    seventh: "O 7. místo",
+    fifth: "O 5. místo",
+    third: "O 3. místo",
+    final: "Finále",
+  },
+  en: {
+    qf: "Quarterfinal",
+    ninth: "9th Place Match",
+    seventh: "7th Place Match",
+    fifth: "5th Place Match",
+    third: "3rd Place Match",
+    final: "Final",
+  },
+  pl: {
+    qf: "Ćwierćfinał",
+    ninth: "Mecz o 9. miejsce",
+    seventh: "Mecz o 7. miejsce",
+    fifth: "Mecz o 5. miejsce",
+    third: "Mecz o 3. miejsce",
+    final: "Finał",
+  },
+};
+
 const catLabels: Record<string, Record<string, string>> = {
   cs: {
     u11: "U11 · Sokol HK",
@@ -147,8 +174,20 @@ function getQuarters(m: any) {
                               {courts[m.court] ?? m.court ?? "—"}
                             </span>
                           </td>
-                          <td style="font-weight: 700;">
-                            {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                          <td>
+                            <div style="font-weight: 700;">
+                              {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
+                            </div>
+                            {m.matchType && m.matchType !== "group" && (matchTypes[locale][m.matchType] || m.matchType) && (
+                              <div class="muted" style="font-size: 11px; font-weight: normal; margin-top: 2px;">
+                                {matchTypes[locale][m.matchType] ?? m.matchType}
+                              </div>
+                            )}
+                            {m.matchType === "group" && m.group && (
+                              <div class="muted" style="font-size: 11px; font-weight: normal; margin-top: 2px;">
+                                {locale === "en" ? "Group" : locale === "pl" ? "Grupa" : "Skupina"} {m.group}
+                              </div>
+                            )}
                           </td>
                           <td>
                             <div class="score-main">{getScore(m)}</div>

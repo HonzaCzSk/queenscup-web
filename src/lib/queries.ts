@@ -37,6 +37,7 @@ export async function getMatches(category: string) {
       venue,
       court,
       matchType,
+      group,
       scoreA,
       scoreB,
       status,
