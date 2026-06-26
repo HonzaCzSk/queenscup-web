@@ -18,12 +18,16 @@ export const en = {
   home: {
     hero_title: 'Queens Cup',
     hero_subtitle: 'International Girls Minibasketball Tournament',
+    hero_desc: 'An international minibasketball tournament for girls across three age categories – U11, U12 and U13. Teams from across Europe will compete in Hradec Králové for the overall victory. The tournament is organized by the Hradecké lvice basketball club.',
     hero_date: 'September 2026 · Hradec Králové',
     btn_schedule: 'Match Schedule',
     btn_info: 'Visitor Info',
     how_title: 'How the tournament works',
     why_title: 'Why come',
     partners_title: 'Tournament Partners',
+    hero_date_u11: 'September 11–13, 2026',
+    hero_date_u12: 'September 4–6, 2026',
+    hero_date_u13: 'September 4–6, 2026',
   },
   schedule: {
     title: 'Match Schedule',

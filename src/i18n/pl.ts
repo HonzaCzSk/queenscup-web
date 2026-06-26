@@ -18,12 +18,16 @@ export const pl = {
   home: {
     hero_title: 'Queens Cup',
     hero_subtitle: 'Międzynarodowy turniej miniкосzykówki dziewcząt',
+    hero_desc: 'Międzynarodowy turniej miniкосzykówki dla dziewcząt w trzech kategoriach wiekowych – U11, U12 i U13. Drużyny z różnych stron Europy będą rywalizować w Hradec Králové o zwycięstwo. Turniej organizowany jest przez klub koszykarski Hradecké lvice.',
     hero_date: 'Wrzesień 2026 · Hradec Králové',
     btn_schedule: 'Harmonogram meczów',
     btn_info: 'Info dla gości',
     how_title: 'Jak przebiega turniej',
     why_title: 'Dlaczego warto przyjść',
     partners_title: 'Partnerzy turnieju',
+    hero_date_u11: '11–13 września 2026',
+    hero_date_u12: '4–6 września 2026',
+    hero_date_u13: '4–6 września 2026',
   },
   schedule: {
     title: 'Harmonogram meczów',

@@ -39,9 +39,22 @@ const categoryDetails = {
   <main class="wrap">
     <section class="hero">
       <div class="hero__text">
-        <h1 class="h1">{cat === "u13" ? "V4 Basketball Queens Cup" : tr.home.hero_title}</h1>
+        <h1 class="h1">
+          {cat === "u13" ? "V4 Basketball Queens Cup" : tr.home.hero_title}
+        </h1>
         <p class="muted">{tr.home.hero_subtitle}</p>
-        <p class="lead">{tr.home.hero_date}</p>
+        <p style="font-size: 14px; margin: 8px 0 10px 0;">
+          {tr.home.hero_desc}
+        </p>
+        <p class="lead">
+          {
+            cat === "u13"
+              ? tr.home.hero_date_u13
+              : cat === "u12"
+                ? tr.home.hero_date_u12
+                : tr.home.hero_date_u11
+          }
+        </p>
         <div class="cta">
           <a class="btn btn--primary" href={scheduleUrl}
             >{tr.home.btn_schedule}</a
@@ -50,21 +63,111 @@ const categoryDetails = {
         </div>
       </div>
       <div class="hero__panel">
-        <div class="panel">
-          <div class="panel__title">
-            {
-              lang === "cs"
-                ? "Kategorie"
-                : lang === "pl"
-                  ? "Kategorie"
-                  : "Categories"
-            }
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num-row">
+              <span class="stat-num" data-target="43">0</span>
+              <span class="stat-plus">+</span>
+            </div>
+            <span class="stat-label">
+              {lang === "cs" ? "zápasů" : lang === "pl" ? "meczów" : "matches"}
+            </span>
           </div>
-          <ul class="list">
-            {categoryDetails.map((detail) => <li>{detail}</li>)}
-          </ul>
+          <div class="stat-card">
+            <span class="stat-num" data-target="3">0</span>
+            <span class="stat-label">
+              {
+                lang === "cs"
+                  ? "kategorie"
+                  : lang === "pl"
+                    ? "kategorie"
+                    : "categories"
+              }
+            </span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" data-target="7">0</span>
+            <span class="stat-label">
+              {
+                lang === "cs"
+                  ? "národností"
+                  : lang === "pl"
+                    ? "narodowości"
+                    : "nations"
+              }
+            </span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" data-target="6">0</span>
+            <span class="stat-label">
+              {
+                lang === "cs"
+                  ? "dní turnaje"
+                  : lang === "pl"
+                    ? "dni turnieju"
+                    : "tournament days"
+              }
+            </span>
+          </div>
+          <div class="stat-card stat-card--flags">
+            <div class="stat-flags">
+              <span class="fi fi-cz" title="Česká republika"></span>
+              <span class="fi fi-pl" title="Polsko"></span>
+              <span class="fi fi-sk" title="Slovensko"></span>
+              <span class="fi fi-hu" title="Maďarsko"></span>
+              <span class="fi fi-de" title="Německo"></span>
+              <span class="fi fi-lv" title="Lotyšsko"></span>
+              <span class="fi fi-si" title="Slovinsko"></span>
+            </div>
+            <span class="stat-label">
+              {
+                lang === "cs"
+                  ? "Hradec Králové · září 2026"
+                  : lang === "pl"
+                    ? "Hradec Králové · wrzesień 2026"
+                    : "Hradec Králové · September 2026"
+              }
+            </span>
+          </div>
         </div>
       </div>
+
+      <script is:inline>
+        (function () {
+          function animateCounter(el) {
+            const target = parseInt(el.getAttribute("data-target"));
+            const duration = 1200;
+            const start = performance.now();
+
+            function update(now) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const ease = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.floor(ease * target);
+              if (progress < 1) requestAnimationFrame(update);
+              else el.textContent = target;
+            }
+            requestAnimationFrame(update);
+          }
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target
+                    .querySelectorAll(".stat-num[data-target]")
+                    .forEach(animateCounter);
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.3 },
+          );
+
+          const grid = document.querySelector(".stats-grid");
+          if (grid) observer.observe(grid);
+        })();
+      </script>
     </section>
   </main>
 </Layout>

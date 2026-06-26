@@ -88,16 +88,18 @@ const dayLabels = {
   },
 }[locale];
 
+const showStream = cat === "u13";
+
 function formatTime(datetime: string) {
   if (!datetime) return "—";
   return new Date(datetime).toLocaleTimeString(
     locale === "cs" ? "cs-CZ" : locale === "pl" ? "pl-PL" : "en-US",
-    {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    },
+    { hour: "2-digit", minute: "2-digit", hour12: false },
   );
+}
+
+function isStreamMatch(m: any) {
+  return m.court === "court1";
 }
 ---
 
@@ -122,12 +124,14 @@ function formatTime(datetime: string) {
             <col style="width: 80px;" />
             <col style="width: 140px;" />
             <col />
+            {showStream && <col style="width: 110px;" />}
           </colgroup>
           <thead>
             <tr>
               <th>{tr.schedule.time}</th>
               <th>{tr.schedule.hall}</th>
               <th>{tr.schedule.match}</th>
+              {showStream && <th>Stream</th>}
             </tr>
           </thead>
           <tbody>
@@ -135,7 +139,7 @@ function formatTime(datetime: string) {
               den1.length === 0 ? (
                 <tr>
                   <td
-                    colspan="3"
+                    colspan="4"
                     class="muted"
                     style="text-align:center; padding:20px;"
                   >
@@ -157,17 +161,41 @@ function formatTime(datetime: string) {
                       <div style="font-weight: 700;">
                         {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
                       </div>
-                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
-                          {matchTypes[m.matchType] ?? m.matchType}
-                        </div>
-                      )}
+                      {m.matchType &&
+                        m.matchType !== "group" &&
+                        (matchTypes[m.matchType] || m.matchType) && (
+                          <div
+                            class="muted"
+                            style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                          >
+                            {matchTypes[m.matchType] ?? m.matchType}
+                          </div>
+                        )}
                       {m.matchType === "group" && m.group && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                        <div
+                          class="muted"
+                          style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                        >
                           {tr.schedule.group_label} {m.group}
                         </div>
                       )}
                     </td>
+                    {showStream && (
+                      <td>
+                        {m.court === "court1" ? (
+                          <a
+                            href="https://www.tvcom.cz/"
+                            target="_blank"
+                            rel="noopener"
+                            class="tvcom-badge"
+                          >
+                            <span>STREAM</span>
+                          </a>
+                        ) : (
+                          <span class="tvcom-badge--empty">—</span>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 ))
               )
@@ -186,12 +214,14 @@ function formatTime(datetime: string) {
             <col style="width: 80px;" />
             <col style="width: 140px;" />
             <col />
+            {showStream && <col style="width: 110px;" />}
           </colgroup>
           <thead>
             <tr>
               <th>{tr.schedule.time}</th>
               <th>{tr.schedule.hall}</th>
               <th>{tr.schedule.match}</th>
+              {showStream && <th>Stream</th>}
             </tr>
           </thead>
           <tbody>
@@ -199,7 +229,7 @@ function formatTime(datetime: string) {
               den2.length === 0 ? (
                 <tr>
                   <td
-                    colspan="3"
+                    colspan="4"
                     class="muted"
                     style="text-align:center; padding:20px;"
                   >
@@ -212,26 +242,50 @@ function formatTime(datetime: string) {
                     <td>{formatTime(m.datetime)}</td>
                     <td>
                       <span
-                        class={`pill ${m.court === "sokol" ? "pill--h1" : "pill--h2"}`}
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
                       >
-                        {courts[m.court] ?? m.court}
+                        {courts[m.court] ?? m.court ?? "—"}
                       </span>
                     </td>
                     <td>
                       <div style="font-weight: 700;">
                         {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
                       </div>
-                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
-                          {matchTypes[m.matchType] ?? m.matchType}
-                        </div>
-                      )}
+                      {m.matchType &&
+                        m.matchType !== "group" &&
+                        (matchTypes[m.matchType] || m.matchType) && (
+                          <div
+                            class="muted"
+                            style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                          >
+                            {matchTypes[m.matchType] ?? m.matchType}
+                          </div>
+                        )}
                       {m.matchType === "group" && m.group && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                        <div
+                          class="muted"
+                          style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                        >
                           {tr.schedule.group_label} {m.group}
                         </div>
                       )}
                     </td>
+                    {showStream && (
+                      <td>
+                        {m.court === "court1" ? (
+                          <a
+                            href="https://www.tvcom.cz/"
+                            target="_blank"
+                            rel="noopener"
+                            class="tvcom-badge"
+                          >
+                            <span>STREAM</span>
+                          </a>
+                        ) : (
+                          <span class="tvcom-badge--empty">—</span>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 ))
               )
@@ -241,7 +295,7 @@ function formatTime(datetime: string) {
       </div>
     </section>
 
-    <!-- Den 3 (only show if there are matches on Day 3) -->
+    <!-- Den 3 -->
     {
       den3.length > 0 && (
         <section class="card" style="margin-top: 24px;">
@@ -252,12 +306,14 @@ function formatTime(datetime: string) {
                 <col style="width: 80px;" />
                 <col style="width: 140px;" />
                 <col />
+                {showStream && <col style="width: 110px;" />}
               </colgroup>
               <thead>
                 <tr>
                   <th>{tr.schedule.time}</th>
                   <th>{tr.schedule.hall}</th>
                   <th>{tr.schedule.match}</th>
+                  {showStream && <th>Stream</th>}
                 </tr>
               </thead>
               <tbody>
@@ -266,26 +322,50 @@ function formatTime(datetime: string) {
                     <td>{formatTime(m.datetime)}</td>
                     <td>
                       <span
-                        class={`pill ${m.court === "sokol" ? "pill--h1" : "pill--h2"}`}
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
                       >
-                        {courts[m.court] ?? m.court}
+                        {courts[m.court] ?? m.court ?? "—"}
                       </span>
                     </td>
                     <td>
                       <div style="font-weight: 700;">
                         {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
                       </div>
-                      {m.matchType && m.matchType !== "group" && (matchTypes[m.matchType] || m.matchType) && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
-                          {matchTypes[m.matchType] ?? m.matchType}
-                        </div>
-                      )}
+                      {m.matchType &&
+                        m.matchType !== "group" &&
+                        (matchTypes[m.matchType] || m.matchType) && (
+                          <div
+                            class="muted"
+                            style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                          >
+                            {matchTypes[m.matchType] ?? m.matchType}
+                          </div>
+                        )}
                       {m.matchType === "group" && m.group && (
-                        <div class="muted" style="font-size: 12px; font-weight: normal; margin-top: 2px;">
+                        <div
+                          class="muted"
+                          style="font-size: 12px; font-weight: normal; margin-top: 2px;"
+                        >
                           {tr.schedule.group_label} {m.group}
                         </div>
                       )}
                     </td>
+                    {showStream && (
+                      <td>
+                        {m.court === "court1" ? (
+                          <a
+                            href="https://www.tvcom.cz/"
+                            target="_blank"
+                            rel="noopener"
+                            class="tvcom-badge"
+                          >
+                            <span>STREAM</span>
+                          </a>
+                        ) : (
+                          <span class="tvcom-badge--empty">—</span>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>
