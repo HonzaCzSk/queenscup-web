@@ -159,21 +159,49 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
             >
           </div>
 
-          <!-- Dark mode -->
-          <button
-            class="themebtn"
+          <!-- Dark mode toggle -->
+          <div
+            class="theme-toggle"
             id="themeToggle"
-            type="button"
-            aria-label="Přepnout motiv">DARK</button
+            role="group"
+            aria-label="Barevný motiv"
           >
+            <button class="theme-seg" data-mode="dark" type="button">
+              <span class="theme-seg__label">D</span>
+              <span class="theme-seg__tip">Dark</span>
+            </button>
+            <button class="theme-seg" data-mode="light" type="button">
+              <span class="theme-seg__label">L</span>
+              <span class="theme-seg__tip">Light</span>
+            </button>
+            <button class="theme-seg" data-mode="system" type="button">
+              <span class="theme-seg__label">S</span>
+              <span class="theme-seg__tip">System</span>
+            </button>
+          </div>
 
           <!-- Hamburger -->
           <button
             class="menubtn"
             id="menuToggle"
             type="button"
-            aria-label="Otevřít menu">☰</button
+            aria-label="Otevřít menu"
           >
+            <svg
+              width="16"
+              height="12"
+              viewBox="0 0 16 12"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="0" y="0" width="16" height="2" rx="1" fill="white"
+              ></rect>
+              <rect x="0" y="5" width="16" height="2" rx="1" fill="white"
+              ></rect>
+              <rect x="5" y="10" width="11" height="2" rx="1" fill="white"
+              ></rect>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -199,55 +227,66 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
         <div class="menu__links">
           <a
             class={`menu__link ${activePage === "home" ? "is-active" : ""}`}
-            href={lang === "cs" ? "/" : `/${lang}/`}>{tr.nav.home}</a
+            href={lang === "cs" ? "/" : `/${lang}/`}
+          >
+            <span class="menu__link__icon">🏠</span>{tr.nav.home}</a
           >
           <a
             class={`menu__link ${activePage === "schedule" ? "is-active" : ""}`}
             href={lang === "cs" ? "/rozpis" : `/${lang}/schedule`}
-            >{tr.nav.schedule}</a
+          >
+            <span class="menu__link__icon">📅</span>{tr.nav.schedule}</a
           >
           <a
             class={`menu__link ${activePage === "results" ? "is-active" : ""}`}
             href={lang === "cs" ? "/vysledky" : `/${lang}/results`}
-            >{tr.nav.results}</a
+          >
+            <span class="menu__link__icon">🏀</span>{tr.nav.results}</a
           >
           <a
             class={`menu__link ${activePage === "bracket" ? "is-active" : ""}`}
             href={lang === "cs" ? "/pavouk" : `/${lang}/bracket`}
-            >{tr.nav.bracket}</a
+          >
+            <span class="menu__link__icon">🏆</span>{tr.nav.bracket}</a
           >
           <a
             class={`menu__link ${activePage === "teams" ? "is-active" : ""}`}
-            href={lang === "cs" ? "/tymy" : `/${lang}/teams`}>{tr.nav.teams}</a
+            href={lang === "cs" ? "/tymy" : `/${lang}/teams`}
+          >
+            <span class="menu__link__icon">👥</span>{tr.nav.teams}</a
           >
           <a
             class={`menu__link ${activePage === "info" ? "is-active" : ""}`}
-            href={lang === "cs" ? "/info" : `/${lang}/info`}>{tr.nav.info}</a
+            href={lang === "cs" ? "/info" : `/${lang}/info`}
+          >
+            <span class="menu__link__icon">ℹ️</span>{tr.nav.info}</a
           >
           <a
             class={`menu__link ${activePage === "contacts" ? "is-active" : ""}`}
             href={lang === "cs" ? "/kontakty" : `/${lang}/contacts`}
-            >{tr.nav.contacts}</a
+          >
+            <span class="menu__link__icon">📞</span>{tr.nav.contacts}</a
           >
           <a
             class={`menu__link ${activePage === "photos" ? "is-active" : ""}`}
             href={lang === "cs" ? "/fotky" : `/${lang}/photos`}
-            >{tr.nav.photos}</a
+          >
+            <span class="menu__link__icon">📷</span>{tr.nav.photos}</a
           >
         </div>
-        <!-- Kategorie v menu -->
-        <div class="menu__cats">
+        <!-- Jazyk v menu -->
+        <div class="menu__lang">
           <a
-            class={`cattab ${activeCategory === "u11" ? "is-active" : ""}`}
-            href="?cat=u11">{tr.categories.u11}</a
+            class={`langbtn ${lang === "cs" ? "is-active" : ""}`}
+            href={langUrls.cs}>CZ</a
           >
           <a
-            class={`cattab ${activeCategory === "u12" ? "is-active" : ""}`}
-            href="?cat=u12">{tr.categories.u12}</a
+            class={`langbtn ${lang === "en" ? "is-active" : ""}`}
+            href={langUrls.en}>EN</a
           >
           <a
-            class={`cattab ${activeCategory === "u13" ? "is-active" : ""}`}
-            href="?cat=u13">{tr.categories.u13}</a
+            class={`langbtn ${lang === "pl" ? "is-active" : ""}`}
+            href={langUrls.pl}>PL</a
           >
         </div>
       </div>
@@ -319,133 +358,129 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
     <!-- FOOTER -->
     <footer class="footer">
       <div class="wrap footer__wrap">
-        <div class="partners">
-          <div class="partners__title">{tr.home.partners_title}</div>
+        {
+          partners.length > 0 && (
+            <div class="partners">
+              <div class="partners__title">{tr.home.partners_title}</div>
 
-          {
-            generalPartners.length > 0 && (
-              <div>
-                <div class="partners__general-label">
-                  {lang === "cs"
-                    ? "Generální partner"
-                    : lang === "pl"
-                      ? "Partner generalny"
-                      : "General Partner"}
+              {generalPartners.length > 0 && (
+                <div>
+                  <div class="partners__general-label">
+                    {lang === "cs"
+                      ? "Generální partner"
+                      : lang === "pl"
+                        ? "Partner generalny"
+                        : "General Partner"}
+                  </div>
+                  <div class="partners__general">
+                    {generalPartners.map((p: any) => (
+                      <a
+                        href={p.url ?? "#"}
+                        class="partner"
+                        target="_blank"
+                        rel="noopener"
+                        title={p.name}
+                      >
+                        {p.logo ? (
+                          <img src={p.logo} alt={p.name} />
+                        ) : (
+                          <span>{p.name}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div class="partners__general">
-                  {generalPartners.map((p: any) => (
-                    <a
-                      href={p.url ?? "#"}
-                      class="partner"
-                      target="_blank"
-                      rel="noopener"
-                      title={p.name}
-                    >
-                      {p.logo ? (
-                        <img src={p.logo} alt={p.name} />
-                      ) : (
-                        <span>{p.name}</span>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )
-          }
+              )}
 
-          {
-            mainPartners.length > 0 && (
-              <div>
-                <div class="partners__section-label">
-                  {lang === "cs"
-                    ? "Hlavní partneři"
-                    : lang === "pl"
-                      ? "Partnerzy główni"
-                      : "Main Partners"}
+              {mainPartners.length > 0 && (
+                <div>
+                  <div class="partners__section-label">
+                    {lang === "cs"
+                      ? "Hlavní partneři"
+                      : lang === "pl"
+                        ? "Partnerzy główni"
+                        : "Main Partners"}
+                  </div>
+                  <div class="partners__row">
+                    {mainPartners.map((p: any) => (
+                      <a
+                        href={p.url ?? "#"}
+                        class="partner partner--main"
+                        target="_blank"
+                        rel="noopener"
+                        title={p.name}
+                      >
+                        {p.logo ? (
+                          <img src={p.logo} alt={p.name} />
+                        ) : (
+                          <span>{p.name}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div class="partners__row">
-                  {mainPartners.map((p: any) => (
-                    <a
-                      href={p.url ?? "#"}
-                      class="partner partner--main"
-                      target="_blank"
-                      rel="noopener"
-                      title={p.name}
-                    >
-                      {p.logo ? (
-                        <img src={p.logo} alt={p.name} />
-                      ) : (
-                        <span>{p.name}</span>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )
-          }
+              )}
 
-          {
-            regularPartners.length > 0 && (
-              <div>
-                <div class="partners__section-label">
-                  {lang === "cs"
-                    ? "Partneři"
-                    : lang === "pl"
-                      ? "Partnerzy"
-                      : "Partners"}
+              {regularPartners.length > 0 && (
+                <div>
+                  <div class="partners__section-label">
+                    {lang === "cs"
+                      ? "Partneři"
+                      : lang === "pl"
+                        ? "Partnerzy"
+                        : "Partners"}
+                  </div>
+                  <div class="partners__row">
+                    {regularPartners.map((p: any) => (
+                      <a
+                        href={p.url ?? "#"}
+                        class="partner"
+                        target="_blank"
+                        rel="noopener"
+                        title={p.name}
+                      >
+                        {p.logo ? (
+                          <img src={p.logo} alt={p.name} />
+                        ) : (
+                          <span>{p.name}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div class="partners__row">
-                  {regularPartners.map((p: any) => (
-                    <a
-                      href={p.url ?? "#"}
-                      class="partner"
-                      target="_blank"
-                      rel="noopener"
-                      title={p.name}
-                    >
-                      {p.logo ? (
-                        <img src={p.logo} alt={p.name} />
-                      ) : (
-                        <span>{p.name}</span>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )
-          }
+              )}
 
-          {
-            mediaPartners.length > 0 && (
-              <div>
-                <div class="partners__section-label">
-                  {lang === "cs"
-                    ? "Mediální partneři"
-                    : lang === "pl"
-                      ? "Partnerzy medialni"
-                      : "Media Partners"}
+              {mediaPartners.length > 0 && (
+                <div>
+                  <div class="partners__section-label">
+                    {lang === "cs"
+                      ? "Mediální partneři"
+                      : lang === "pl"
+                        ? "Partnerzy medialni"
+                        : "Media Partners"}
+                  </div>
+                  <div class="partners__row">
+                    {mediaPartners.map((p: any) => (
+                      <a
+                        href={p.url ?? "#"}
+                        class="partner"
+                        target="_blank"
+                        rel="noopener"
+                        title={p.name}
+                      >
+                        {p.logo ? (
+                          <img src={p.logo} alt={p.name} />
+                        ) : (
+                          <span>{p.name}</span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-                <div class="partners__row">
-                  {mediaPartners.map((p: any) => (
-                    <a
-                      href={p.url ?? "#"}
-                      class="partner"
-                      target="_blank"
-                      rel="noopener"
-                      title={p.name}
-                    >
-                      {p.logo ? (
-                        <img src={p.logo} alt={p.name} />
-                      ) : (
-                        <span>{p.name}</span>
-                      )}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )
-          }
-        </div>
+              )}
+            </div>
+          )
+        }
         <div class="footer__bar">
           <div class="footer__left-wrap">
             <div class="footer__left">
