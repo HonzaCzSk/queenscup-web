@@ -27,9 +27,6 @@
       const mode = btn.dataset.mode;
       const isActive = mode === active;
       btn.classList.toggle("is-active", isActive);
-      // aktivní = celý název, neaktivní = první písmeno
-      const names = { dark: "Dark", light: "Light", system: "System" };
-      btn.querySelector(".theme-seg__label").textContent = isActive ? names[mode] : names[mode][0];
     });
   }
 

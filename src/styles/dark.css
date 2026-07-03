@@ -190,7 +190,7 @@
 
 /* Dark mode – mobile menu panel (hamburger) */
 :root[data-theme="dark"] .menu__panel {
-  background: rgba(11, 11, 14, .96);
+  background: var(--accent2) !important;
   border-left-color: var(--line);
 }
 

@@ -76,7 +76,7 @@ main {
 
 /* ── Menu panel – dark redesign ── */
 .menu__panel {
-  background: #111827 !important;
+  background: var(--accent2) !important;
   border-left: 1px solid rgba(255, 255, 255, .08) !important;
 }
 
@@ -172,69 +172,135 @@ main {
   border-radius: 8px;
   padding: 2px;
   gap: 1px;
+  position: relative;
 }
 
 .theme-seg {
   position: relative;
-  height: 22px;
-  padding: 0 7px;
+  height: 26px;
   border-radius: 6px;
   border: none;
   background: transparent;
   color: rgba(255, 255, 255, .4);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
   letter-spacing: .04em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background .12s, color .12s;
   white-space: nowrap;
+  overflow: hidden;
+  /* šířka řízená přes max-width pro smooth animaci */
+  max-width: 28px;
+  transition: max-width .25s cubic-bezier(0.4, 0, 0.2, 1), background .12s, color .12s;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-seg__label {
+  padding: 0 10px;
+  display: block;
+  white-space: nowrap;
+}
+
+.theme-seg__first {
+  display: inline;
+}
+
+.theme-seg__rest {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  vertical-align: bottom;
+  transition: max-width .25s cubic-bezier(0.4, 0, 0.2, 1), opacity .2s ease;
 }
 
 .theme-seg.is-active {
   background: rgba(255, 255, 255, .15);
   color: #fff;
+  max-width: 80px;
 }
 
-.theme-seg:hover:not(.is-active) {
-  color: rgba(255, 255, 255, .7);
-}
-
-/* Tooltip – jen desktop */
-.theme-seg__tip {
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, .85);
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .12s;
-  z-index: 100;
+.theme-seg.is-active .theme-seg__rest {
+  max-width: 60px;
+  opacity: 1;
 }
 
 @media (hover: hover) {
-  .theme-seg:hover .theme-seg__tip {
+  .theme-seg:hover:not(.is-active) {
+    color: rgba(255, 255, 255, .9);
+    max-width: 80px;
+    background: rgba(255, 255, 255, .08);
+  }
+
+  .theme-seg:hover .theme-seg__rest {
+    max-width: 60px;
     opacity: 1;
   }
 }
 
-/* Na mobilu toggle trochu menší */
+/* Skrýt starý tip element */
+.theme-seg__tip {
+  display: none !important;
+}
+
+/* Na mobilu – menší font, stejné proporce */
 @media (max-width: 700px) {
-  .theme-seg {
-    font-size: 8px;
-    padding: 0 5px;
+  .theme-toggle {
+    padding: 2px;
+    gap: 1px;
   }
 
-  .theme-seg__tip {
-    display: none;
+  .theme-seg {
+    font-size: 9px;
+    height: 22px;
+    max-width: 22px;
   }
+
+  .theme-seg__label {
+    padding: 0 7px;
+  }
+
+  .theme-seg.is-active {
+    max-width: 70px;
+  }
+
+  .theme-seg.is-active .theme-seg__rest {
+    max-width: 50px;
+  }
+
+  @media (hover: hover) {
+    .theme-seg:hover:not(.is-active) {
+      max-width: 70px;
+    }
+
+    .theme-seg:hover .theme-seg__rest {
+      max-width: 50px;
+    }
+  }
+}
+
+/* ── Hamburger button ── */
+.menubtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e8001c;
+  border: none;
+  color: #fff;
+  padding: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+
+.menubtn:hover {
+  opacity: 0.85;
 }
 
 /* Hero override – nechceme clip na panel */
