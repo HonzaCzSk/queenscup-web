@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- CS (default) -->
+  <url>
+    <loc>https://queenscup2026.com/</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/rozpis</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/rozpis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/schedule"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/schedule"/>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/vysledky</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/vysledky"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/results"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/results"/>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pavouk</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/pavouk"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/bracket"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/bracket"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/tymy</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/tymy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/teams"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/teams"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/info</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/info"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/info"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/info"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/kontakty</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/kontakty"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/contacts"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/contacts"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/fotky</loc>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://queenscup2026.com/fotky"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://queenscup2026.com/en/photos"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://queenscup2026.com/pl/photos"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- EN -->
+  <url>
+    <loc>https://queenscup2026.com/en/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/schedule</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/results</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/bracket</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/teams</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/info</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/contacts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/en/photos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- PL -->
+  <url>
+    <loc>https://queenscup2026.com/pl/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/schedule</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/results</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/bracket</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/teams</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/info</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/contacts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://queenscup2026.com/pl/photos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
