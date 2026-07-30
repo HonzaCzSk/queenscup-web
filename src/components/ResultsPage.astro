@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
-import { getMatches } from "../lib/queries";
+import { getMatches, getSettings } from "../lib/queries";
 import { t, getLang } from "../i18n/index";
 
 interface Props {
@@ -14,6 +14,8 @@ const locale = getLang(lang);
 const tr = t(locale);
 
 const matches = await getMatches(cat);
+const settings = await getSettings();
+const showSchedule = settings?.showSchedule?.[cat] ?? true;
 
 const den1 = matches.filter((m: any) => m.day === 1);
 const den2 = matches.filter((m: any) => m.day === 2);
@@ -134,107 +136,137 @@ function getQuarters(m: any) {
     </section>
 
     {
-      [
-        { label: dayLabels[locale].day1, matches: den1 },
-        { label: dayLabels[locale].day2, matches: den2 },
-        { label: dayLabels[locale].day3, matches: den3 },
-      ].map(
-        ({ label, matches }) =>
-          matches.length > 0 && (
-            <section class="card">
-              <h2 class="h2">{label}</h2>
-              <div class="tablewrap">
-                <table class="schedule results">
-                  <colgroup>
-                    <col style="width: 75px;" />
-                    <col style="width: 110px;" />
-                    <col />
-                    <col style="width: 110px;" />
-                    <col style="width: 80px;" />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th>{tr.results.time}</th>
-                      <th>{tr.results.hall}</th>
-                      <th>{tr.results.match}</th>
-                      <th>{tr.results.score}</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {matches.map((m: any) => {
-                      const quarters = getQuarters(m);
-                      return (
-                        <tr class={getRowClass(m)}>
-                          <td>{formatTime(m.datetime)}</td>
-                          <td>
-                            <span
-                              class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
-                            >
-                              {courts[m.court] ?? m.court ?? "—"}
-                            </span>
-                          </td>
-                          <td>
-                            <div style="font-weight: 700;">
-                              {m.teamA?.name ?? "?"} – {m.teamB?.name ?? "?"}
-                            </div>
-                            {m.matchType && m.matchType !== "group" && (matchTypes[locale][m.matchType] || m.matchType) && (
-                              <div class="muted" style="font-size: 11px; font-weight: normal; margin-top: 2px;">
-                                {matchTypes[locale][m.matchType] ?? m.matchType}
-                              </div>
-                            )}
-                            {m.matchType === "group" && m.group && (
-                              <div class="muted" style="font-size: 11px; font-weight: normal; margin-top: 2px;">
-                                {locale === "en" ? "Group" : locale === "pl" ? "Grupa" : "Skupina"} {m.group}
-                              </div>
-                            )}
-                          </td>
-                          <td>
-                            <div class="score-main">{getScore(m)}</div>
-                            {quarters && (
-                              <div class="qscore" style="margin-top: 4px;">
-                                <table
-                                  class="quarters"
-                                  style="font-size: 11px; opacity: 0.7;"
-                                >
-                                  <thead>
-                                    <tr>
-                                      {quarters.map((_: any, i: number) => (
-                                        <th style="padding: 1px 6px; text-align:center;">
-                                          Q{i + 1}
-                                        </th>
-                                      ))}
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      {quarters.map((q: any) => (
-                                        <td style="padding: 1px 6px; text-align:center;">
-                                          {q.scoreA ?? "—"}
-                                        </td>
-                                      ))}
-                                    </tr>
-                                    <tr>
-                                      {quarters.map((q: any) => (
-                                        <td style="padding: 1px 6px; text-align:center;">
-                                          {q.scoreB ?? "—"}
-                                        </td>
-                                      ))}
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            )}
-                          </td>
-                          <td set:html={getStatusBadge(m, locale)} />
+      !showSchedule ? (
+        <section class="card" style="text-align: center; padding: 48px 24px;">
+          <p style="font-size: 18px; font-weight: 700; opacity: 0.5;">
+            {locale === "cs"
+              ? "Výsledky budou k dispozici po zahájení turnaje."
+              : locale === "pl"
+                ? "Wyniki będą dostępne po rozpoczęciu turnieju."
+                : "Results will be available once the tournament begins."}
+          </p>
+        </section>
+      ) : (
+        <>
+          {[
+            { label: dayLabels[locale].day1, matches: den1 },
+            { label: dayLabels[locale].day2, matches: den2 },
+            { label: dayLabels[locale].day3, matches: den3 },
+          ].map(
+            ({ label, matches }) =>
+              matches.length > 0 && (
+                <section class="card">
+                  <h2 class="h2">{label}</h2>
+                  <div class="tablewrap">
+                    <table class="schedule results">
+                      <colgroup>
+                        <col style="width: 75px;" />
+                        <col style="width: 110px;" />
+                        <col />
+                        <col style="width: 110px;" />
+                        <col style="width: 80px;" />
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>{tr.results.time}</th>
+                          <th>{tr.results.hall}</th>
+                          <th>{tr.results.match}</th>
+                          <th>{tr.results.score}</th>
+                          <th>Status</th>
                         </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </section>
-          ),
+                      </thead>
+                      <tbody>
+                        {matches.map((m: any) => {
+                          const quarters = getQuarters(m);
+                          return (
+                            <tr class={getRowClass(m)}>
+                              <td>{formatTime(m.datetime)}</td>
+                              <td>
+                                <span
+                                  class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
+                                >
+                                  {courts[m.court] ?? m.court ?? "—"}
+                                </span>
+                              </td>
+                              <td>
+                                <div style="font-weight: 700;">
+                                  {m.teamA?.name ?? "?"} –{" "}
+                                  {m.teamB?.name ?? "?"}
+                                </div>
+                                {m.matchType &&
+                                  m.matchType !== "group" &&
+                                  (matchTypes[locale][m.matchType] ||
+                                    m.matchType) && (
+                                    <div
+                                      class="muted"
+                                      style="font-size: 11px; font-weight: normal; margin-top: 2px;"
+                                    >
+                                      {matchTypes[locale][m.matchType] ??
+                                        m.matchType}
+                                    </div>
+                                  )}
+                                {m.matchType === "group" && m.group && (
+                                  <div
+                                    class="muted"
+                                    style="font-size: 11px; font-weight: normal; margin-top: 2px;"
+                                  >
+                                    {locale === "en"
+                                      ? "Group"
+                                      : locale === "pl"
+                                        ? "Grupa"
+                                        : "Skupina"}{" "}
+                                    {m.group}
+                                  </div>
+                                )}
+                              </td>
+                              <td>
+                                <div class="score-main">{getScore(m)}</div>
+                                {quarters && (
+                                  <div class="qscore" style="margin-top: 4px;">
+                                    <table
+                                      class="quarters"
+                                      style="font-size: 11px; opacity: 0.7;"
+                                    >
+                                      <thead>
+                                        <tr>
+                                          {quarters.map((_: any, i: number) => (
+                                            <th style="padding: 1px 6px; text-align:center;">
+                                              Q{i + 1}
+                                            </th>
+                                          ))}
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          {quarters.map((q: any) => (
+                                            <td style="padding: 1px 6px; text-align:center;">
+                                              {q.scoreA ?? "—"}
+                                            </td>
+                                          ))}
+                                        </tr>
+                                        <tr>
+                                          {quarters.map((q: any) => (
+                                            <td style="padding: 1px 6px; text-align:center;">
+                                              {q.scoreB ?? "—"}
+                                            </td>
+                                          ))}
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                )}
+                              </td>
+                              <td set:html={getStatusBadge(m, locale)} />
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              ),
+          )}
+        </>
       )
     }
   </main>
