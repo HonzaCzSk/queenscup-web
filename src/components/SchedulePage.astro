@@ -1,7 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
-import { getMatches } from "../lib/queries";
+import { getMatches, getSettings } from "../lib/queries";
 import { t, getLang } from "../i18n/index";
 
 interface Props {
@@ -14,6 +14,8 @@ const locale = getLang(lang);
 const tr = t(locale);
 
 const matches = await getMatches(cat);
+const settings = await getSettings();
+const showSchedule = settings?.showSchedule?.[cat] ?? true;
 
 const den1 = matches.filter((m: any) => m.day === 1);
 const den2 = matches.filter((m: any) => m.day === 2);
@@ -114,6 +116,15 @@ function isStreamMatch(m: any) {
       <h1 class="h1">{tr.schedule.title}</h1>
       <p class="lead">{catLabels[cat]}</p>
     </section>
+
+    {!showSchedule ? (
+      <section class="card" style="text-align: center; padding: 48px 24px;">
+        <p style="font-size: 18px; font-weight: 700; opacity: 0.5;">
+          {locale === "cs" ? "Rozpis zápasů bude zveřejněn brzy." : locale === "pl" ? "Harmonogram zostanie wkrótce opublikowany." : "The schedule will be published soon."}
+        </p>
+      </section>
+    ) : (
+    <>
 
     <!-- Den 1 -->
     <section class="card">
@@ -374,5 +385,7 @@ function isStreamMatch(m: any) {
         </section>
       )
     }
+    </>
+    )}
   </main>
 </Layout>

@@ -47,3 +47,11 @@ export async function getMatches(category: string) {
     }
   `, { category })
 }
+
+export async function getSettings() {
+  return await sanityClient.fetch(`
+    *[_type == "settings"][0] {
+      showSchedule
+    }
+  `)
+}
