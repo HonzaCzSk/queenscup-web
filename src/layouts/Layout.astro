@@ -161,7 +161,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
 
           <!-- Dark mode toggle -->
           <div
-            class="theme-toggle"
+            class="theme-toggle theme-toggle--topbar"
             id="themeToggle"
             role="group"
             aria-label="Barevný motiv"
@@ -274,7 +274,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
             <span class="menu__link__icon">📷</span>{tr.nav.photos}</a
           >
         </div>
-        <!-- Jazyk v menu -->
+        <!-- Jazyk + theme v menu -->
         <div class="menu__lang">
           <a
             class={`langbtn ${lang === "cs" ? "is-active" : ""}`}
@@ -288,6 +288,22 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
             class={`langbtn ${lang === "pl" ? "is-active" : ""}`}
             href={langUrls.pl}>PL</a
           >
+          <div class="menu__lang__sep"></div>
+          <div
+            class="theme-toggle theme-toggle--menu"
+            role="group"
+            aria-label="Barevný motiv"
+          >
+            <button class="theme-seg" data-mode="dark" type="button">
+              <span class="theme-seg__label">D</span>
+            </button>
+            <button class="theme-seg" data-mode="light" type="button">
+              <span class="theme-seg__label">L</span>
+            </button>
+            <button class="theme-seg" data-mode="system" type="button">
+              <span class="theme-seg__label">S</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

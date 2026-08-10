@@ -416,3 +416,46 @@
     border-radius: 14px;
   }
 }
+
+/* ── Theme toggle – schovat v topbaru na mobilu ── */
+@media (max-width: 700px) {
+  .theme-toggle--topbar {
+    display: none !important;
+  }
+}
+
+/* ── Menu footer – lang + theme vedle sebe ── */
+.menu__lang {
+  display: flex;
+  gap: 6px;
+  padding: 12px 20px 16px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  align-items: center;
+}
+
+.menu__lang__sep {
+  flex: 1;
+}
+
+/* ── Menu theme toggle – force dark topbar styles ── */
+.theme-toggle--menu .theme-seg {
+  color: rgba(255, 255, 255, .4) !important;
+  background: transparent !important;
+}
+
+.theme-toggle--menu .theme-seg.is-active {
+  background: rgba(255, 255, 255, .15) !important;
+  color: #fff !important;
+}
+
+/* ── Menu theme toggle – explicitní is-active styl ── */
+.menu__panel .theme-toggle--menu .theme-seg {
+  color: rgba(255, 255, 255, .4);
+  background: transparent;
+  border: none;
+}
+
+.menu__panel .theme-toggle--menu .theme-seg.is-active {
+  background: rgba(255, 255, 255, .18) !important;
+  color: #fff !important;
+}

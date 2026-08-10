@@ -1,8 +1,5 @@
 (function () {
   const KEY = "theme";
-  const wrap = document.getElementById("themeToggle");
-  if (!wrap) return;
-
   const mql = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)") : null;
 
   function systemPrefersDark() {
@@ -14,19 +11,21 @@
     return (v === "light" || v === "dark") ? v : null;
   }
 
-  // "dark" | "light" | null(=system) -> aktuální data-theme hodnota
   function resolveTheme(saved) {
     if (saved === "dark" || saved === "light") return saved;
     return systemPrefersDark() ? "dark" : "light";
   }
 
-  // saved: "dark" | "light" | null
   function updateUI(saved) {
     const active = saved ?? "system";
-    wrap.querySelectorAll(".theme-seg").forEach(btn => {
+    const names = { dark: "Dark", light: "Light", system: "System" };
+    // Vyber všechny segmenty napříč všemi wrappy najednou
+    document.querySelectorAll(".theme-seg[data-mode]").forEach(btn => {
       const mode = btn.dataset.mode;
       const isActive = mode === active;
       btn.classList.toggle("is-active", isActive);
+      const label = btn.querySelector(".theme-seg__label");
+      if (label) label.textContent = isActive ? names[mode] : names[mode][0];
     });
   }
 
@@ -35,12 +34,16 @@
     updateUI(saved);
   }
 
-  // init
-  applyTheme(getSaved());
+  // Init – spusť až je DOM ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => applyTheme(getSaved()));
+  } else {
+    applyTheme(getSaved());
+  }
 
-  // klik na segment
-  wrap.addEventListener("click", (e) => {
-    const btn = e.target.closest(".theme-seg");
+  // Klik na libovolný segment
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".theme-seg[data-mode]");
     if (!btn) return;
     const mode = btn.dataset.mode;
     if (mode === "system") {
@@ -52,7 +55,7 @@
     }
   });
 
-  // změna systému – jen když je nastaven system
+  // Změna systémového nastavení
   if (mql) {
     mql.addEventListener("change", () => {
       if (getSaved() === null) applyTheme(null);
