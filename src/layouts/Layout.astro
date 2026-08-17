@@ -23,10 +23,6 @@ const {
 const locale = getLang(lang);
 const tr = t(locale);
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "public, max-age=60, s-maxage=600, stale-while-revalidate=120"
-);
 
 const currentPath = Astro.url.pathname;
 const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u11";

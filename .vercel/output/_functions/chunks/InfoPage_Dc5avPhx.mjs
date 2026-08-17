@@ -1,0 +1,192 @@
+import "./compiler_C0vW4n3q.mjs";
+import { E as addAttribute, M as createComponent, j as createAstro, v as renderComponent, w as maybeRenderHead, x as renderTemplate } from "./render_DHxBp8Wz.mjs";
+import { a as getLang, o as t, t as $$Layout } from "./global_BpGe8sQP.mjs";
+//#region src/components/InfoPage.astro
+createAstro("https://astro.build");
+var $$InfoPage = createComponent(($$result, $$props, $$slots) => {
+	const Astro = $$result.createAstro($$props, $$slots);
+	Astro.self = $$InfoPage;
+	const { lang, cat } = Astro.props;
+	const locale = getLang(lang);
+	const tr = t(locale);
+	const catInfo = {
+		u11: {
+			cs: {
+				dates: "11. – 13. září 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (hlavní sál) · Court 2 (tréninkový sál)",
+				stream: null
+			},
+			en: {
+				dates: "September 11–13, 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (main hall) · Court 2 (training hall)",
+				stream: null
+			},
+			pl: {
+				dates: "11–13 września 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (hala główna) · Court 2 (hala treningowa)",
+				stream: null
+			}
+		},
+		u12: {
+			cs: {
+				dates: "4.–6. září 2026",
+				venue: "GAPA aréna – Na potoce 691/30, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
+				courts: "Jedna hala",
+				stream: null
+			},
+			en: {
+				dates: "September 4–6, 2026",
+				venue: "GAPA Arena – Na potoce 691/30, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
+				courts: "Single hall",
+				stream: null
+			},
+			pl: {
+				dates: "4–6 września 2026",
+				venue: "GAPA Arena – Na potoce 691/30, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
+				courts: "Jedna hala",
+				stream: null
+			}
+		},
+		u13: {
+			cs: {
+				dates: "4. – 6. září 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (hlavní sál, živý přenos TVCOM) · Court 2 (tréninkový sál)",
+				stream: "https://www.tvcom.cz/"
+			},
+			en: {
+				dates: "September 4–6, 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (main hall, live stream on TVCOM) · Court 2 (training hall)",
+				stream: "https://www.tvcom.cz/"
+			},
+			pl: {
+				dates: "4–6 września 2026",
+				venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
+				mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+				courts: "Court 1 (hala główna, transmisja na TVCOM) · Court 2 (hala treningowa)",
+				stream: "https://www.tvcom.cz/"
+			}
+		}
+	}[cat][locale];
+	const transportInfo = {
+		u11: {
+			cs: {
+				parking: "Parkování v okolí haly je zdarma – v okolních ulicích i u přilehlých panelových domů. Vždy kontrolujte dopravní značení.",
+				transit_stop: "Muzeum",
+				transit_lines: "Autobusy č. 12, 13, 16, 17 a trolejbusy č. 3, 4, 7. Ze zastávky dojdete k hale za 2 minuty pěšky."
+			},
+			en: {
+				parking: "Free parking is available nearby – in surrounding streets and near residential buildings. Always check traffic signs.",
+				transit_stop: "Muzeum",
+				transit_lines: "Buses no. 12, 13, 16, 17 and trolleybuses no. 3, 4, 7. A 2-minute walk from the stop to the venue."
+			},
+			pl: {
+				parking: "Parking w pobliżu hali jest bezpłatny – na okolicznych ulicach i przy blokach. Prosimy sprawdzać oznakowanie drogowe.",
+				transit_stop: "Muzeum",
+				transit_lines: "Autobusy nr 12, 13, 16, 17 oraz trolejbusy nr 3, 4, 7. Od przystanku do hali 2 minuty piechotą."
+			}
+		},
+		u12: {
+			cs: {
+				parking: "Parkování v okolí haly je zdarma – v přilehlých ulicích i u panelových domů. Vždy kontrolujte dopravní značení.",
+				transit_stop: "Štefánikova",
+				transit_lines: "Autobusy č. 9, 18, 23, 24 a 25. Za přibližně dvě minuty dojdete k hale."
+			},
+			en: {
+				parking: "Free parking is available nearby – in surrounding streets and near residential buildings. Always check traffic signs.",
+				transit_stop: "Štefánikova",
+				transit_lines: "Buses no. 9, 18, 23, 24 and 25. From the stop, it is approximately a two-minute walk to the venue."
+			},
+			pl: {
+				parking: "Parking w pobliżu hali jest bezpłatny – na okolicznych ulicach i przy blokach. Prosimy sprawdzać oznakowanie drogowe.",
+				transit_stop: "Štefánikova",
+				transit_lines: "Autobusy nr 9, 18, 23, 24 i 25. Od przystanku do hali około dwie minuty piechotą."
+			}
+		},
+		u13: {
+			cs: {
+				parking: "Parkování v okolí haly je zdarma – v okolních ulicích i u přilehlých panelových domů. Vždy kontrolujte dopravní značení.",
+				transit_stop: "Muzeum",
+				transit_lines: "Autobusy č. 12, 13, 16, 17 a trolejbusy č. 3, 4, 7. Ze zastávky dojdete k hale za 2 minuty pěšky."
+			},
+			en: {
+				parking: "Free parking is available nearby – in surrounding streets and near residential buildings. Always check traffic signs.",
+				transit_stop: "Muzeum",
+				transit_lines: "Buses no. 12, 13, 16, 17 and trolleybuses no. 3, 4, 7. A 2-minute walk from the stop to the venue."
+			},
+			pl: {
+				parking: "Parking w pobliżu hali jest bezpłatny – na okolicznych ulicach i przy blokach. Prosimy sprawdzać oznakowanie drogowe.",
+				transit_stop: "Muzeum",
+				transit_lines: "Autobusy nr 12, 13, 16, 17 oraz trolejbusy nr 3, 4, 7. Od przystanku do hali 2 minuty piechotą."
+			}
+		}
+	}[cat][locale];
+	const pageTitle = {
+		cs: {
+			u11: "Info – U11",
+			u12: "Info – U12",
+			u13: "Info – U13"
+		},
+		en: {
+			u11: "Info – U11",
+			u12: "Info – U12",
+			u13: "Info – U13"
+		},
+		pl: {
+			u11: "Info – U11",
+			u12: "Info – U12",
+			u13: "Info – U13"
+		}
+	}[locale][cat];
+	return renderTemplate`${renderComponent($$result, "Layout", $$Layout, {
+		"title": pageTitle,
+		"activePage": "info",
+		"activeCategory": cat,
+		"lang": lang
+	}, { "default": ($$result) => renderTemplate`${maybeRenderHead($$result)}<main class="wrap page-info"><section class="pagehead"><h1 class="h1">${tr.info.title}</h1><p class="lead">${tr.info.subtitle}</p></section><div id="info-cards" class="grid" style="grid-template-columns: repeat(2, minmax(280px, 1fr)); gap: 24px; margin-bottom: 30px;"><!-- Datum a místo konání --><div class="card" style="grid-column: 1 / -1;"><h2 class="h2">${tr.info.venue_dates}</h2><div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;"><div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 20px;">📅</span><span style="font-weight: 700; font-size: 15px;">${catInfo.dates}</span></div><div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 20px;">📍</span><span style="font-weight: 700; font-size: 15px;">${catInfo.venue}</span></div><div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 20px;">🏀</span><span style="font-size: 14px; opacity: 0.8;">${catInfo.courts}</span></div>${catInfo.stream && renderTemplate`<div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 20px;">📺</span><a${addAttribute(catInfo.stream, "href")} target="_blank" rel="noopener" class="tvcom-badge"><span>LIVE STREAM</span></a></div>`}<div style="margin-top: 4px;"><a${addAttribute(catInfo.mapsUrl, "href")} target="_blank" rel="noopener" class="btn btn--ghost" style="padding: 8px 16px; font-size: 13px;">${tr.info.show_on_map}</a></div></div></div><!-- Vstupné (Highlighted Card) --><div class="card card--accent"><h2 class="h2">${tr.info.tickets}<span class="badge" style="background: rgba(255,59,48,.15); border-color: rgba(255,59,48,.35); color: var(--accent);">${tr.info.free}</span></h2><p class="muted">${tr.info.tickets_desc}</p></div><!-- Parkování --><div class="card"><h2 class="h2">${tr.info.parking}</h2><p class="muted">${transportInfo.parking}</p></div><!-- Doprava / Sportovní haly --><div class="card"><h2 class="h2">${tr.info.venues}</h2><p class="muted" style="margin-bottom: 14px;">${tr.info.venues_desc}</p><div style="display: flex; flex-direction: column; gap: 10px;"><!-- Sokol HK --><div${addAttribute(`venue-card ${cat === "u11" || cat === "u13" ? "venue-card--active" : ""}`, "class")}><div class="venue-card__name">Sokol HK${(cat === "u11" || cat === "u13") && renderTemplate`<span class="badge" style="margin-left: 8px;">${cat === "u11" ? "U11" : "U13"}</span>`}</div><div class="venue-card__address">Eliščino nábřeží 777, Hradec Králové</div>${cat === "u11" || cat === "u13" ? renderTemplate`<a href="https://www.google.com/maps/place/TJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9/@50.213257,15.5241203,36547m/data=!3m1!1e3!4m10!1m2!2m1!1sTJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9!3m6!1s0x470c2b2ee9083f57:0xdadd5997f9d5361d!8m2!3d50.213257!4d15.8289909!15sChlUSiBTb2tvbCBIcmFkZWMgS3LDoWxvdsOpWhsiGXRqIHNva29sIGhyYWRlYyBrcsOhbG92w6mSAQtzcG9ydHNfY2x1YpoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOQ2RGQnhaVlIzRUFF4AEA-gEECAAQGA!16s%2Fg%2F11h52sp2wy?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="venue-card__map">${tr.info.map}</a>` : renderTemplate`<span class="venue-card__map" style="opacity: 0.3; cursor: default;">${tr.info.map}</span>`}</div><!-- GAPA aréna --><div${addAttribute(`venue-card ${cat === "u12" ? "venue-card--active" : ""}`, "class")}><div class="venue-card__name">GAPA aréna${cat === "u12" && renderTemplate`<span class="badge" style="margin-left: 8px;">U12</span>`}</div><div class="venue-card__address">Na potoce 691/30, Hradec Králové</div>${cat === "u12" ? renderTemplate`<a href="https://www.google.com/maps/place/T%C5%99ebe%C5%A1+Sports+Hall/@50.1897984,15.8362913,571m/data=!3m2!1e3!4b1!4m6!3m5!1s0x470dd4b08b301b19:0x6218f1f39b47361!8m2!3d50.1897984!4d15.8388662!16s%2Fg%2F1ptzdst_x?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="venue-card__map">${tr.info.map}</a>` : renderTemplate`<span class="venue-card__map" style="opacity: 0.3; cursor: default;">${tr.info.map}</span>`}</div></div></div><!-- Doprava --><div class="card"><h2 class="h2">${tr.info.travel}</h2><div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;"><div style="display: flex; align-items: flex-start; gap: 10px;"><span style="font-size: 18px; flex-shrink: 0;">🚌</span><div><div style="font-weight: 700; font-size: 13px; opacity: 0.55; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px;">${tr.info.nearest_stop}</div><div style="font-weight: 800; font-size: 15px;">${transportInfo.transit_stop}</div></div></div><p class="muted" style="margin: 0; padding-left: 28px;">${transportInfo.transit_lines}</p></div></div><!-- Ke stažení
+      <div class="card" style="grid-column: 1 / -1;">
+        <h2 class="h2">{tr.info.downloads}</h2>
+        <div
+          style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-top: 12px;"
+        >
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div
+              style="width: 40px; height: 40px; border-radius: 10px; background: rgba(255,59,48,.1); border: 1px solid rgba(255,59,48,.2); display: flex; align-items: center; justify-content: center; font-weight: 950; color: var(--accent);"
+            >
+              PDF
+            </div>
+            <div>
+              <div style="font-weight: 800; font-size: 14px;">
+                {tr.info.poster}
+              </div>
+              <div class="muted" style="font-size: 12px; margin: 0;">
+                Queens Cup 2026 Poster
+              </div>
+            </div>
+          </div>
+          <a
+            href="/assets/plakat-2026.pdf"
+            class="btn btn--ghost"
+            download
+            style="padding: 8px 16px;"
+          >
+            {tr.info.download_btn}
+          </a>
+        </div>
+      </div>
+      --></div></main>` })}`;
+}, "C:/Users/janvo/source/vsCodeRepos/queenscup-web/src/components/InfoPage.astro", void 0);
+//#endregion
+export { $$InfoPage as t };
