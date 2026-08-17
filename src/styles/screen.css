@@ -418,7 +418,7 @@
 }
 
 /* ── Theme toggle – schovat v topbaru na mobilu ── */
-@media (max-width: 700px) {
+@media (max-width: 820px) {
   .theme-toggle--topbar {
     display: none !important;
   }
