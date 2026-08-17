@@ -23,7 +23,6 @@ const {
 const locale = getLang(lang);
 const tr = t(locale);
 
-
 const currentPath = Astro.url.pathname;
 const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u11";
 const catParam = `?cat=${currentCat}`;
@@ -361,13 +360,14 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
       </div>
     </nav>
 
-    <!-- UNDER CONSTRUCTION BANNER -->
+    <!-- UNDER CONSTRUCTION BANNER
     <div class="construction-banner">
       <div class="wrap construction-banner__inner">
         <span class="construction-banner__icon">⚠️</span>
         <span class="construction-banner__text">{tr.construction_notice}</span>
       </div>
     </div>
+    -->
 
     <!-- OBSAH STRÁNKY -->
     <slot />
@@ -407,9 +407,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
 
               {mainPartners.length > 0 && (
                 <div>
-                  <div class="partners__section-label">
-                    {tr.partners.main}
-                  </div>
+                  <div class="partners__section-label">{tr.partners.main}</div>
                   <div class="partners__row">
                     {mainPartners.map((p: any) => (
                       <a
@@ -457,9 +455,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
 
               {mediaPartners.length > 0 && (
                 <div>
-                  <div class="partners__section-label">
-                    {tr.partners.media}
-                  </div>
+                  <div class="partners__section-label">{tr.partners.media}</div>
                   <div class="partners__row">
                     {mediaPartners.map((p: any) => (
                       <a
@@ -558,7 +554,9 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
           <span>{tr.cookies.desc}</span>
         </div>
         <div class="site-notice__actions">
-          <button class="notice-btn" id="cookie-accept" type="button">{tr.cookies.accept}</button>
+          <button class="notice-btn" id="cookie-accept" type="button"
+            >{tr.cookies.accept}</button
+          >
         </div>
       </div>
     </div>
