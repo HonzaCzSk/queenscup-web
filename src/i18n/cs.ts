@@ -1,5 +1,17 @@
 export const cs = {
   construction_notice: 'Tento web je momentálně ve výstavbě. Probíhá příprava dat, soupisek a rozpisů zápasů.',
+  cookies: {
+    label: 'Upozornění na cookies',
+    title: 'Tento web ukládá vaše preference',
+    desc: 'Používáme localStorage pouze pro uložení zvoleného barevného motivu. Žádná osobní data neshromažďujeme.',
+    accept: 'Rozumím',
+  },
+  partners: {
+    general: 'Generální partner',
+    main: 'Hlavní partneři',
+    regular: 'Partneři',
+    media: 'Mediální partneři',
+  },
   nav: {
     home: 'Úvod',
     schedule: 'Rozpis',
@@ -28,6 +40,11 @@ export const cs = {
     hero_date_u11: '11. – 13. září 2026',
     hero_date_u12: '4. – 6. září 2026',
     hero_date_u13: '4. – 6. září 2026',
+    stats_matches: 'zápasů',
+    stats_categories: 'kategorie',
+    stats_nations: 'národností',
+    stats_days: 'dní turnaje',
+    stats_date: 'Hradec Králové · září 2026',
   },
   schedule: {
     title: 'Rozpis zápasů',
@@ -38,6 +55,7 @@ export const cs = {
     hall: 'Hala',
     match: 'Zápas',
     group_label: 'Skupina',
+    schedule_upcoming: 'Rozpis zápasů bude zveřejněn brzy.',
   },
   results: {
     title: 'Výsledky zápasů',
@@ -48,6 +66,7 @@ export const cs = {
     match: 'Zápas',
     time: 'Čas',
     hall: 'Hala',
+    results_upcoming: 'Výsledky budou k dispozici po zahájení turnaje.',
   },
   teams: {
     title: 'Týmy a soupisky',
@@ -58,6 +77,8 @@ export const cs = {
     name: 'Jméno a příjmení',
     no_teams: 'V této kategorii zatím nejsou přihlášeny žádné týmy.',
     venue: 'Hřiště',
+    teams_upcoming: 'Seznam týmů bude zveřejněn brzy.',
+    roster_upcoming: 'Soupiska bude doplněna.',
   },
   bracket: {
     title: 'Play-off (Pavouk)',
@@ -67,6 +88,11 @@ export const cs = {
     third: 'O 3. místo',
     winner: 'Vítěz',
     playoff: 'Play-off',
+    qf: 'Čtvrtfinále',
+    placement: 'Zápasy o umístění',
+    fifth: 'O 5. místo',
+    seventh: 'O 7. místo',
+    ninth: 'O 9. místo',
   },
   info: {
     title: 'Informace pro návštěvníky',
@@ -81,6 +107,12 @@ export const cs = {
     travel_desc: 'Nejbližší autobusová zastávka je Muzeum. Ze zastávky dojdete k hale za 2 minuty. K zástavce jezdí autobusy č. 12, 13, 16, 17 a trolejbusy 3, 4 a 7.',
     tickets_desc: 'Vstup na všechna utkání ve všech halách je po celou dobu turnaje zdarma. Přijďte podpořit mladé basketbalové naděje!',
     venues_desc: 'Turnaj probíhá na dvou místech v Hradci Králové: hala Sokol HK (U11, U13) a GAPA aréna (U12). Mezi halami je dobré spojení MHD i možnost parkování.',
+    subtitle: 'Důležité organizační informace a pokyny pro týmy a návštěvníky turnaje.',
+    venue_dates: 'Místo a termín',
+    show_on_map: 'Zobrazit na mapě →',
+    free: 'Zdarma',
+    map: 'Mapa →',
+    nearest_stop: 'Nejbližší zastávka',
   },
   contacts: {
     title: 'Kontakty',
@@ -97,6 +129,10 @@ export const cs = {
     gallery_btn: 'Zobrazit celou galerii na Zonerama',
     no_photos: 'Fotogalerie bude nahrána po zahájení turnaje.',
     desc: 'Zde naleznete odkazy na oficiální fotogalerie z průběhu celého turnaje Queens Cup 2026.',
+    official_gallery: 'Oficiální fotogalerie na Zonerama',
+    gallery_desc: 'Všechny fotografie z turnaje naleznete v plném rozlišení na naší Zoneramě.',
+    daily_albums: 'Fotoalba podle hracích dnů',
+    open_album: 'Otevřít album',
   },
   footer: {
     rights: '© Queens Cup – Hradec Králové',

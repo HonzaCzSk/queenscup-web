@@ -1,5 +1,17 @@
 export const en = {
   construction_notice: 'This website is currently under construction. Tournament data, rosters, and schedules are being prepared.',
+  cookies: {
+    label: 'Cookie Notice',
+    title: 'This website saves your preferences',
+    desc: 'We only use localStorage to store your chosen color theme. We do not collect any personal data.',
+    accept: 'Understood',
+  },
+  partners: {
+    general: 'General Partner',
+    main: 'Main Partners',
+    regular: 'Partners',
+    media: 'Media Partners',
+  },
   nav: {
     home: 'Home',
     schedule: 'Schedule',
@@ -28,6 +40,11 @@ export const en = {
     hero_date_u11: 'September 11–13, 2026',
     hero_date_u12: 'September 4–6, 2026',
     hero_date_u13: 'September 4–6, 2026',
+    stats_matches: 'matches',
+    stats_categories: 'categories',
+    stats_nations: 'nations',
+    stats_days: 'tournament days',
+    stats_date: 'Hradec Králové · September 2026',
   },
   schedule: {
     title: 'Match Schedule',
@@ -38,6 +55,7 @@ export const en = {
     hall: 'Hall',
     match: 'Match',
     group_label: 'Group',
+    schedule_upcoming: 'The schedule will be published soon.',
   },
   results: {
     title: 'Match Results',
@@ -48,6 +66,7 @@ export const en = {
     match: 'Match',
     time: 'Time',
     hall: 'Hall',
+    results_upcoming: 'Results will be available once the tournament begins.',
   },
   teams: {
     title: 'Teams & Rosters',
@@ -58,6 +77,8 @@ export const en = {
     name: 'Player Name',
     no_teams: 'No teams registered in this category yet.',
     venue: 'Venue',
+    teams_upcoming: 'The team list will be published soon.',
+    roster_upcoming: 'Roster will be added soon.',
   },
   bracket: {
     title: 'Play-offs (Bracket)',
@@ -67,6 +88,11 @@ export const en = {
     third: '3rd Place Match',
     winner: 'Winner',
     playoff: 'Play-offs',
+    qf: 'Quarter-finals',
+    placement: 'Placement Matches',
+    fifth: '5th Place Match',
+    seventh: '7th Place Match',
+    ninth: '9th Place Match',
   },
   info: {
     title: 'Information for Visitors',
@@ -81,6 +107,12 @@ export const en = {
     travel_desc: 'The nearest bus stop is Muzeum. It’s a 2-minute walk from the stop to the arena. Buses 12, 13, 16, and 17, as well as trolleybuses 3, 4, and 7, stop there.',
     tickets_desc: 'Admission to all matches at all venues is free of charge for the entire duration of the tournament. Come support young basketball talents!',
     venues_desc: 'The tournament is hosted across two locations in Hradec Králové: Sokol HK (U11, U13) and GAPA Arena (U12). Both venues are easily accessible via public transit and offer parking.',
+    subtitle: 'Important organizational information and guidelines for teams and tournament visitors.',
+    venue_dates: 'Venue & Dates',
+    show_on_map: 'Show on map →',
+    free: 'Free',
+    map: 'Map →',
+    nearest_stop: 'Nearest stop',
   },
   contacts: {
     title: 'Contacts',
@@ -97,6 +129,10 @@ export const en = {
     gallery_btn: 'View entire gallery on Zonerama',
     no_photos: 'The photo gallery will be uploaded after the tournament starts.',
     desc: 'Here you will find links to the official photo galleries from the Queens Cup 2026 tournament.',
+    official_gallery: 'Official Photo Gallery on Zonerama',
+    gallery_desc: 'All high-resolution tournament photos are available on our Zonerama profile.',
+    daily_albums: 'Photo Albums by Day',
+    open_album: 'Open Album',
   },
   footer: {
     rights: '© Queens Cup – Hradec Králové',

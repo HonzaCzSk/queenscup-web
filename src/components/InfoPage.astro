@@ -173,13 +173,7 @@ const pageTitle = {
     <section class="pagehead">
       <h1 class="h1">{tr.info.title}</h1>
       <p class="lead">
-        {
-          lang === "cs"
-            ? "Důležité organizační informace a pokyny pro týmy a návštěvníky turnaje."
-            : lang === "pl"
-              ? "Ważne informacje organizacyjne i wskazówki dla drużyn oraz gości turnieju."
-              : "Important organizational information and guidelines for teams and tournament visitors."
-        }
+        {tr.info.subtitle}
       </p>
     </section>
 
@@ -191,13 +185,7 @@ const pageTitle = {
       <!-- Datum a místo konání -->
       <div class="card" style="grid-column: 1 / -1;">
         <h2 class="h2">
-          {
-            lang === "cs"
-              ? "Místo a termín"
-              : lang === "pl"
-                ? "Miejsce i termin"
-                : "Venue & Dates"
-          }
+          {tr.info.venue_dates}
         </h2>
         <div
           style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px;"
@@ -241,13 +229,7 @@ const pageTitle = {
               class="btn btn--ghost"
               style="padding: 8px 16px; font-size: 13px;"
             >
-              {
-                lang === "cs"
-                  ? "Zobrazit na mapě →"
-                  : lang === "pl"
-                    ? "Pokaż na mapie →"
-                    : "Show on map →"
-              }
+              {tr.info.show_on_map}
             </a>
           </div>
         </div>
@@ -261,7 +243,7 @@ const pageTitle = {
             class="badge"
             style="background: rgba(255,59,48,.15); border-color: rgba(255,59,48,.35); color: var(--accent);"
           >
-            {lang === "cs" ? "Zdarma" : lang === "pl" ? "Bezpłatnie" : "Free"}
+            {tr.info.free}
           </span>
         </h2>
         <p class="muted">{tr.info.tickets_desc}</p>
@@ -270,7 +252,7 @@ const pageTitle = {
       <!-- Parkování -->
       <div class="card">
         <h2 class="h2">
-          {lang === "cs" ? "Parkování" : lang === "pl" ? "Parking" : "Parking"}
+          {tr.info.parking}
         </h2>
         <p class="muted">{transportInfo.parking}</p>
       </div>
@@ -278,13 +260,7 @@ const pageTitle = {
       <!-- Doprava / Sportovní haly -->
       <div class="card">
         <h2 class="h2">
-          {
-            lang === "cs"
-              ? "Sportovní haly"
-              : lang === "pl"
-                ? "Hale sportowe"
-                : "Sports Venues"
-          }
+          {tr.info.venues}
         </h2>
         <p class="muted" style="margin-bottom: 14px;">{tr.info.venues_desc}</p>
 
@@ -314,22 +290,14 @@ const pageTitle = {
                   rel="noopener"
                   class="venue-card__map"
                 >
-                  {lang === "cs"
-                    ? "Mapa →"
-                    : lang === "pl"
-                      ? "Mapa →"
-                      : "Map →"}
+                  {tr.info.map}
                 </a>
               ) : (
                 <span
                   class="venue-card__map"
                   style="opacity: 0.3; cursor: default;"
                 >
-                  {lang === "cs"
-                    ? "Mapa →"
-                    : lang === "pl"
-                      ? "Mapa →"
-                      : "Map →"}
+                  {tr.info.map}
                 </span>
               )
             }
@@ -360,22 +328,14 @@ const pageTitle = {
                   rel="noopener"
                   class="venue-card__map"
                 >
-                  {lang === "cs"
-                    ? "Mapa →"
-                    : lang === "pl"
-                      ? "Mapa →"
-                      : "Map →"}
+                  {tr.info.map}
                 </a>
               ) : (
                 <span
                   class="venue-card__map"
                   style="opacity: 0.3; cursor: default;"
                 >
-                  {lang === "cs"
-                    ? "Mapa →"
-                    : lang === "pl"
-                      ? "Mapa →"
-                      : "Map →"}
+                  {tr.info.map}
                 </span>
               )
             }
@@ -386,13 +346,7 @@ const pageTitle = {
       <!-- Doprava -->
       <div class="card">
         <h2 class="h2">
-          {
-            lang === "cs"
-              ? "Doprava"
-              : lang === "pl"
-                ? "Dojazd"
-                : "Getting There"
-          }
+          {tr.info.travel}
         </h2>
         <div
           style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px;"
@@ -403,13 +357,7 @@ const pageTitle = {
               <div
                 style="font-weight: 700; font-size: 13px; opacity: 0.55; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px;"
               >
-                {
-                  lang === "cs"
-                    ? "Nejbližší zastávka"
-                    : lang === "pl"
-                      ? "Najbliższy przystanek"
-                      : "Nearest stop"
-                }
+                {tr.info.nearest_stop}
               </div>
               <div style="font-weight: 800; font-size: 15px;">
                 {transportInfo.transit_stop}

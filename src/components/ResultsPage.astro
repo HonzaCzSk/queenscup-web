@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import { getMatches, getSettings } from "../lib/queries";
 import { t, getLang } from "../i18n/index";
+import type { Match } from "../lib/types";
 
 interface Props {
   lang: string;
@@ -96,14 +97,14 @@ function formatTime(datetime: string) {
   });
 }
 
-function getRowClass(m: any) {
+function getRowClass(m: Match) {
   if (m.status === "live") return "is-live";
   if (m.status === "finished" || (m.scoreA != null && m.scoreB != null))
     return "is-fin";
   return "";
 }
 
-function getStatusBadge(m: any, locale: string) {
+function getStatusBadge(m: Match, locale: string) {
   if (m.status === "live") return `<span class="badge badge--live">LIVE</span>`;
   if (m.status === "finished" || (m.scoreA != null && m.scoreB != null)) {
     return `<span class="badge badge--fin">${locale === "en" ? "FT" : "FIN"}</span>`;
@@ -111,13 +112,13 @@ function getStatusBadge(m: any, locale: string) {
   return `<span class="badge">—</span>`;
 }
 
-function getScore(m: any) {
+function getScore(m: Match) {
   if (m.scoreA != null && m.scoreB != null) return `${m.scoreA} : ${m.scoreB}`;
   if (m.status === "live") return "0 : 0";
   return "—";
 }
 
-function getQuarters(m: any) {
+function getQuarters(m: Match) {
   if (!m.quarters || m.quarters.length === 0) return null;
   return m.quarters;
 }
@@ -139,11 +140,7 @@ function getQuarters(m: any) {
       !showSchedule ? (
         <section class="card" style="text-align: center; padding: 48px 24px;">
           <p style="font-size: 18px; font-weight: 700; opacity: 0.5;">
-            {locale === "cs"
-              ? "Výsledky budou k dispozici po zahájení turnaje."
-              : locale === "pl"
-                ? "Wyniki będą dostępne po rozpoczęciu turnieju."
-                : "Results will be available once the tournament begins."}
+            {tr.results.results_upcoming}
           </p>
         </section>
       ) : (
@@ -176,7 +173,7 @@ function getQuarters(m: any) {
                         </tr>
                       </thead>
                       <tbody>
-                        {matches.map((m: any) => {
+                        {matches.map((m: Match) => {
                           const quarters = getQuarters(m);
                           return (
                             <tr class={getRowClass(m)}>

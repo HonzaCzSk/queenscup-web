@@ -66,48 +66,22 @@ const categoryDetails = {
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-num-row">
-              <span class="stat-num" data-target="43">0</span>
+              <span class="stat-num" data-target="100">0</span>
               <span class="stat-plus">+</span>
             </div>
-            <span class="stat-label">
-              {lang === "cs" ? "zápasů" : lang === "pl" ? "meczów" : "matches"}
-            </span>
+            <span class="stat-label">{tr.home.stats_matches}</span>
           </div>
           <div class="stat-card">
             <span class="stat-num" data-target="3">0</span>
-            <span class="stat-label">
-              {
-                lang === "cs"
-                  ? "kategorie"
-                  : lang === "pl"
-                    ? "kategorie"
-                    : "categories"
-              }
-            </span>
+            <span class="stat-label">{tr.home.stats_categories}</span>
           </div>
           <div class="stat-card">
-            <span class="stat-num" data-target="7">0</span>
-            <span class="stat-label">
-              {
-                lang === "cs"
-                  ? "národností"
-                  : lang === "pl"
-                    ? "narodowości"
-                    : "nations"
-              }
-            </span>
+            <span class="stat-num" data-target="8">0</span>
+            <span class="stat-label">{tr.home.stats_nations}</span>
           </div>
           <div class="stat-card">
             <span class="stat-num" data-target="6">0</span>
-            <span class="stat-label">
-              {
-                lang === "cs"
-                  ? "dní turnaje"
-                  : lang === "pl"
-                    ? "dni turnieju"
-                    : "tournament days"
-              }
-            </span>
+            <span class="stat-label">{tr.home.stats_days}</span>
           </div>
           <div class="stat-card stat-card--flags">
             <div class="stat-flags">
@@ -118,16 +92,9 @@ const categoryDetails = {
               <span class="fi fi-de" title="Německo"></span>
               <span class="fi fi-lv" title="Lotyšsko"></span>
               <span class="fi fi-it" title="Itálie"></span>
+              <span class="fi fi-si" title="Slovinsko"></span>
             </div>
-            <span class="stat-label">
-              {
-                lang === "cs"
-                  ? "Hradec Králové · září 2026"
-                  : lang === "pl"
-                    ? "Hradec Králové · wrzesień 2026"
-                    : "Hradec Králové · September 2026"
-              }
-            </span>
+            <span class="stat-label">{tr.home.stats_date}</span>
           </div>
         </div>
       </div>

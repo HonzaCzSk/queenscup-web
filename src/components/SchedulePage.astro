@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import { getMatches, getSettings } from "../lib/queries";
 import { t, getLang } from "../i18n/index";
+import type { Match } from "../lib/types";
 
 interface Props {
   lang: string;
@@ -100,7 +101,7 @@ function formatTime(datetime: string) {
   );
 }
 
-function isStreamMatch(m: any) {
+function isStreamMatch(m: Match) {
   return m.court === "court1";
 }
 ---
@@ -120,7 +121,7 @@ function isStreamMatch(m: any) {
     {!showSchedule ? (
       <section class="card" style="text-align: center; padding: 48px 24px;">
         <p style="font-size: 18px; font-weight: 700; opacity: 0.5;">
-          {locale === "cs" ? "Rozpis zápasů bude zveřejněn brzy." : locale === "pl" ? "Harmonogram zostanie wkrótce opublikowany." : "The schedule will be published soon."}
+          {tr.schedule.schedule_upcoming}
         </p>
       </section>
     ) : (
@@ -158,7 +159,7 @@ function isStreamMatch(m: any) {
                   </td>
                 </tr>
               ) : (
-                den1.map((m: any) => (
+                den1.map((m: Match) => (
                   <tr>
                     <td>{formatTime(m.datetime)}</td>
                     <td>
@@ -248,7 +249,7 @@ function isStreamMatch(m: any) {
                   </td>
                 </tr>
               ) : (
-                den2.map((m: any) => (
+                den2.map((m: Match) => (
                   <tr>
                     <td>{formatTime(m.datetime)}</td>
                     <td>
@@ -328,7 +329,7 @@ function isStreamMatch(m: any) {
                 </tr>
               </thead>
               <tbody>
-                {den3.map((m: any) => (
+                {den3.map((m: Match) => (
                   <tr>
                     <td>{formatTime(m.datetime)}</td>
                     <td>

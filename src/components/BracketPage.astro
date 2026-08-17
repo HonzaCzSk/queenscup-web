@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro'
 import '../styles/global.css'
 import { getMatches } from '../lib/queries'
 import { t, getLang } from '../i18n/index'
+import type { Match } from '../lib/types'
 
 interface Props {
   lang: string
@@ -15,12 +16,12 @@ const tr = t(locale)
 
 const matches = await getMatches(cat)
 
-const qfMatches = matches.filter((m: any) => m.matchType === 'qf')
-const finalMatch = matches.find((m: any) => m.matchType === 'final')
-const thirdMatch = matches.find((m: any) => m.matchType === 'third')
-const fifthMatch = matches.find((m: any) => m.matchType === 'fifth')
-const seventhMatch = matches.find((m: any) => m.matchType === 'seventh')
-const ninthMatch = matches.find((m: any) => m.matchType === 'ninth')
+const qfMatches = matches.filter((m: Match) => m.matchType === 'qf')
+const finalMatch = matches.find((m: Match) => m.matchType === 'final')
+const thirdMatch = matches.find((m: Match) => m.matchType === 'third')
+const fifthMatch = matches.find((m: Match) => m.matchType === 'fifth')
+const seventhMatch = matches.find((m: Match) => m.matchType === 'seventh')
+const ninthMatch = matches.find((m: Match) => m.matchType === 'ninth')
 
 const hasAny = qfMatches.length > 0 || finalMatch || thirdMatch
 
@@ -49,15 +50,15 @@ function formatTime(datetime: string) {
   })
 }
 
-function isPlayed(m: any) {
+function isPlayed(m: Match | undefined | null): m is Match & { scoreA: number; scoreB: number } {
   return m?.scoreA != null && m?.scoreB != null
 }
 
-function winnerA(m: any) {
+function winnerA(m: Match) {
   return isPlayed(m) && m.scoreA > m.scoreB
 }
 
-function winnerB(m: any) {
+function winnerB(m: Match) {
   return isPlayed(m) && m.scoreB > m.scoreA
 }
 ---
@@ -79,10 +80,10 @@ function winnerB(m: any) {
         <!-- ČTVRTFINÁLE -->
         <div class="bracket-section">
           <div class="bracket-section__title">
-            {lang === 'cs' ? 'Čtvrtfinále' : lang === 'pl' ? 'Ćwierćfinał' : 'Quarter-finals'}
+            {tr.bracket.qf}
           </div>
           <div class="bracket-qf-grid">
-            {qfMatches.map((m: any) => (
+            {qfMatches.map((m: Match) => (
               <div class={`bk-game ${isPlayed(m) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
                 <div class={`bk-team ${winnerA(m) ? 'bk-team--winner' : ''}`}>
                   <span class="bk-team__name">{m.teamA?.name ?? '?'}</span>
@@ -103,7 +104,7 @@ function winnerB(m: any) {
         <!-- ZÁPASY O UMÍSTĚNÍ -->
         <div class="bracket-section">
           <div class="bracket-section__title">
-            {lang === 'cs' ? 'Zápasy o umístění' : lang === 'pl' ? 'Mecze o miejsca' : 'Placement Matches'}
+            {tr.bracket.placement}
           </div>
           <div class="bracket-placement-grid">
 
@@ -147,7 +148,7 @@ function winnerB(m: any) {
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
               {fifthMatch && (
                 <div>
-                  <div class="bk-placement__label">O 5. místo</div>
+                  <div class="bk-placement__label">{tr.bracket.fifth}</div>
                   <div class={`bk-game ${isPlayed(fifthMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
                     <div class={`bk-team ${winnerA(fifthMatch) ? 'bk-team--winner' : ''}`}>
                       <span class="bk-team__name">{fifthMatch.teamA?.name ?? '—'}</span>
@@ -163,7 +164,7 @@ function winnerB(m: any) {
               )}
               {seventhMatch && (
                 <div>
-                  <div class="bk-placement__label">O 7. místo</div>
+                  <div class="bk-placement__label">{tr.bracket.seventh}</div>
                   <div class={`bk-game ${isPlayed(seventhMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
                     <div class={`bk-team ${winnerA(seventhMatch) ? 'bk-team--winner' : ''}`}>
                       <span class="bk-team__name">{seventhMatch.teamA?.name ?? '—'}</span>
@@ -182,7 +183,7 @@ function winnerB(m: any) {
             <!-- Řada 3: O 9. místo -->
             {ninthMatch && (
               <div style="max-width: 50%; padding-right: 5px;">
-                <div class="bk-placement__label">O 9. místo</div>
+                <div class="bk-placement__label">{tr.bracket.ninth}</div>
                 <div class={`bk-game ${isPlayed(ninthMatch) ? 'bk-game--played' : 'bk-game--upcoming'}`}>
                   <div class={`bk-team ${winnerA(ninthMatch) ? 'bk-team--winner' : ''}`}>
                     <span class="bk-team__name">{ninthMatch.teamA?.name ?? '—'}</span>
