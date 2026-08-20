@@ -146,6 +146,12 @@ export default defineType({
         ],
       },
     }),
+    defineField({
+      name: 'streamUrl',
+      title: 'Stream URL (TVCOM)',
+      type: 'url',
+      description: 'Odkaz na přenos zápasu na TVCOM. Vyplňte jen pokud je zápas streamován.',
+    }),
   ],
   preview: {
     select: {

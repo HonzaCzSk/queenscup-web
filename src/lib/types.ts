@@ -45,6 +45,7 @@ export interface Match {
   scoreB?: number;
   status: "upcoming" | "live" | "finished";
   quarters?: MatchQuarter[];
+  streamUrl?: string;
   teamA?: MatchTeamRef;
   teamB?: MatchTeamRef;
 }

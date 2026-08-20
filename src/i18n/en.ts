@@ -23,9 +23,9 @@ export const en = {
     photos: 'Photos',
   },
   categories: {
-    u11: 'U11 · 2015',
-    u12: 'U12 · 2014',
-    u13: 'U13 · 2013',
+    u11: 'U11 · 2016',
+    u12: 'U12 · 2015',
+    u13: 'U13 · 2014',
   },
   home: {
     hero_title: 'Queens Cup',

@@ -18,7 +18,7 @@ const matches = await getMatches(cat);
 const settings = await getSettings();
 const showSchedule = settings?.showSchedule?.[cat] ?? true;
 
-const courtOrder = (court: string) => court === "Court 1" ? 0 : 1;
+const courtOrder = (court: string) => court === "court1" ? 0 : 1;
 const den1 = matches.filter((m: any) => m.day === 1).sort((a: any, b: any) => a.datetime.localeCompare(b.datetime) || courtOrder(a.court) - courtOrder(b.court));
 const den2 = matches.filter((m: any) => m.day === 2).sort((a: any, b: any) => a.datetime.localeCompare(b.datetime) || courtOrder(a.court) - courtOrder(b.court));
 const den3 = matches.filter((m: any) => m.day === 3).sort((a: any, b: any) => a.datetime.localeCompare(b.datetime) || courtOrder(a.court) - courtOrder(b.court));
@@ -103,7 +103,7 @@ function formatTime(datetime: string) {
 }
 
 function isStreamMatch(m: Match) {
-  return m.court === "Court 1";
+  return !!m.streamUrl;
 }
 ---
 
@@ -165,7 +165,7 @@ function isStreamMatch(m: Match) {
                     <td>{formatTime(m.datetime)}</td>
                     <td>
                       <span
-                        class={`pill ${m.court === "Court 1" ? "pill--h1" : "pill--h2"}`}
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
                       >
                         {courts[m.court] ?? m.court ?? "—"}
                       </span>
@@ -195,9 +195,9 @@ function isStreamMatch(m: Match) {
                     </td>
                     {showStream && (
                       <td>
-                        {m.court === "Court 1" ? (
+                        {m.streamUrl ? (
                           <a
-                            href="https://www.tvcom.cz/"
+                            href={m.streamUrl}
                             target="_blank"
                             rel="noopener"
                             class="tvcom-badge"
@@ -255,7 +255,7 @@ function isStreamMatch(m: Match) {
                     <td>{formatTime(m.datetime)}</td>
                     <td>
                       <span
-                        class={`pill ${m.court === "Court 1" ? "pill--h1" : "pill--h2"}`}
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
                       >
                         {courts[m.court] ?? m.court ?? "—"}
                       </span>
@@ -285,9 +285,9 @@ function isStreamMatch(m: Match) {
                     </td>
                     {showStream && (
                       <td>
-                        {m.court === "Court 1" ? (
+                        {m.streamUrl ? (
                           <a
-                            href="https://www.tvcom.cz/"
+                            href={m.streamUrl}
                             target="_blank"
                             rel="noopener"
                             class="tvcom-badge"
@@ -335,7 +335,7 @@ function isStreamMatch(m: Match) {
                     <td>{formatTime(m.datetime)}</td>
                     <td>
                       <span
-                        class={`pill ${m.court === "Court 1" ? "pill--h1" : "pill--h2"}`}
+                        class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
                       >
                         {courts[m.court] ?? m.court ?? "—"}
                       </span>
@@ -365,9 +365,9 @@ function isStreamMatch(m: Match) {
                     </td>
                     {showStream && (
                       <td>
-                        {m.court === "Court 1" ? (
+                        {m.streamUrl ? (
                           <a
-                            href="https://www.tvcom.cz/"
+                            href={m.streamUrl}
                             target="_blank"
                             rel="noopener"
                             class="tvcom-badge"
