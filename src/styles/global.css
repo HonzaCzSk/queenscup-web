@@ -739,3 +739,19 @@ table.quarters th {
 .venue-card__map:hover {
   text-decoration: underline;
 }
+
+/* ── Court pills – Court 1 červená, Court 2 modrá ── */
+/* Musí být na konci global.css, za všemi importy z base.css */
+table .pill--h1,
+table .pill--h1.pill {
+  border-color: rgba(232, 0, 28, .55);
+  background: rgba(232, 0, 28, .14);
+  color: #ff6b6b;
+}
+
+table .pill--h2,
+table .pill--h2.pill {
+  border-color: rgba(59, 130, 246, .55);
+  background: rgba(59, 130, 246, .14);
+  color: #60a5fa;
+}

@@ -93,8 +93,6 @@ function formatTime(datetime: string) {
   return new Date(datetime).toLocaleTimeString("cs-CZ", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
-    timeZone: "Europe/Prague",
   });
 }
 
@@ -181,7 +179,7 @@ function getQuarters(m: Match) {
                               <td>{formatTime(m.datetime)}</td>
                               <td>
                                 <span
-                                  class={`pill ${m.court === "court1" ? "pill--h1" : "pill--h2"}`}
+                                  class={`pill ${m.court === "Court 1" ? "pill--h1" : "pill--h2"}`}
                                 >
                                   {courts[m.court] ?? m.court ?? "—"}
                                 </span>
