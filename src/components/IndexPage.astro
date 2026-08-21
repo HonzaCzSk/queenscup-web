@@ -5,7 +5,7 @@ import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
-  cat: "u11" | "u12" | "u13";
+  cat: "u12" | "u13" | "u14";
 }
 
 const { lang, cat } = Astro.props;
@@ -18,19 +18,19 @@ const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
 
 const categoryDetails = {
   cs: [
-    "U11 · ročník 2015 · Sokol HK",
-    "U12 · ročník 2014 · GAPA aréna",
-    "U13 · ročník 2013 · Sokol HK",
+    "U12 · ročník 2015 · GAPA aréna",
+    "U13 · ročník 2014 · Sokol HK",
+    "U14 · ročník 2013 · Sokol HK",
   ],
   en: [
-    "U11 · born 2015 · Sokol HK",
-    "U12 · born 2014 · GAPA Arena",
-    "U13 · born 2013 · Sokol HK",
+    "U12 · born 2015 · GAPA Arena",
+    "U13 · born 2014 · Sokol HK",
+    "U14 · born 2013 · Sokol HK",
   ],
   pl: [
-    "U11 · rocznik 2015 · Sokol HK",
-    "U12 · rocznik 2014 · GAPA Arena",
-    "U13 · rocznik 2013 · Sokol HK",
+    "U12 · rocznik 2015 · GAPA Arena",
+    "U13 · rocznik 2014 · Sokol HK",
+    "U14 · rocznik 2013 · Sokol HK",
   ],
 }[locale];
 ---
@@ -40,7 +40,7 @@ const categoryDetails = {
     <section class="hero">
       <div class="hero__text">
         <h1 class="h1">
-          {cat === "u13" ? "V4 Basketball Queens Cup" : tr.home.hero_title}
+          {cat === "u14" ? "V4 Basketball Queens Cup" : tr.home.hero_title}
         </h1>
         <p class="muted">{tr.home.hero_subtitle}</p>
         <p style="font-size: 14px; margin: 8px 0 10px 0;">
@@ -48,11 +48,11 @@ const categoryDetails = {
         </p>
         <p class="lead">
           {
-            cat === "u13"
-              ? tr.home.hero_date_u13
-              : cat === "u12"
-                ? tr.home.hero_date_u12
-                : tr.home.hero_date_u11
+            cat === "u14"
+              ? tr.home.hero_date_u14
+              : cat === "u13"
+                ? tr.home.hero_date_u13
+                : tr.home.hero_date_u12
           }
         </p>
         <div class="cta">

@@ -1,10 +1,10 @@
 ---
 import ResultsPage from "../components/ResultsPage.astro";
 
-const cat = (Astro.url.searchParams.get("cat") ?? "u11") as
-    | "u11"
+const cat = (Astro.url.searchParams.get("cat") ?? "u12") as
     | "u12"
-    | "u13";
+    | "u13"
+    | "u14";
 ---
 
 <ResultsPage lang="cs" cat={cat} />

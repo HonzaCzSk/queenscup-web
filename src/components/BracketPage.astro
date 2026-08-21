@@ -7,7 +7,7 @@ import type { Match } from '../lib/types'
 
 interface Props {
   lang: string
-  cat: 'u11' | 'u12' | 'u13'
+  cat: 'u12' | 'u13' | 'u14'
 }
 
 const { lang, cat } = Astro.props
@@ -27,19 +27,19 @@ const hasAny = qfMatches.length > 0 || finalMatch || thirdMatch
 
 const catLabels: Record<string, Record<string, string>> = {
   cs: {
-    u11: 'U11 · Sokol HK',
     u12: 'U12 · GAPA aréna',
     u13: 'U13 · Sokol HK',
+    u14: 'U14 · Sokol HK',
   },
   en: {
-    u11: 'U11 · Sokol HK',
     u12: 'U12 · GAPA Arena',
     u13: 'U13 · Sokol HK',
+    u14: 'U14 · Sokol HK',
   },
   pl: {
-    u11: 'U11 · Sokol HK',
     u12: 'U12 · GAPA Arena',
     u13: 'U13 · Sokol HK',
+    u14: 'U14 · Sokol HK',
   },
 }
 

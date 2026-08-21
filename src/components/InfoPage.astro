@@ -5,7 +5,7 @@ import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
-  cat: "u11" | "u12" | "u13";
+  cat: "u12" | "u13" | "u14";
 }
 
 const { lang, cat } = Astro.props;
@@ -14,7 +14,7 @@ const tr = t(locale);
 
 // Specifické info pro každou kategorii
 const catInfo = {
-  u11: {
+  u12: {
     cs: {
       dates: "11. – 13. září 2026",
       venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
@@ -37,9 +37,9 @@ const catInfo = {
       stream: null,
     },
   },
-  u12: {
+  u13: {
     cs: {
-      dates: "4.–6. září 2026",
+      dates: "4. – 6. září 2026",
       venue: "GAPA aréna – Na potoce 691/30, Hradec Králové",
       mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
       courts: "Jedna hala",
@@ -60,7 +60,7 @@ const catInfo = {
       stream: null,
     },
   },
-  u13: {
+  u14: {
     cs: {
       dates: "4. – 6. září 2026",
       venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
@@ -90,7 +90,7 @@ const catInfo = {
 
 // Parkování a doprava podle kategorie
 const transportInfo = {
-  u11: {
+  u12: {
     cs: {
       parking:
         "Parkování v okolí haly je zdarma – v okolních ulicích i u přilehlých panelových domů. Vždy kontrolujte dopravní značení.",
@@ -113,7 +113,7 @@ const transportInfo = {
         "Autobusy nr 12, 13, 16, 17 oraz trolejbusy nr 3, 4, 7. Od przystanku do hali 2 minuty piechotą.",
     },
   },
-  u12: {
+  u13: {
     cs: {
       parking:
         "Parkování v okolí haly je zdarma – v přilehlých ulicích i u panelových domů. Vždy kontrolujte dopravní značení.",
@@ -145,7 +145,7 @@ const transportInfo = {
         "Autobusy nr 16, 23, 24 i 33. Od przystanku do hali 4 minuty piechotą.",
     },
   },
-  u13: {
+  u14: {
     cs: {
       parking:
         "Parkování v okolí haly je zdarma – v okolních ulicích i u přilehlých panelových domů. Vždy kontrolujte dopravní značení.",
@@ -171,9 +171,9 @@ const transportInfo = {
 }[cat][locale];
 
 const pageTitle = {
-  cs: { u11: "Info – U11", u12: "Info – U12", u13: "Info – U13" },
-  en: { u11: "Info – U11", u12: "Info – U12", u13: "Info – U13" },
-  pl: { u11: "Info – U11", u12: "Info – U12", u13: "Info – U13" },
+  cs: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
+  en: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
+  pl: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
 }[locale][cat];
 ---
 
@@ -276,14 +276,14 @@ const pageTitle = {
         <div style="display: flex; flex-direction: column; gap: 10px;">
           <!-- Sokol HK -->
           <div
-            class={`venue-card ${cat === "u11" || cat === "u13" ? "venue-card--active" : ""}`}
+            class={`venue-card ${cat === "u12" || cat === "u14" ? "venue-card--active" : ""}`}
           >
             <div class="venue-card__name">
               Sokol HK
               {
-                (cat === "u11" || cat === "u13") && (
+                (cat === "u12" || cat === "u14") && (
                   <span class="badge" style="margin-left: 8px;">
-                    {cat === "u11" ? "U11" : "U13"}
+                    {cat === "u12" ? "U12" : "U14"}
                   </span>
                 )
               }
@@ -292,7 +292,7 @@ const pageTitle = {
               Eliščino nábřeží 777, Hradec Králové
             </div>
             {
-              cat === "u11" || cat === "u13" ? (
+              cat === "u12" || cat === "u14" ? (
                 <a
                   href="https://www.google.com/maps/place/TJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9/@50.213257,15.5241203,36547m/data=!3m1!1e3!4m10!1m2!2m1!1sTJ+Sokol+Hradec+Kr%C3%A1lov%C3%A9!3m6!1s0x470c2b2ee9083f57:0xdadd5997f9d5361d!8m2!3d50.213257!4d15.8289909!15sChlUSiBTb2tvbCBIcmFkZWMgS3LDoWxvdsOpWhsiGXRqIHNva29sIGhyYWRlYyBrcsOhbG92w6mSAQtzcG9ydHNfY2x1YpoBI0NoWkRTVWhOTUc5blMwVkpRMEZuU1VOQ2RGQnhaVlIzRUFF4AEA-gEECAAQGA!16s%2Fg%2F11h52sp2wy?entry=ttu&g_ep=EgoyMDI2MDYyNC4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"

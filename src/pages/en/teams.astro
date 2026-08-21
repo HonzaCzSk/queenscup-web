@@ -2,7 +2,7 @@
 import TeamsPage from "../../components/TeamsPage.astro";
 
 const cat =
-    (Astro.url.searchParams.get("cat") as "u11" | "u12" | "u13") ?? "u11";
+    (Astro.url.searchParams.get("cat") as "u12" | "u13" | "u14") ?? "u12";
 ---
 
 <TeamsPage lang="en" cat={cat} />

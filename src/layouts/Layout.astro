@@ -17,18 +17,18 @@ const {
   description = "Mezinárodní minibasketbalový turnaj – Hradec Králové",
   lang = "cs",
   activePage = "",
-  activeCategory = "u11",
+  activeCategory = "u12",
 } = Astro.props;
 
 const locale = getLang(lang);
 const tr = t(locale);
 
 const currentPath = Astro.url.pathname;
-const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u11";
+const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u12";
 const catParam = `?cat=${currentCat}`;
 
 const tournamentName =
-  currentCat === "u13" ? "V4 Basketball Queens Cup" : "Basketball Queens Cup";
+  currentCat === "u14" ? "V4 Basketball Queens Cup" : "Basketball Queens Cup";
 
 // Mapa českých cest na EN/PL ekvivalenty
 const pathMap: Record<string, { en: string; pl: string }> = {
@@ -121,12 +121,6 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
           <!-- Přepínač kategorií -->
           <div class="cattabs">
             <a
-              class={`cattab ${activeCategory === "u11" ? "is-active" : ""}`}
-              href={`${currentPath}?cat=u11`}
-            >
-              {tr.categories.u11}
-            </a>
-            <a
               class={`cattab ${activeCategory === "u12" ? "is-active" : ""}`}
               href={`${currentPath}?cat=u12`}
             >
@@ -137,6 +131,12 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
               href={`${currentPath}?cat=u13`}
             >
               {tr.categories.u13}
+            </a>
+            <a
+              class={`cattab ${activeCategory === "u14" ? "is-active" : ""}`}
+              href={`${currentPath}?cat=u14`}
+            >
+              {tr.categories.u14}
             </a>
           </div>
 
@@ -484,7 +484,7 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
               {tr.footer.rights.replace("Queens Cup", tournamentName)}
             </div>
             {
-              currentCat === "u13" && (
+              currentCat === "u14" && (
                 <div class="eu-funding">
                   <a
                     href="https://www.visegradfund.org"

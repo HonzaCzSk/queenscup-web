@@ -17,9 +17,9 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'U11 (2015)', value: 'u11' },
-          { title: 'U12 (2014)', value: 'u12' },
-          { title: 'U13 (2013)', value: 'u13' },
+          { title: 'U12 (2015)', value: 'u12' },
+          { title: 'U13 (2014)', value: 'u13' },
+          { title: 'U14 (2013)', value: 'u14' },
         ],
       },
       validation: Rule => Rule.required(),
