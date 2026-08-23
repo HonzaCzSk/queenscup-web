@@ -54,13 +54,32 @@ export async function getMatches(category: string): Promise<Match[]> {
         scoreB,
         status,
         quarters,
-        streamUrl,
         "teamA": teamA->{ name, country },
         "teamB": teamB->{ name, country },
       }
     `, { category });
   } catch (error) {
     console.error(`Error fetching matches for category ${category}:`, error);
+    return [];
+  }
+}
+
+export async function getGalleries(category: string) {
+  try {
+    return await sanityClient.fetch(`
+      *[_type == "gallery" && (category == $category || category == "all")] | order(day asc, publishedAt asc) {
+        _id,
+        title,
+        photographer,
+        url,
+        "thumbnail": thumbnail.asset->url,
+        category,
+        day,
+        publishedAt,
+      }
+    `, { category });
+  } catch (error) {
+    console.error(`Error fetching galleries for category ${category}:`, error);
     return [];
   }
 }

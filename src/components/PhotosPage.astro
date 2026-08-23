@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
+import { getGalleries } from "../lib/queries";
 import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
+  cat: "u12" | "u13" | "u14";
 }
 
 const { lang } = Astro.props;
@@ -12,51 +14,48 @@ const locale = getLang(lang);
 const tr = t(locale);
 
 const cat = (Astro.url.searchParams.get("cat") ?? "u12") as
-  | "u12"
-  | "u13"
-  | "u14";
+  "u12" | "u13" | "u14";
 
-const photoAlbums = {
-  cs: [
-    {
-      title: "Den 1 – Sobota (Zápasy)",
-      desc: "Fotky ze zápasů základní části",
+const galleries = await getGalleries(cat);
+
+const dayLabel = (day: number) => {
+  const labels: Record<string, Record<number, string>> = {
+    cs: {
+      0: "Celý turnaj",
+      1: "Den 1 – Pátek",
+      2: "Den 2 – Sobota",
+      3: "Den 3 – Neděle",
     },
-    {
-      title: "Den 2 – Neděle (Play-off)",
-      desc: "Fotky z play-off a finálových bojů",
+    en: {
+      0: "Full tournament",
+      1: "Day 1 – Friday",
+      2: "Day 2 – Saturday",
+      3: "Day 3 – Sunday",
     },
-    {
-      title: "Slavnostní zakončení",
-      desc: "Vyhlášení výsledků a předávání pohárů",
+    pl: {
+      0: "Cały turniej",
+      1: "Dzień 1 – Piątek",
+      2: "Dzień 2 – Sobota",
+      3: "Dzień 3 – Niedziela",
     },
-  ],
-  en: [
-    {
-      title: "Day 1 – Saturday (Matches)",
-      desc: "Photos from group stage games",
-    },
-    {
-      title: "Day 2 – Sunday (Play-offs)",
-      desc: "Photos from play-off rounds and finals",
-    },
-    { title: "Closing Ceremony", desc: "Award ceremony and team photos" },
-  ],
-  pl: [
-    {
-      title: "Dzień 1 – Sobota (Mecze)",
-      desc: "Zdjęcia z meczów fazy grupowej",
-    },
-    {
-      title: "Dzień 2 – Niedziela (Play-off)",
-      desc: "Zdjęcia z fazy pucharowej i finałów",
-    },
-    {
-      title: "Ceremonia zakończenia",
-      desc: "Wręczenie nagród i zdjęcia grupowe",
-    },
-  ],
-}[locale];
+  };
+  return labels[locale]?.[day] ?? "";
+};
+
+const openAlbum =
+  locale === "cs"
+    ? "Otevřít album"
+    : locale === "pl"
+      ? "Otwórz album"
+      : "Open album";
+const byPhotographer =
+  locale === "cs" ? "Fotograf" : locale === "pl" ? "Fotograf" : "Photographer";
+const noGalleries =
+  locale === "cs"
+    ? "Fotografie budou k dispozici brzy po skončení turnaje."
+    : locale === "pl"
+      ? "Zdjęcia będą dostępne wkrótce po zakończeniu turnieju."
+      : "Photos will be available shortly after the tournament.";
 ---
 
 <Layout
@@ -71,59 +70,41 @@ const photoAlbums = {
       <p class="lead">{tr.photos.desc}</p>
     </section>
 
-    <!-- Zonerama Primary CTA -->
-    <div
-      class="card card--accent"
-      style="margin-bottom: 24px; padding: 24px; text-align: center;"
-    >
-      <h2 class="h2" style="font-size: 16px; margin-bottom: 8px;">
-        {tr.photos.official_gallery}
-      </h2>
-      <p class="muted" style="font-size: 14px; margin-bottom: 16px;">
-        {tr.photos.gallery_desc}
-      </p>
-      <a
-        href="https://zonerama.com"
-        target="_blank"
-        rel="noopener"
-        class="btn btn--primary"
-        style="display: inline-flex;"
-      >
-        {tr.photos.gallery_btn}
-      </a>
-    </div>
-
-    <!-- Album Blocks (Dashed Thumbnails) -->
-    <div class="card">
-      <h2 class="h2" style="margin-bottom: 16px;">
-        {tr.photos.daily_albums}
-      </h2>
-      <div class="gallery" style="margin-top: 14px;">
-        {
-          photoAlbums.map((album: { title: string; desc: string }) => (
-            <a
-              href="https://zonerama.com"
-              target="_blank"
-              rel="noopener"
-              class="thumb"
-              style="flex-direction: column; text-align: center; padding: 14px; gap: 4px;"
-            >
-              <span style="font-size: 14px; font-weight: 800; color: var(--accent); line-height: 1.2;">
-                {album.title}
-              </span>
-              <span
-                class="muted"
-                style="font-size: 11px; font-weight: 500; margin-top: 2px;"
+    {
+      galleries.length === 0 ? (
+        <section class="card card--empty">
+          <p class="card--empty__text">{noGalleries}</p>
+        </section>
+      ) : (
+        <div class="photos-grid">
+          {galleries.map((g: any) => (
+            <a href={g.url} target="_blank" rel="noopener" class="photo-card">
+              <div
+                class={`photo-card__thumb ${!g.thumbnail ? "photo-card__thumb--empty" : ""}`}
               >
-                {album.desc}
-              </span>
-              <span style="font-size: 11px; font-weight: 700; opacity: 0.65; margin-top: auto; text-transform: uppercase;">
-                {tr.photos.open_album} ↗
-              </span>
+                {g.thumbnail ? (
+                  <img src={g.thumbnail} alt={g.title} loading="lazy" />
+                ) : (
+                  <span class="photo-card__thumb-icon">📷</span>
+                )}
+              </div>
+              <div class="photo-card__body">
+                {g.day > 0 && (
+                  <div class="photo-card__day">{dayLabel(g.day)}</div>
+                )}
+                <div class="photo-card__title">{g.title}</div>
+                {g.photographer && (
+                  <div class="photo-card__meta">
+                    <span class="photo-card__label">{byPhotographer}:</span>{" "}
+                    {g.photographer}
+                  </div>
+                )}
+                <div class="photo-card__cta">{openAlbum} ↗</div>
+              </div>
             </a>
-          ))
-        }
-      </div>
-    </div>
+          ))}
+        </div>
+      )
+    }
   </main>
 </Layout>

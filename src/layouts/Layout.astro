@@ -81,10 +81,36 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content={`https://queenscup2026.com${Astro.url.pathname}`}
+    />
     <meta property="og:title" content={`${title} | ${tournamentName}`} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={tournamentName} />
-    <meta property="og:image" content="/og-image.png" />
+    <meta
+      property="og:image"
+      content="https://queenscup2026.com/og-image.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Basketball Queens Cup 2026 – Hradec Králové"
+    />
+    <meta
+      property="og:locale"
+      content={lang === "cs" ? "cs_CZ" : lang === "pl" ? "pl_PL" : "en_US"}
+    />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | ${tournamentName}`} />
+    <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image"
+      content="https://queenscup2026.com/og-image.png"
+    />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
