@@ -21,7 +21,7 @@ export async function getPartners(): Promise<Partner[]> {
 export async function getTeams(category: string): Promise<Team[]> {
   try {
     return await sanityClient.fetch(`
-      *[_type == "team" && category == $category && !(name in ["A1", "A2", "A3", "A4", "B1", "B2", "B3", "B4", "__"])] | order(name asc) {
+      *[_type == "team" && category == $category && !(name in ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "__"])] | order(name asc) {
         _id,
         name,
         category,
