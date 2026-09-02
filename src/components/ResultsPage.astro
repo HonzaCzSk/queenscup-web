@@ -90,10 +90,10 @@ const dayLabels: Record<string, Record<string, string>> = {
 
 function formatTime(datetime: string) {
   if (!datetime) return "—";
-  return new Date(datetime).toLocaleTimeString("cs-CZ", {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+  return new Date(datetime).toLocaleTimeString(
+    locale === "cs" ? "cs-CZ" : locale === "pl" ? "pl-PL" : "en-US",
+    { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Europe/Prague" },
+  );
 }
 
 function getRowClass(m: Match) {
