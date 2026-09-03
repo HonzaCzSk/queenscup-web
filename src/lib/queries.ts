@@ -54,6 +54,7 @@ export async function getMatches(category: string): Promise<Match[]> {
         scoreB,
         status,
         quarters,
+        streamUrl,
         "teamA": teamA->{ name, country },
         "teamB": teamB->{ name, country },
       }

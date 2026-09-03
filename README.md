@@ -17,6 +17,7 @@ Turnaj se koná tento rok první dva víkendy v září v Hradci Králové.
 Zúčastňují se týmy z České republiky, Polska, Slovenska a dalších evropských zemí.
 
 ### Hrací dny
+
 4-6. a 11-13. září
 
 ## Technologie

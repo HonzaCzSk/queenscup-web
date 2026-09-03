@@ -92,7 +92,7 @@ const dayLabels = {
   },
 }[locale];
 
-const showStream = cat === "u13";
+const showStream = cat === "u14" || cat === "u13" || cat === "u12";
 
 function formatTime(datetime: string) {
   if (!datetime) return "—";
