@@ -866,9 +866,3 @@ table .pill--h2.pill {
     grid-template-columns: 1fr;
   }
 }
-
-@media (min-height: 6000px) {
-  .schedule-game[data-tour="true"] {
-    display: none;
-  }
-}
