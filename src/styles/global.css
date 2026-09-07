@@ -860,9 +860,3 @@ table .pill--h2.pill {
   font-weight: 700;
   opacity: 0.5;
 }
-
-.card--empty__text {
-  font-size: 18px;
-  font-weight: 700;
-  opacity: 0.5;
-}
