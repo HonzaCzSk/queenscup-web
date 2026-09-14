@@ -45,6 +45,13 @@ export const en = {
     stats_nations: 'nations',
     stats_days: 'tournament days',
     stats_date: 'Hradec Králové · September 2026',
+    thanks_title: 'Acknowledgments',
+    thanks_p1: 'We hope you enjoyed the Queens Cup tournament from start to finish.',
+    thanks_p2: 'Thank you to all teams and players for coming to Hradec Králové and creating such a great atmosphere and support for the players on the court!',
+    thanks_p3: 'Thank you to all parents, referees, coaches, and other organizers, without whom this tournament would not be possible.',
+    thanks_p4: 'We believe you took away many wonderful experiences and memories from this tournament. We wish you good luck and success in the upcoming season, and we look forward to seeing you in 2027!',
+    thanks_team: 'On behalf of the organizing team',
+    thanks_author: 'Jan Votroubek – web manager',
   },
   schedule: {
     title: 'Match Schedule',
