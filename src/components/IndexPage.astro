@@ -16,23 +16,6 @@ const scheduleUrl =
   lang === "cs" ? `/rozpis?cat=${cat}` : `/${lang}/schedule?cat=${cat}`;
 const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
 
-const categoryDetails = {
-  cs: [
-    "U12 · ročník 2015 · GAPA aréna",
-    "U13 · ročník 2014 · Sokol HK",
-    "U14 · ročník 2013 · Sokol HK",
-  ],
-  en: [
-    "U12 · born 2015 · GAPA Arena",
-    "U13 · born 2014 · Sokol HK",
-    "U14 · born 2013 · Sokol HK",
-  ],
-  pl: [
-    "U12 · rocznik 2015 · GAPA Arena",
-    "U13 · rocznik 2014 · Sokol HK",
-    "U14 · rocznik 2013 · Sokol HK",
-  ],
-}[locale];
 ---
 
 <Layout title={tr.nav.home} activePage="home" activeCategory={cat} lang={lang}>

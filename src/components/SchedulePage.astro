@@ -24,73 +24,25 @@ const den2 = matches.filter((m: any) => m.day === 2).sort((a: any, b: any) => a.
 const den3 = matches.filter((m: any) => m.day === 3).sort((a: any, b: any) => a.datetime.localeCompare(b.datetime) || courtOrder(a.court) - courtOrder(b.court));
 
 const courts: Record<string, string> = {
-  court1: "Court 1 – Sokol HK",
-  court2: "Court 2 – Sokol HK",
-  gapa: "GAPA aréna",
+  court1: tr.venues.court1,
+  court2: tr.venues.court2,
+  gapa: tr.venues.gapa,
+  sokol: tr.venues.sokol,
 };
 
-const matchTypes: Record<string, string> = {
-  cs: {
-    qf: "Čtvrtfinále",
-    ninth: "O 9. místo",
-    seventh: "O 7. místo",
-    fifth: "O 5. místo",
-    third: "O 3. místo",
-    final: "Finále",
-  },
-  en: {
-    qf: "Quarterfinal",
-    ninth: "9th Place Match",
-    seventh: "7th Place Match",
-    fifth: "5th Place Match",
-    third: "3rd Place Match",
-    final: "Final",
-  },
-  pl: {
-    qf: "Ćwierćfinał",
-    ninth: "Mecz o 9. miejsce",
-    seventh: "Mecz o 7. miejsce",
-    fifth: "Mecz o 5. miejsce",
-    third: "Mecz o 3. miejsce",
-    final: "Finał",
-  },
-}[locale];
+const matchTypes = tr.matchTypes as Record<string, string>;
 
 const catLabels: Record<string, string> = {
-  cs: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Aréna",
-    u14: "U14 · Sokol HK",
-  },
-  en: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-  pl: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-}[locale];
+  u12: tr.categories.u12_venue,
+  u13: tr.categories.u13_venue,
+  u14: tr.categories.u14_venue,
+};
 
 const dayLabels = {
-  cs: {
-    day1: "Den 1 – Pátek",
-    day2: "Den 2 – Sobota",
-    day3: "Den 3 – Neděle",
-  },
-  en: {
-    day1: "Day 1 – Friday",
-    day2: "Day 2 – Saturday",
-    day3: "Day 3 – Sunday",
-  },
-  pl: {
-    day1: "Dzień 1 – Piątek",
-    day2: "Dzień 2 – Sobota",
-    day3: "Dzień 3 – Niedziela",
-  },
-}[locale];
+  day1: tr.schedule.day1,
+  day2: tr.schedule.day2,
+  day3: tr.schedule.day3,
+};
 
 const showStream = cat === "u14" || cat === "u13" || cat === "u12";
 

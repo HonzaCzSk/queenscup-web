@@ -1,5 +1,5 @@
 (() => {
-  const KEY = "mcr_cookie_consent_v1";
+  const KEY = "queenscup_cookie_consent_v1";
 
   function hasConsent() {
     try { return localStorage.getItem(KEY) === "granted"; } catch { return true; }

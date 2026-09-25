@@ -6,56 +6,30 @@ import { t, getLang } from "../i18n/index";
 
 interface Props {
   lang: string;
-  cat: "u12" | "u13" | "u14";
+  cat?: "u12" | "u13" | "u14";
 }
 
-const { lang } = Astro.props;
+const { lang, cat: propCat } = Astro.props;
 const locale = getLang(lang);
 const tr = t(locale);
 
-const cat = (Astro.url.searchParams.get("cat") ?? "u12") as
-  "u12" | "u13" | "u14";
+const cat = (propCat ?? (Astro.url.searchParams.get("cat") ?? "u12")) as
+  | "u12"
+  | "u13"
+  | "u14";
 
 const galleries = await getGalleries(cat);
 
 const dayLabel = (day: number) => {
-  const labels: Record<string, Record<number, string>> = {
-    cs: {
-      0: "Celý turnaj",
-      1: "Den 1 – Pátek",
-      2: "Den 2 – Sobota",
-      3: "Den 3 – Neděle",
-    },
-    en: {
-      0: "Full tournament",
-      1: "Day 1 – Friday",
-      2: "Day 2 – Saturday",
-      3: "Day 3 – Sunday",
-    },
-    pl: {
-      0: "Cały turniej",
-      1: "Dzień 1 – Piątek",
-      2: "Dzień 2 – Sobota",
-      3: "Dzień 3 – Niedziela",
-    },
-  };
-  return labels[locale]?.[day] ?? "";
+  if (day === 1) return tr.photos.day1;
+  if (day === 2) return tr.photos.day2;
+  if (day === 3) return tr.photos.day3;
+  return tr.photos.day0;
 };
 
-const openAlbum =
-  locale === "cs"
-    ? "Otevřít album"
-    : locale === "pl"
-      ? "Otwórz album"
-      : "Open album";
-const byPhotographer =
-  locale === "cs" ? "Fotograf" : locale === "pl" ? "Fotograf" : "Photographer";
-const noGalleries =
-  locale === "cs"
-    ? "Fotografie budou k dispozici brzy po skončení turnaje."
-    : locale === "pl"
-      ? "Zdjęcia będą dostępne wkrótce po zakończeniu turnieju."
-      : "Photos will be available shortly after the tournament.";
+const openAlbum = tr.photos.open_album;
+const byPhotographer = tr.photos.by_photographer;
+const noGalleries = tr.photos.no_photos;
 ---
 
 <Layout

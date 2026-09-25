@@ -15,166 +15,48 @@ const tr = t(locale);
 // Specifické info pro každou kategorii
 const catInfo = {
   u12: {
-    cs: {
-      dates: "11. – 13. září 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts: "Court 1 (hlavní sál) · Court 2 (tréninkový sál)",
-      stream: null,
-    },
-    en: {
-      dates: "September 11–13, 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts: "Court 1 (main hall) · Court 2 (training hall)",
-      stream: null,
-    },
-    pl: {
-      dates: "11–13 września 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts: "Court 1 (hala główna) · Court 2 (hala treningowa)",
-      stream: null,
-    },
+    dates: tr.info.u12_dates,
+    venue: tr.info.u12_venue,
+    mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+    courts: tr.info.u12_courts,
+    stream: null,
   },
   u13: {
-    cs: {
-      dates: "4. – 6. září 2026",
-      venue: "GAPA aréna – Na potoce 691/30, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
-      courts: "Jedna hala",
-      stream: null,
-    },
-    en: {
-      dates: "September 4–6, 2026",
-      venue: "GAPA Arena – Na potoce 691/30, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
-      courts: "Single hall",
-      stream: null,
-    },
-    pl: {
-      dates: "4–6 września 2026",
-      venue: "GAPA Arena – Na potoce 691/30, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
-      courts: "Jedna hala",
-      stream: null,
-    },
+    dates: tr.info.u13_dates,
+    venue: tr.info.u13_venue,
+    mapsUrl: "https://maps.google.com/?q=GAPA+arena+Hradec+Králové",
+    courts: tr.info.u13_courts,
+    stream: null,
   },
   u14: {
-    cs: {
-      dates: "4. – 6. září 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts:
-        "Court 1 (hlavní sál, živý přenos TVCOM) · Court 2 (tréninkový sál)",
-      stream: "https://www.tvcom.cz/",
-    },
-    en: {
-      dates: "September 4–6, 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts:
-        "Court 1 (main hall, live stream on TVCOM) · Court 2 (training hall)",
-      stream: "https://www.tvcom.cz/",
-    },
-    pl: {
-      dates: "4–6 września 2026",
-      venue: "Sokol HK – Eliščino nábřeží 777, Hradec Králové",
-      mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
-      courts:
-        "Court 1 (hala główna, transmisja na TVCOM) · Court 2 (hala treningowa)",
-      stream: "https://www.tvcom.cz/",
-    },
+    dates: tr.info.u14_dates,
+    venue: tr.info.u14_venue,
+    mapsUrl: "https://maps.google.com/?q=TJ+Sokol+Hradec+Králové",
+    courts: tr.info.u14_courts,
+    stream: "https://www.tvcom.cz/",
   },
-}[cat][locale];
+}[cat];
 
 // Parkování a doprava podle kategorie
 const transportInfo = {
   u12: {
-    cs: {
-      parking:
-        "Parkování v okolí haly je možné. Nedaleko se nachází parkovací dům Jana Gayera, který je otevřen 24/7. V okolí haly se nachází žlutá parkovací zóna, kde je možné parkovat zdarma pouze jen v neděli. V ostatní dny je parkování zpoplatněno (20Kč/h, v pracovní dny se platí v hodinách 8-18, o víkendu 8-16).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Autobusy č. 12, 13, 16, 17 a trolejbusy č. 3, 4, 7. Ze zastávky dojdete k hale za 2 minuty pěšky.",
-    },
-    en: {
-      parking:
-        "Parking is available nearby. The Jana Gayera parking garage is located nearby and is open 24/7. The area around the hall has a yellow parking zone where parking is free only on Sundays. On other days, parking is subject to a charge (CZK 20/hour; on weekdays, payment is required between 8 a.m. and 6 p.m., and on weekends between 8 a.m. and 4 p.m.).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Buses no. 12, 13, 16, 17 and trolleybuses no. 3, 4, 7. A 2-minute walk from the stop to the venue.",
-    },
-    pl: {
-      parking:
-        "Parking jest dostępny w pobliżu. Pobliska hala garażowa Jana Gayera jest otwarta przez całą dobę. Teren wokół hali znajduje się w strefie żółtego parkowania, gdzie parkowanie jest bezpłatne tylko w niedziele. W pozostałe dni parkowanie jest płatne (20 CZK/godz.; w dni powszednie opłata obowiązuje w godzinach 8:00–18:00, a w weekendy w godzinach 8:00–16:00).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Autobusy nr 12, 13, 16, 17 oraz trolejbusy nr 3, 4, 7. Od przystanku do hali 2 minuty piechotą.",
-    },
+    parking: tr.info.parking_sokol,
+    transit_stop: tr.info.transit_sokol_stop,
+    transit_lines: tr.info.transit_sokol_lines,
   },
   u13: {
-    cs: {
-      parking:
-        "Parkování v okolí haly je zdarma – v přilehlých ulicích i u panelových domů. Vždy kontrolujte dopravní značení.",
-      transit_stop: "Štefánikova",
-      transit_lines:
-        "Autobusy č. 9, 18, 23, 24 a 25. Za přibližně dvě minuty dojdete k hale.",
-      transit_stop2: "Příčná",
-      transit_lines2:
-        "Autobusy č. 16, 23, 24 a 33. Ze zastávky dojdete k hale za 4 minuty pěšky.",
-    },
-    en: {
-      parking:
-        "Free parking is available nearby – in surrounding streets and near residential buildings. Always check traffic signs.",
-      transit_stop: "Štefánikova",
-      transit_lines:
-        "Buses no. 9, 18, 23, 24 and 25. From the stop, it is approximately a two-minute walk to the venue.",
-      transit_stop2: "Příčná",
-      transit_lines2:
-        "Buses no. 16, 23, 24 and 33. A 4-minute walk from the stop to the venue.",
-    },
-    pl: {
-      parking:
-        "Parking w pobliżu hali jest bezpłatny – na okolicznych ulicach i przy blokach. Prosimy sprawdzać oznakowanie drogowe.",
-      transit_stop: "Štefánikova",
-      transit_lines:
-        "Autobusy nr 9, 18, 23, 24 i 25. Od przystanku do hali około dwie minuty piechotą.",
-      transit_stop2: "Příčná",
-      transit_lines2:
-        "Autobusy nr 16, 23, 24 i 33. Od przystanku do hali 4 minuty piechotą.",
-    },
+    parking: tr.info.parking_gapa,
+    transit_stop: tr.info.transit_gapa_stop,
+    transit_lines: tr.info.transit_gapa_lines,
   },
   u14: {
-    cs: {
-      parking:
-        "Parkování v okolí haly je možné. Nedaleko se nachází parkovací dům Jana Gayera, který je otevřen 24/7. V okolí haly se nachází žlutá parkovací zóna, kde je možné parkovat zdarma pouze jen v neděli. V ostatní dny je parkování zpoplatněno (20Kč/h, v pracovní dny se platí v hodinách 8-18, o víkendu 8-16).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Autobusy č. 12, 13, 16, 17 a trolejbusy č. 3, 4, 7. Ze zastávky dojdete k hale za 2 minuty pěšky.",
-    },
-    en: {
-      parking:
-        "Parking is available nearby. The Jana Gayera parking garage is located nearby and is open 24/7. The area around the hall has a yellow parking zone where parking is free only on Sundays. On other days, parking is subject to a charge (CZK 20/hour; on weekdays, payment is required between 8 a.m. and 6 p.m., and on weekends between 8 a.m. and 4 p.m.).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Buses no. 12, 13, 16, 17 and trolleybuses no. 3, 4, 7. A 2-minute walk from the stop to the venue.",
-    },
-    pl: {
-      parking:
-        "Parking jest dostępny w pobliżu. Pobliska hala garażowa Jana Gayera jest otwarta przez całą dobę. Teren wokół hali znajduje się w strefie żółtego parkowania, gdzie parkowanie jest bezpłatne tylko w niedziele. W pozostałe dni parkowanie jest płatne (20 CZK/godz.; w dni powszednie opłata obowiązuje w godzinach 8:00–18:00, a w weekendy w godzinach 8:00–16:00).",
-      transit_stop: "Muzeum",
-      transit_lines:
-        "Autobusy nr 12, 13, 16, 17 oraz trolejbusy nr 3, 4, 7. Od przystanku do hali 2 minuty piechotą.",
-    },
+    parking: tr.info.parking_sokol,
+    transit_stop: tr.info.transit_sokol_stop,
+    transit_lines: tr.info.transit_sokol_lines,
   },
-}[cat][locale];
+}[cat];
 
-const pageTitle = {
-  cs: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
-  en: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
-  pl: { u12: "Info – U12", u13: "Info – U13", u14: "Info – U14" },
-}[locale][cat];
+const pageTitle = `${tr.info.title} – ${cat.toUpperCase()}`;
 ---
 
 <Layout title={pageTitle} activePage="info" activeCategory={cat} lang={lang}>

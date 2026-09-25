@@ -23,69 +23,24 @@ const den2 = matches.filter((m: any) => m.day === 2);
 const den3 = matches.filter((m: any) => m.day === 3);
 
 const courts: Record<string, string> = {
-  court1: "Court 1",
-  court2: "Court 2",
-  sokol: "Sokol HK",
-  gapa: "GAPA aréna",
+  court1: tr.venues.court1,
+  court2: tr.venues.court2,
+  sokol: tr.venues.sokol,
+  gapa: tr.venues.gapa,
 };
 
-const matchTypes: Record<string, Record<string, string>> = {
-  cs: {
-    qf: "Čtvrtfinále",
-    ninth: "O 9. místo",
-    seventh: "O 7. místo",
-    fifth: "O 5. místo",
-    third: "O 3. místo",
-    final: "Finále",
-  },
-  en: {
-    qf: "Quarterfinal",
-    ninth: "9th Place Match",
-    seventh: "7th Place Match",
-    fifth: "5th Place Match",
-    third: "3rd Place Match",
-    final: "Final",
-  },
-  pl: {
-    qf: "Ćwierćfinał",
-    ninth: "Mecz o 9. miejsce",
-    seventh: "Mecz o 7. miejsce",
-    fifth: "Mecz o 5. miejsce",
-    third: "Mecz o 3. miejsce",
-    final: "Finał",
-  },
+const matchTypes = tr.matchTypes as Record<string, string>;
+
+const catLabels: Record<string, string> = {
+  u12: tr.categories.u12_venue,
+  u13: tr.categories.u13_venue,
+  u14: tr.categories.u14_venue,
 };
 
-const catLabels: Record<string, Record<string, string>> = {
-  cs: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Aréna",
-    u14: "U14 · Sokol HK",
-  },
-  en: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-  pl: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-};
-
-const dayLabels: Record<string, Record<string, string>> = {
-  cs: { day1: "Den 1 – Pátek", day2: "Den 2 – Sobota", day3: "Den 3 – Neděle" },
-  en: {
-    day1: "Day 1 – Friday",
-    day2: "Day 2 – Saturday",
-    day3: "Day 3 – Sunday",
-  },
-  pl: {
-    day1: "Dzień 1 – Piątek",
-    day2: "Dzień 2 – Sobota",
-    day3: "Dzień 3 – Niedziela",
-  },
+const dayLabels = {
+  day1: tr.schedule.day1,
+  day2: tr.schedule.day2,
+  day3: tr.schedule.day3,
 };
 
 function formatTime(datetime: string) {
@@ -106,7 +61,7 @@ function getRowClass(m: Match) {
 function getStatusBadge(m: Match, locale: string) {
   if (m.status === "live") return `<span class="badge badge--live">LIVE</span>`;
   if (m.status === "finished" || (m.scoreA != null && m.scoreB != null)) {
-    return `<span class="badge badge--fin">${locale === "en" ? "FT" : "FIN"}</span>`;
+    return `<span class="badge badge--fin">${locale === "en" ? "FT" : locale === "pl" ? "KONIEC" : "KONEC"}</span>`;
   }
   return `<span class="badge">—</span>`;
 }
@@ -132,7 +87,23 @@ function getQuarters(m: Match) {
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.results.title}</h1>
-      <p class="lead">{catLabels[locale][cat]}</p>
+      <p class="lead">{catLabels[cat]}</p>
+
+      <!-- Live auto-refresh bar -->
+      <div class="live-refresh-bar" id="liveRefreshBar">
+        <div class="live-refresh-status">
+          <span class="live-pulse"></span>
+          <span class="live-status-text">{tr.results.auto_refresh_on}</span>
+        </div>
+        <div class="live-refresh-actions">
+          <span class="live-refresh-time" id="liveRefreshTime">
+            {tr.results.updated_at} <strong id="liveLastTime">—</strong>
+          </span>
+          <button type="button" class="btn btn--small btn--ghost live-refresh-btn" id="liveRefreshBtn">
+            {tr.results.refresh_now}
+          </button>
+        </div>
+      </div>
     </section>
 
     {
@@ -145,13 +116,13 @@ function getQuarters(m: Match) {
       ) : (
         <>
           {[
-            { label: dayLabels[locale].day1, matches: den1 },
-            { label: dayLabels[locale].day2, matches: den2 },
-            { label: dayLabels[locale].day3, matches: den3 },
+            { label: dayLabels.day1, matches: den1 },
+            { label: dayLabels.day2, matches: den2 },
+            { label: dayLabels.day3, matches: den3 },
           ].map(
             ({ label, matches }) =>
               matches.length > 0 && (
-                <section class="card">
+                <section class="card" style="margin-bottom: 24px;">
                   <h2 class="h2">{label}</h2>
                   <div class="tablewrap">
                     <table class="schedule results">
@@ -175,7 +146,7 @@ function getQuarters(m: Match) {
                         {matches.map((m: Match) => {
                           const quarters = getQuarters(m);
                           return (
-                            <tr class={getRowClass(m)}>
+                            <tr class={getRowClass(m)} data-match-id={m._id}>
                               <td>{formatTime(m.datetime)}</td>
                               <td>
                                 <span
@@ -191,13 +162,13 @@ function getQuarters(m: Match) {
                                 </div>
                                 {m.matchType &&
                                   m.matchType !== "group" &&
-                                  (matchTypes[locale][m.matchType] ||
+                                  (matchTypes[m.matchType] ||
                                     m.matchType) && (
                                     <div
                                       class="muted"
                                       style="font-size: 11px; font-weight: normal; margin-top: 2px;"
                                     >
-                                      {matchTypes[locale][m.matchType] ??
+                                      {matchTypes[m.matchType] ??
                                         m.matchType}
                                     </div>
                                   )}
@@ -215,7 +186,7 @@ function getQuarters(m: Match) {
                                   </div>
                                 )}
                               </td>
-                              <td>
+                              <td class="col-score">
                                 <div class="score-main">{getScore(m)}</div>
                                 {quarters && (
                                   <div class="qscore" style="margin-top: 4px;">
@@ -252,7 +223,7 @@ function getQuarters(m: Match) {
                                   </div>
                                 )}
                               </td>
-                              <td set:html={getStatusBadge(m, locale)} />
+                              <td class="col-status" set:html={getStatusBadge(m, locale)} />
                             </tr>
                           );
                         })}
@@ -267,3 +238,160 @@ function getQuarters(m: Match) {
     }
   </main>
 </Layout>
+
+<style>
+  .live-refresh-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 10px 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--sh-sm);
+  }
+
+  .live-refresh-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .live-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #34c759;
+    box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+    animation: livePulseAnim 1.8s infinite;
+  }
+
+  @keyframes livePulseAnim {
+    0% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7);
+    }
+    70% {
+      transform: scale(1);
+      box-shadow: 0 0 0 8px rgba(52, 199, 89, 0);
+    }
+    100% {
+      transform: scale(0.95);
+      box-shadow: 0 0 0 0 rgba(52, 199, 89, 0);
+    }
+  }
+
+  .live-refresh-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .live-refresh-time {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .btn--small {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+</style>
+
+<script is:inline define:vars={{ cat, locale, refreshingText: tr.results.refreshing }}>
+  (function () {
+    const timeEl = document.getElementById("liveLastTime");
+    const refreshBtn = document.getElementById("liveRefreshBtn");
+    const intervalMs = 30000; // 30 sekund
+    let isFetching = false;
+
+    function updateTimestamp() {
+      if (timeEl) {
+        timeEl.textContent = new Date().toLocaleTimeString(
+          locale === "cs" ? "cs-CZ" : locale === "pl" ? "pl-PL" : "en-US",
+          { hour: "2-digit", minute: "2-digit", second: "2-digit" }
+        );
+      }
+    }
+
+    updateTimestamp();
+
+    async function fetchMatches() {
+      if (isFetching) return;
+      isFetching = true;
+      if (refreshBtn) {
+        refreshBtn.setAttribute("disabled", "true");
+        refreshBtn.textContent = refreshingText;
+      }
+
+      try {
+        const res = await fetch(`/api/matches?cat=${cat}&t=${Date.now()}`);
+        if (!res.ok) throw new Error("Fetch error: " + res.status);
+        const data = await res.json();
+        
+        if (data.matches && Array.isArray(data.matches)) {
+          data.matches.forEach((m) => {
+            const row = document.querySelector(`tr[data-match-id="${m._id}"]`);
+            if (!row) return;
+
+            // Aktualizace stavové třídy
+            row.classList.remove("is-live", "is-fin");
+            if (m.status === "live") {
+              row.classList.add("is-live");
+            } else if (m.status === "finished" || (m.scoreA != null && m.scoreB != null)) {
+              row.classList.add("is-fin");
+            }
+
+            // Aktualizace skóre
+            const scoreMain = row.querySelector(".score-main");
+            if (scoreMain) {
+              if (m.scoreA != null && m.scoreB != null) {
+                scoreMain.textContent = `${m.scoreA} : ${m.scoreB}`;
+              } else if (m.status === "live") {
+                scoreMain.textContent = "0 : 0";
+              } else {
+                scoreMain.textContent = "—";
+              }
+            }
+
+            // Aktualizace status badge
+            const statusCell = row.querySelector(".col-status");
+            if (statusCell) {
+              if (m.status === "live") {
+                statusCell.innerHTML = '<span class="badge badge--live">LIVE</span>';
+              } else if (m.status === "finished" || (m.scoreA != null && m.scoreB != null)) {
+                const finLabel = locale === "en" ? "FT" : locale === "pl" ? "KONIEC" : "KONEC";
+                statusCell.innerHTML = `<span class="badge badge--fin">${finLabel}</span>`;
+              } else {
+                statusCell.innerHTML = '<span class="badge">—</span>';
+              }
+            }
+          });
+        }
+        updateTimestamp();
+      } catch (err) {
+        console.warn("Live refresh failed:", err);
+      } finally {
+        isFetching = false;
+        if (refreshBtn) {
+          refreshBtn.removeAttribute("disabled");
+          refreshBtn.textContent = locale === "en" ? "Refresh now" : locale === "pl" ? "Odśwież teraz" : "Obnovit nyní";
+        }
+      }
+    }
+
+    if (refreshBtn) {
+      refreshBtn.addEventListener("click", () => fetchMatches());
+    }
+
+    // Automatický polling každých 30 sekund
+    setInterval(fetchMatches, intervalMs);
+  })();
+</script>

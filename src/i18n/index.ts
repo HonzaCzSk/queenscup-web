@@ -2,7 +2,9 @@ import { cs } from './cs'
 import { en } from './en'
 import { pl } from './pl'
 
-export const languages = { cs, en, pl }
+export type Translation = typeof cs
+
+export const languages: Record<'cs' | 'en' | 'pl', Translation> = { cs, en, pl }
 export type Lang = keyof typeof languages
 
 export function getLang(lang: string): Lang {
@@ -10,6 +12,6 @@ export function getLang(lang: string): Lang {
   return 'cs'
 }
 
-export function t(lang: Lang) {
+export function t(lang: Lang): Translation {
   return languages[lang]
 }

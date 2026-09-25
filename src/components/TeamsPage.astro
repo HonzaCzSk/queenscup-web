@@ -30,28 +30,15 @@ const countryFlags: Record<string, string> = {
 };
 
 const venues: Record<string, string> = {
-  cs: { sokol: "Sokol HK", gapa: "GAPA aréna" },
-  en: { sokol: "Sokol HK", gapa: "GAPA Arena" },
-  pl: { sokol: "Sokol HK", gapa: "GAPA Arena" },
-}[locale];
+  sokol: tr.venues.sokol,
+  gapa: tr.venues.gapa,
+};
 
 const catLabels: Record<string, string> = {
-  cs: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA aréna",
-    u14: "U14 · Sokol HK",
-  },
-  en: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-  pl: {
-    u12: "U12 · Sokol HK",
-    u13: "U13 · GAPA Arena",
-    u14: "U14 · Sokol HK",
-  },
-}[locale];
+  u12: tr.categories.u12_venue,
+  u13: tr.categories.u13_venue,
+  u14: tr.categories.u14_venue,
+};
 ---
 
 <Layout

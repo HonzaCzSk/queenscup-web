@@ -1,3 +1,17 @@
+export type Category = "u12" | "u13" | "u14";
+
+export type MatchStatus = "scheduled" | "live" | "finished" | "upcoming";
+
+export type MatchType =
+  | "group"
+  | "qf"
+  | "ninth"
+  | "seventh"
+  | "fifth"
+  | "third"
+  | "final"
+  | string;
+
 export interface Partner {
   _id: string;
   name: string;
@@ -14,7 +28,7 @@ export interface Player {
 export interface Team {
   _id: string;
   name: string;
-  category: string;
+  category: Category | string;
   country?: string;
   venue?: string;
   coach?: string;
@@ -34,16 +48,16 @@ export interface MatchTeamRef {
 
 export interface Match {
   _id: string;
-  category: string;
+  category: Category | string;
   day: number;
   datetime: string;
   venue: string;
   court: string;
-  matchType: string;
+  matchType: MatchType;
   group?: string;
   scoreA?: number;
   scoreB?: number;
-  status: "upcoming" | "live" | "finished";
+  status: MatchStatus;
   quarters?: MatchQuarter[];
   streamUrl?: string;
   teamA?: MatchTeamRef;

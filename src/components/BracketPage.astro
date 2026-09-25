@@ -25,23 +25,11 @@ const ninthMatch = matches.find((m: Match) => m.matchType === 'ninth')
 
 const hasAny = qfMatches.length > 0 || finalMatch || thirdMatch
 
-const catLabels: Record<string, Record<string, string>> = {
-  cs: {
-    u12: 'U12 · Sokol HK',
-    u13: 'U13 · GAPA Aréna',
-    u14: 'U14 · Sokol HK',
-  },
-  en: {
-    u12: 'U12 · Sokol HK',
-    u13: 'U13 · GAPA Arena',
-    u14: 'U14 · Sokol HK',
-  },
-  pl: {
-    u12: 'U12 · Sokol HK',
-    u13: 'U13 · GAPA Arena',
-    u14: 'U14 · Sokol HK',
-  },
-}
+const catLabels: Record<string, string> = {
+  u12: tr.categories.u12_venue,
+  u13: tr.categories.u13_venue,
+  u14: tr.categories.u14_venue,
+};
 
 function formatTime(datetime: string) {
   if (!datetime) return "—";
@@ -68,7 +56,7 @@ function winnerB(m: Match) {
   <main class="wrap">
     <section class="pagehead">
       <h1 class="h1">{tr.bracket.title}</h1>
-      <p class="lead">{catLabels[locale][cat]}</p>
+      <p class="lead">{catLabels[cat]}</p>
     </section>
 
     {!hasAny ? (
