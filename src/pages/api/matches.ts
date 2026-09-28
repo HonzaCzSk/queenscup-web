@@ -3,7 +3,7 @@ import { getMatches } from "../../lib/queries";
 
 export const GET: APIRoute = async ({ url }) => {
   const cat = url.searchParams.get("cat") ?? "u12";
-  
+
   try {
     const matches = await getMatches(cat);
     return new Response(JSON.stringify({ category: cat, matches, updatedAt: new Date().toISOString() }), {
