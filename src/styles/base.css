@@ -1875,11 +1875,6 @@ table.schedule:not(.results) tr.is-next td:first-child::after {
   cursor: default;
 }
 
-/* Skóre nechceme na webu */
-.col-score {
-  display: none;
-}
-
 /* Sloupec Odkazy – zarovnání doprava */
 .col-links {
   text-align: center;
@@ -1898,17 +1893,6 @@ table.schedule:not(.results) tr.is-next td:first-child::after {
 .col-links {
   display: table-cell;
 }
-
-/* Web: skóre pryč + žádná šířka */
-.col-score {
-  display: none;
-}
-
-col.col-score {
-  width: 0;
-}
-
-/* Web: sloupec skóre fakt zmizí a nebude dělat pruh */
 
 /* =========================================================
    PRINT – FINÁLNÍ CLEAN (rozpis na papír)

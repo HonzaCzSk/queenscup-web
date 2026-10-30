@@ -225,33 +225,22 @@
   }
 }
 
-@media screen {
-  col.col-score {
-    width: 0 !important;
-  }
+/* ODKAZY doprava */
+th.col-links,
+td.col-links {
+  text-align: right !important;
+  white-space: nowrap;
+}
 
-  th.col-score,
-  td.col-score {
-    display: none !important;
-  }
+th.col-links {
+  padding-right: 20px;
+}
 
-  /* ODKAZY doprava */
-  th.col-links,
-  td.col-links {
-    text-align: right !important;
-    white-space: nowrap;
-  }
-
-  th.col-links {
-    padding-right: 20px;
-  }
-
-  td.col-links .matchlinks {
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: flex-end;
-  }
+td.col-links .matchlinks {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 @media screen {

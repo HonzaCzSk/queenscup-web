@@ -2,11 +2,16 @@
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
 import { t, getLang } from "../i18n/index";
+import { supabase } from "../lib/supabase";
 
 interface Props {
   lang: string;
   cat: "u12" | "u13" | "u14";
 }
+
+const { data: tournaments, error } = await supabase
+  .from("tournaments")
+  .select("*");
 
 const { lang, cat } = Astro.props;
 const locale = getLang(lang);
@@ -15,7 +20,6 @@ const tr = t(locale);
 const scheduleUrl =
   lang === "cs" ? `/rozpis?cat=${cat}` : `/${lang}/schedule?cat=${cat}`;
 const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
-
 ---
 
 <Layout title={tr.nav.home} activePage="home" activeCategory={cat} lang={lang}>

@@ -38,7 +38,13 @@ const catInfo = {
 }[cat];
 
 // Parkování a doprava podle kategorie
-const transportInfo = {
+const transportInfo: {
+  parking: string;
+  transit_stop: string;
+  transit_lines: string;
+  transit_stop2?: string;
+  transit_lines2?: string;
+} = {
   u12: {
     parking: tr.info.parking_sokol,
     transit_stop: tr.info.transit_sokol_stop,

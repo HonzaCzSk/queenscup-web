@@ -264,43 +264,57 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
           >
           <a
             class={`menu__link ${activePage === "schedule" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/rozpis${catParam}` : `/${lang}/schedule${catParam}`}
+            href={lang === "cs"
+              ? `/rozpis${catParam}`
+              : `/${lang}/schedule${catParam}`}
           >
             <span class="menu__link__icon">📅</span>{tr.nav.schedule}</a
           >
           <a
             class={`menu__link ${activePage === "results" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/vysledky${catParam}` : `/${lang}/results${catParam}`}
+            href={lang === "cs"
+              ? `/vysledky${catParam}`
+              : `/${lang}/results${catParam}`}
           >
             <span class="menu__link__icon">🏀</span>{tr.nav.results}</a
           >
           <a
             class={`menu__link ${activePage === "bracket" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/pavouk${catParam}` : `/${lang}/bracket${catParam}`}
+            href={lang === "cs"
+              ? `/pavouk${catParam}`
+              : `/${lang}/bracket${catParam}`}
           >
             <span class="menu__link__icon">🏆</span>{tr.nav.bracket}</a
           >
           <a
             class={`menu__link ${activePage === "teams" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/tymy${catParam}` : `/${lang}/teams${catParam}`}
+            href={lang === "cs"
+              ? `/tymy${catParam}`
+              : `/${lang}/teams${catParam}`}
           >
             <span class="menu__link__icon">👥</span>{tr.nav.teams}</a
           >
           <a
             class={`menu__link ${activePage === "info" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/info${catParam}` : `/${lang}/info${catParam}`}
+            href={lang === "cs"
+              ? `/info${catParam}`
+              : `/${lang}/info${catParam}`}
           >
             <span class="menu__link__icon">ℹ️</span>{tr.nav.info}</a
           >
           <a
             class={`menu__link ${activePage === "contacts" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/kontakty${catParam}` : `/${lang}/contacts${catParam}`}
+            href={lang === "cs"
+              ? `/kontakty${catParam}`
+              : `/${lang}/contacts${catParam}`}
           >
             <span class="menu__link__icon">📞</span>{tr.nav.contacts}</a
           >
           <a
             class={`menu__link ${activePage === "photos" ? "is-active" : ""}`}
-            href={lang === "cs" ? `/fotky${catParam}` : `/${lang}/photos${catParam}`}
+            href={lang === "cs"
+              ? `/fotky${catParam}`
+              : `/${lang}/photos${catParam}`}
           >
             <span class="menu__link__icon">📷</span>{tr.nav.photos}</a
           >

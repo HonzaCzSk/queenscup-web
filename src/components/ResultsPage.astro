@@ -130,16 +130,16 @@ function getQuarters(m: Match) {
                         <col style="width: 75px;" />
                         <col style="width: 110px;" />
                         <col />
-                        <col style="width: 110px;" />
-                        <col style="width: 80px;" />
+                        <col style="width: 110px;" class="col-score" />
+                        <col style="width: 80px;" class="col-status" />
                       </colgroup>
                       <thead>
                         <tr>
                           <th>{tr.results.time}</th>
                           <th>{tr.results.hall}</th>
                           <th>{tr.results.match}</th>
-                          <th>{tr.results.score}</th>
-                          <th>Status</th>
+                          <th class="col-score">{tr.results.score}</th>
+                          <th class="col-status">Status</th>
                         </tr>
                       </thead>
                       <tbody>

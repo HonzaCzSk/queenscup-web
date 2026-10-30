@@ -8,6 +8,7 @@ dist/
 skills/
 .gemini/
 supabase/
+/scripts
 
 # generated types
 .astro/

@@ -6,6 +6,14 @@ export default defineType({
     type: 'document',
     fields: [
         defineField({
+            name: 'year',
+            title: 'Ročník',
+            type: 'number',
+            validation: Rule => Rule.required(),
+            initialValue: 2026,
+            description: 'Např. 2026, 2027',
+        }),
+        defineField({
             name: 'title',
             title: 'Název alba',
             type: 'string',
@@ -68,11 +76,12 @@ export default defineType({
             subtitle: 'photographer',
             media: 'thumbnail',
             category: 'category',
+            year: 'year',
         },
-        prepare({ title, subtitle, media, category }) {
+        prepare({ title, subtitle, media, category, year }) {
             return {
                 title,
-                subtitle: `${category?.toUpperCase() ?? 'ALL'} · ${subtitle ?? 'bez fotografa'}`,
+                subtitle: `${year ?? '2026'} · ${category?.toUpperCase() ?? 'ALL'} · ${subtitle ?? 'bez fotografa'}`,
                 media,
             }
         },
