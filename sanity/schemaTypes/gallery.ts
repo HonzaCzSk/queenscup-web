@@ -1,18 +1,12 @@
 import { defineField, defineType } from 'sanity'
+import { yearField } from '../fields/year'
 
 export default defineType({
     name: 'gallery',
     title: 'Fotogalerie',
     type: 'document',
     fields: [
-        defineField({
-            name: 'year',
-            title: 'Ročník',
-            type: 'number',
-            validation: Rule => Rule.required(),
-            initialValue: 2026,
-            description: 'Např. 2026, 2027',
-        }),
+        yearField,
         defineField({
             name: 'title',
             title: 'Název alba',
@@ -81,7 +75,7 @@ export default defineType({
         prepare({ title, subtitle, media, category, year }) {
             return {
                 title,
-                subtitle: `${year ?? '2026'} · ${category?.toUpperCase() ?? 'ALL'} · ${subtitle ?? 'bez fotografa'}`,
+                subtitle: `${year ?? '?'} · ${category?.toUpperCase() ?? 'ALL'} · ${subtitle ?? 'bez fotografa'}`,
                 media,
             }
         },

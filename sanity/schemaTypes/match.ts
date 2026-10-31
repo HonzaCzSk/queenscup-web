@@ -1,18 +1,12 @@
 import { defineField, defineType } from 'sanity'
+import { yearField } from '../fields/year'
 
 export default defineType({
   name: 'match',
   title: 'Zápas',
   type: 'document',
   fields: [
-    defineField({
-      name: 'year',
-      title: 'Ročník',
-      type: 'number',
-      validation: Rule => Rule.required(),
-      initialValue: 2026,
-      description: 'Např. 2026, 2027',
-    }),
+    yearField,
     defineField({
       name: 'category',
       title: 'Kategorie',
@@ -138,7 +132,7 @@ export default defineType({
       options: {
         list: [
           { title: 'Court 1 – hlavní hala', value: 'Court 1' },
-          { title: 'Main court', value: 'GAPA aréna' },
+          { title: 'Main court', value: 'Main Court - GAPA' },
           { title: 'Court 2 – tréninková hala', value: 'Court 2' },
         ],
       },
@@ -172,7 +166,7 @@ export default defineType({
     prepare({ teamA, teamB, category, day, year }) {
       return {
         title: `${teamA ?? '?'} vs ${teamB ?? '?'}`,
-        subtitle: `${year ?? '2026'} – ${category?.toUpperCase()} – Den ${day}`,
+        subtitle: `${year ?? '?'} · ${category?.toUpperCase()} – Den ${day}`,
       }
     },
   },

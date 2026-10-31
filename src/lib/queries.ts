@@ -1,5 +1,6 @@
 import { sanityClient } from "./sanity";
 import type { Partner, Team, Match, Settings } from "./types";
+import { CURRENT_YEAR } from "./config";
 
 export async function getPartners(): Promise<Partner[]> {
   try {
@@ -18,10 +19,10 @@ export async function getPartners(): Promise<Partner[]> {
   }
 }
 
-export async function getTeams(category: string): Promise<Team[]> {
+export async function getTeams(category: string, year: number = CURRENT_YEAR): Promise<Team[]> {
   try {
     return await sanityClient.fetch(`
-      *[_type == "team" && category == $category && !(name in ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "__"])] | order(name asc) {
+      *[_type == "team" && year == $year && category == $category && !(name in ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "__"])] | order(name asc) {
         _id,
         name,
         category,
@@ -31,17 +32,17 @@ export async function getTeams(category: string): Promise<Team[]> {
         "logo": logo.asset->url,
         players
       }
-    `, { category });
+    `, { category, year });
   } catch (error) {
-    console.error(`Error fetching teams for category ${category}:`, error);
+    console.error(`Error fetching teams for category ${category}, year ${year}:`, error);
     return [];
   }
 }
 
-export async function getMatches(category: string): Promise<Match[]> {
+export async function getMatches(category: string, year: number = CURRENT_YEAR): Promise<Match[]> {
   try {
     return await sanityClient.fetch(`
-      *[_type == "match" && category == $category] | order(day asc, datetime asc) {
+      *[_type == "match" && year == $year && category == $category] | order(day asc, datetime asc) {
         _id,
         category,
         day,
@@ -58,17 +59,17 @@ export async function getMatches(category: string): Promise<Match[]> {
         "teamA": teamA->{ name, country },
         "teamB": teamB->{ name, country },
       }
-    `, { category });
+    `, { category, year });
   } catch (error) {
-    console.error(`Error fetching matches for category ${category}:`, error);
+    console.error(`Error fetching matches for category ${category}, year ${year}:`, error);
     return [];
   }
 }
 
-export async function getGalleries(category: string) {
+export async function getGalleries(category: string, year: number = CURRENT_YEAR) {
   try {
     return await sanityClient.fetch(`
-      *[_type == "gallery" && (category == $category || category == "all")] | order(day asc, publishedAt asc) {
+      *[_type == "gallery" && year == $year && (category == $category || category == "all")] | order(day asc, publishedAt asc) {
         _id,
         title,
         photographer,
@@ -78,9 +79,9 @@ export async function getGalleries(category: string) {
         day,
         publishedAt,
       }
-    `, { category });
+    `, { category, year });
   } catch (error) {
-    console.error(`Error fetching galleries for category ${category}:`, error);
+    console.error(`Error fetching galleries for category ${category}, year ${year}:`, error);
     return [];
   }
 }
