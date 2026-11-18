@@ -1,0 +1,217 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/global.css'
+import { getMatches } from '../lib/queries'
+import { computeStandings } from '../lib/standings'
+import { CURRENT_YEAR } from '../lib/config'
+import { t, getLang } from '../i18n/index'
+import { archiveText } from '../i18n/archive'
+import type { Match } from '../lib/types'
+
+interface Props {
+  lang: string
+  year: number
+  cat: 'u12' | 'u13' | 'u14'
+}
+
+const { lang, year, cat } = Astro.props
+const locale = getLang(lang)
+const tr = t(locale)
+const a = archiveText[locale]
+
+const base = locale === 'cs' ? '/archiv' : `/${locale}/archiv`
+const matchTypes = tr.matchTypes as Record<string, string>
+
+const catLabels: Record<string, string> = {
+  u12: tr.categories.u12,
+  u13: tr.categories.u13,
+  u14: tr.categories.u14,
+}
+
+const matches = await getMatches(cat, year)
+const standings = computeStandings(matches)
+
+const isPlayed = (m: Match) => m.scoreA != null && m.scoreB != null
+
+// Pořadí fází v seznamu výsledků: od nejdůležitějších.
+const STAGE_ORDER = ['final', 'third', 'fifth', 'seventh', 'ninth', 'qf', 'group']
+const stages = STAGE_ORDER.map(type => ({
+  type,
+  label: matchTypes[type] ?? type,
+  matches: matches
+    .filter(m => m.matchType === type && isPlayed(m))
+    .sort((x, y) => (x.datetime ?? '').localeCompare(y.datetime ?? '')),
+})).filter(s => s.matches.length > 0)
+
+const medal = (place: number) =>
+  place === 1 ? '🥇' : place === 2 ? '🥈' : place === 3 ? '🥉' : ''
+---
+
+<Layout title={`${a.title} ${year}`} activePage="archive" activeCategory={cat} lang={lang}>
+  <main class="wrap">
+    <section class="pagehead">
+      <h1 class="h1">{a.title} · {year}</h1>
+      <p class="lead">
+        {catLabels[cat]}
+        {year === CURRENT_YEAR && <span class="pill muted"> {a.current}</span>}
+      </p>
+      <p><a href={base}>{a.back}</a></p>
+    </section>
+
+    <nav class="archive-tabs" aria-label="categories">
+      {
+        (['u12', 'u13', 'u14'] as const).map(c => (
+          <a
+            class={`archive-tab ${c === cat ? 'is-active' : ''}`}
+            href={`${base}/${year}?cat=${c}`}
+          >
+            {catLabels[c]}
+          </a>
+        ))
+      }
+    </nav>
+
+    <section class="card archive-block">
+      <h2 class="archive-h2">{a.standings}</h2>
+      {
+        standings.length === 0 ? (
+          <p class="muted">{a.noStandings}</p>
+        ) : (
+          <div class="tablewrap">
+            <table class="archive-table">
+              <thead>
+                <tr>
+                  <th class="archive-col-place">{a.place}</th>
+                  <th>{a.team}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {standings.map(s => (
+                  <tr class={s.place <= 3 ? 'is-top' : ''}>
+                    <td class="archive-col-place">
+                      {medal(s.place)} {s.place}.
+                    </td>
+                    <td>
+                      {s.team}
+                      {s.country && <span class="muted"> · {s.country}</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )
+      }
+    </section>
+
+    <section class="card archive-block">
+      <h2 class="archive-h2">{a.results}</h2>
+      {
+        stages.length === 0 ? (
+          <p class="muted">{a.noMatches}</p>
+        ) : (
+          stages.map(stage => (
+            <div class="archive-stage">
+              <h3 class="archive-h3">{stage.label}</h3>
+              <div class="tablewrap">
+                <table class="archive-table">
+                  <tbody>
+                    {stage.matches.map(m => (
+                      <tr>
+                        <td class="archive-team archive-team--a">
+                          <span class={m.scoreA! > m.scoreB! ? 'is-win' : ''}>
+                            {m.teamA?.name ?? '?'}
+                          </span>
+                        </td>
+                        <td class="archive-score">
+                          {m.scoreA} : {m.scoreB}
+                        </td>
+                        <td class="archive-team">
+                          <span class={m.scoreB! > m.scoreA! ? 'is-win' : ''}>
+                            {m.teamB?.name ?? '?'}
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))
+        )
+      }
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .archive-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .archive-tab {
+    padding: 8px 14px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill, 999px);
+    text-decoration: none;
+    color: inherit;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .archive-tab.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .archive-block {
+    margin-bottom: 20px;
+    padding: 18px 20px;
+  }
+  .archive-h2 {
+    margin: 0 0 12px;
+    font-size: 20px;
+  }
+  .archive-h3 {
+    margin: 16px 0 6px;
+    font-size: 15px;
+    opacity: 0.75;
+  }
+  .archive-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .archive-table th,
+  .archive-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+  }
+  .archive-col-place {
+    width: 110px;
+    white-space: nowrap;
+    font-weight: 700;
+  }
+  .archive-table tr.is-top td {
+    font-weight: 700;
+  }
+  .archive-team {
+    width: 42%;
+  }
+  .archive-team--a {
+    text-align: right;
+  }
+  .archive-table td.archive-team--a {
+    text-align: right;
+  }
+  .archive-score {
+    width: 16%;
+    text-align: center !important;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .is-win {
+    font-weight: 800;
+  }
+</style>

@@ -43,6 +43,19 @@ const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
           >
           <a class="btn btn--ghost" href={infoUrl}>{tr.home.btn_info}</a>
         </div>
+        <article class="thanks-card">
+          <h2 class="thanks-card__title">{tr.home.thanks_title}</h2>
+          <div class="thanks-card__body">
+            <p>{tr.home.thanks_p1}</p>
+            <p>{tr.home.thanks_p2}</p>
+            <p>{tr.home.thanks_p3}</p>
+            <p>{tr.home.thanks_p4}</p>
+          </div>
+          <footer class="thanks-card__sig">
+            <span class="thanks-card__sig-team">{tr.home.thanks_team}</span>
+            <span class="thanks-card__sig-author">{tr.home.thanks_author}</span>
+          </footer>
+        </article>
       </div>
       <div class="hero__panel">
         <div class="stats-grid">
@@ -79,28 +92,32 @@ const infoUrl = lang === "cs" ? `/info?cat=${cat}` : `/${lang}/info?cat=${cat}`;
             <span class="stat-label">{tr.home.stats_date}</span>
           </div>
         </div>
+        <div class="sponsor-panel">
+            <div class="sponsor-panel__eyebrow">Co-financed by</div>
+            <a
+              href="https://www.visegradfund.org"
+              target="_blank"
+              rel="noopener"
+              class="sponsor-panel__logo-link"
+              aria-label="Visegrad Fund"
+            >
+              <img
+                src="/assets/visegrad-logo.jpg"
+                alt="Visegrad Fund"
+                class="sponsor-panel__logo"
+              />
+            </a>
+            <p class="sponsor-panel__text">
+              The project is co-financed by the governments of Czechia, Hungary, Poland and Slovakia through Visegrad Grants from {" "}
+              <a
+                href="https://www.visegradfund.org"
+                target="_blank"
+                rel="noopener"
+                class="sponsor-panel__link"
+              >International Visegrad Fund</a>. Its mission is to advance ideas for sustainable regional cooperation in Central Europe.
+            </p>
+          </div>
       </div>
-      <article class="card">
-        <h2>{tr.home.thanks_title}</h2>
-        <p>
-          {tr.home.thanks_p1}
-        </p>
-        <p>
-          {tr.home.thanks_p2}
-        </p>
-        <p>
-          {tr.home.thanks_p3}
-        </p>
-        <p>
-          {tr.home.thanks_p4}
-        </p>
-        <p>
-          <i>
-            {tr.home.thanks_team}<br />
-            {tr.home.thanks_author}<br />
-          </i>
-        </p>
-      </article>
 
       <script is:inline>
         (function () {

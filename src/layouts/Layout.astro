@@ -18,14 +18,14 @@ const {
   description = "Mezinárodní minibasketbalový turnaj – Hradec Králové",
   lang = "cs",
   activePage = "",
-  activeCategory = "u12",
+  activeCategory = "u14",
 } = Astro.props;
 
 const locale = getLang(lang);
 const tr = t(locale);
 
 const currentPath = Astro.url.pathname;
-const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u12";
+const currentCat = Astro.url.searchParams.get("cat") ?? activeCategory ?? "u14";
 const catParam = `?cat=${currentCat}`;
 
 const tournamentName =
@@ -528,35 +528,25 @@ const mediaPartners = partners.filter((p: any) => p.level === "media");
             <div class="footer__left">
               {tr.footer.rights.replace("Queens Cup", tournamentName)}
             </div>
-            {
+            <!-- {
               currentCat === "u14" && (
                 <div class="eu-funding">
-                  <a
-                    href="https://www.visegradfund.org"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    <img
-                      src="/assets/visegrad-logo.jpg"
-                      alt="Visegrad Fund"
-                      class="visegrad-logo"
-                    />
-                  </a>
                   <span class="eu-text">
-                    This event is supported by the grant No. 12610107 of{" "}
+                    The project is co-financed by the governments of Czechia, Hungary, Poland and Slovakia through Visegrad Grants from the {" "}
                     <a
                       href="https://www.visegradfund.org"
                       target="_blank"
                       rel="noopener"
                       class="eu-link"
                     >
-                      Visegrad funds.
-                    </a>
+                    International Visegrad Fund. 
+                    </a>{" "}
+                    Its mission is to advance ideas for sustainable regional cooperation in Central Europe.
                   </span>
                 </div>
               )
-            }
-          </div>
+            } -->
+          </div> 
           <div class="socialbar" aria-label="Sociální sítě">
             <a
               class="socialbtn"

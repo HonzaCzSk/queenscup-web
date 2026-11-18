@@ -1,0 +1,11 @@
+---
+import ArchiveYearPage from "../../components/ArchiveYearPage.astro";
+import { resolveArchiveYear, normalizeCategory } from "../../lib/years";
+
+const year = await resolveArchiveYear(Astro.params.year);
+if (year === null) return new Response(null, { status: 404 });
+
+const cat = normalizeCategory(Astro.url.searchParams.get("cat"));
+---
+
+<ArchiveYearPage lang="cs" year={year} cat={cat} />

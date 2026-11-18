@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro'
+import '../styles/global.css'
+import { getTournamentYears } from '../lib/years'
+import { CURRENT_YEAR } from '../lib/config'
+import { archiveText } from '../i18n/archive'
+import { getLang } from '../i18n/index'
+
+interface Props {
+  lang: string
+}
+
+const { lang } = Astro.props
+const locale = getLang(lang)
+const a = archiveText[locale]
+
+const base = locale === 'cs' ? '/archiv' : `/${locale}/archiv`
+const years = await getTournamentYears()
+---
+
+<Layout title={a.title} activePage="archive" lang={lang}>
+  <main class="wrap">
+    <section class="pagehead">
+      <h1 class="h1">{a.title}</h1>
+      <p class="lead">{a.lead}</p>
+    </section>
+
+    {
+      years.length === 0 ? (
+        <section class="card archive-empty">
+          <p class="muted">{a.noYears}</p>
+        </section>
+      ) : (
+        <div class="archive-years">
+          {years.map(y => (
+            <a class="card archive-year" href={`${base}/${y}`}>
+              <span class="archive-year__label">{a.year}</span>
+              <span class="archive-year__value">{y}</span>
+              {y === CURRENT_YEAR && <span class="pill muted">{a.current}</span>}
+              <span class="archive-year__open">{a.open} →</span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </main>
+</Layout>
+
+<style>
+  .archive-empty {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .archive-years {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .archive-year {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+  }
+  .archive-year__label {
+    font-size: 13px;
+    opacity: 0.6;
+  }
+  .archive-year__value {
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .archive-year__open {
+    margin-top: 6px;
+    font-weight: 700;
+  }
+</style>
